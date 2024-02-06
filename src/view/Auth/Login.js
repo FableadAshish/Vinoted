@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-shadow */
 import React from 'react';
 import {
   StyleSheet,
@@ -13,8 +11,10 @@ import {
   ActivityIndicator,
   BackHandler,
 } from 'react-native';
-import {isEmpty, unset, set} from 'lodash';
-import {_login, _handleAuthUser} from '../../api/auth';
+import messaging from '@react-native-firebase/messaging';
+
+import { isEmpty, unset, set } from 'lodash';
+import { _login, _handleAuthUser } from '../../api/auth';
 import Snackbar from '../../component/Common/Snackbar';
 import TextInput from '../../component/Common/EditTextField';
 import Button from '../../component/Common/Button';
@@ -25,7 +25,7 @@ import {
   white,
   sofiaFont,
 } from '../../style/variables';
-import {Toast} from 'native-base';
+import { Toast } from 'native-base';
 Dimensions.get('window');
 import AsyncStorage from '@react-native-community/async-storage';
 // import {
@@ -45,6 +45,7 @@ export default class Login extends React.Component {
       uerInfo: {},
       value: false,
     };
+    this.getFcmToken = this.getFcmToken.bind(this);
   }
 
   // componentWillMount = () => {
@@ -71,13 +72,13 @@ export default class Login extends React.Component {
         console.log('error....', error);
       });
 
-    this.props.navigation.navigate('Auth', {screen: 'Login'});
+    this.props.navigation.navigate('Auth', { screen: 'Login' });
     AsyncStorage.clear();
     return true;
   };
 
   componentDidMount = () => {
-    this.setState({form: {...this.state.form}});
+    this.setState({ form: { ...this.state.form } });
     BackHandler.addEventListener(
       'hardwareBackPress',
       this.handleBackButtonClick,
@@ -87,14 +88,14 @@ export default class Login extends React.Component {
   handleChange(name, value) {
     let errors = this.state.errors;
     unset(errors, name);
-    let form = {...this.state.form, [name]: value};
-    this.setState({form});
+    let form = { ...this.state.form, [name]: value };
+    this.setState({ form });
   }
 
   validate = () => {
     console.log('on validate console');
     let errors = {};
-    const {email, password} = this.state.form;
+    const { email, password } = this.state.form;
     if (isEmpty(email)) {
       set(errors, 'email', ['Email is required']);
     }
@@ -105,35 +106,59 @@ export default class Login extends React.Component {
     return errors;
   };
 
-  onSave = () => {
-    const {form} = this.state;
-    console.log('form Login Data:-', form);
-    let errors = this.validate();
-
-    if (!isEmpty(errors)) {
-      return this.setState({errors});
+  getFcmToken = async () => {
+    try {
+      let getToken = await AsyncStorage.getItem('fcmToken');
+      console.log('Token Retrieved', getToken);
+  
+      if (!getToken) {
+        let fcmToken = await messaging().getToken();
+        await AsyncStorage.setItem('fcmToken', JSON.stringify(fcmToken));
+        return fcmToken; // Return the token
+      } else {
+        return JSON.parse(getToken); // Return the parsed token
+      }
+    } catch (error) {
+      console.log('Error Retrieving Token', error);
+      return null; // Return null if there's an error
     }
+  };
 
-    this.setState({loading: true, form: {...this.state.form}});
+  
+  onSave = async () => {
+    const { form } = this.state;
+    console.log('form Login Data:-', form);
+  
+    let errors = this.validate();
+  
+    if (!isEmpty(errors)) {
+      return this.setState({ errors });
+    }
+  
+    // Get the token before proceeding
+    let token = await this.getFcmToken();
+  
+    console.log("Got token", token)
     form.type = 'Sommelier';
-
+    form.notification_token = token;
+    console.log("Recieved token", token)
     _login(this.state.form)
       .then(res => {
         console.log('Login User Res Success', res);
-        this.setState({loading: false, response: res});
+        this.setState({ loading: false, response: res });
         _handleAuthUser();
         // this.props.navigation.navigate('Home');
       })
       .catch(err => {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         console.log('error for Login Form', err);
         let errors = {};
-
+  
         if (err && err.status.data.code == 422) {
           errors = err.status.data.errors;
-          this.setState({errors});
+          this.setState({ errors });
         } else if (err && err.status.data.code == 401) {
-          this.setState({loading: false});
+          this.setState({ loading: false });
           Toast.show({
             text: `${err.status.data.message}`,
             // buttonText: 'Ok',
@@ -142,18 +167,17 @@ export default class Login extends React.Component {
         }
       });
   };
-
   render() {
-    const {form, errors} = this.state;
+    const { form, errors } = this.state;
     return (
       <View style={styles.container}>
         <ImageBackground
           source={require('../../assets/ImageBackgroung.png')}
-          style={{height: '100%', width: '100%'}}>
+          style={{ height: '100%', width: '100%' }}>
           <Snackbar ref={ref => (this._snk = ref)} />
 
           <ScrollView
-            contentContainerStyle={{flexGrow: 1}}
+            contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
             <View
@@ -203,9 +227,9 @@ export default class Login extends React.Component {
                 onSubmitEditing={() => this.onSave()}
               />
 
-              <View style={{flexDirection: 'row', marginVertical: 10}}>
+              <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                 <TouchableOpacity
-                  style={{flex: 1}}
+                  style={{ flex: 1 }}
                   onPress={() => this.props.navigation.navigate('SignUp')}>
                   <Text
                     onPress={() =>
@@ -248,7 +272,7 @@ export default class Login extends React.Component {
                   onPress={this.onSave}
                 />
               )}
-              <View style={{marginVertical: 10, flexDirection: 'row'}}>
+              <View style={{ marginVertical: 10, flexDirection: 'row' }}>
                 <Text
                   style={{
                     fontSize: 16,

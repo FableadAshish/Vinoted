@@ -277,6 +277,8 @@ const styles = StyleSheet.create({
     height: 40,
     // fontFamily:sofiaFont
     //backgroundColor:'red'
+    marginLeft:25
+
   },
   logoContainer: {
     flex: 0.5,

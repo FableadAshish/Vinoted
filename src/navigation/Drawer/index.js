@@ -21,7 +21,6 @@ import ProductRatings from '../../view/Home/ProductRatings'
 import RatingProductDetail from '../../view/Home/ProductRatings/RatingProductDetail'
 
 import Chat from '../../view/Home/Chat'
-import Home from '../../view/Home';
 
 import {
   createStackNavigator,
@@ -32,6 +31,7 @@ import {
   createDrawerNavigator,
 
 } from '@react-navigation/drawer';
+import MyTabs from '../TabNavigation';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 export default function DrawerDemo() {
@@ -42,7 +42,9 @@ export default function DrawerDemo() {
         activeBackgroundColor: 'red',
         
       }}
-      drawerContent={props => <SideBar {...props} />}>
+      drawerContent={props => <SideBar {...props} />}
+      screenOptions={{headerShown: false}}
+      >
       <Drawer.Screen name="DrawerRoot" component={DrawerStack} />
     </Drawer.Navigator>
   );
@@ -55,10 +57,11 @@ const DrawerStack = () => {
       initialRouteName={'Home'}
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        headerShown:false
       }}>
       <Stack.Screen
         name="Home"
-        component={Home}
+        component={MyTabs}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -66,14 +69,11 @@ const DrawerStack = () => {
         component={Search}
         options={{ headerShown: false }}
       />
-
-
       <Stack.Screen
         name="ProEventDetails"
         component={ProEventDetails}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Notification"
         component={Notification}
@@ -84,7 +84,6 @@ const DrawerStack = () => {
         component={ChangePassword}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="MyEvents"
         component={MyEvents}
@@ -155,7 +154,6 @@ const DrawerStack = () => {
         component={ProductRatings}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Filter"
         component={Filter}
@@ -165,8 +163,8 @@ const DrawerStack = () => {
         name="RatingProductDetail"
         component={RatingProductDetail}
         options={{ headerShown: false }}
-      />
-
+      /> 
+       
     </Stack.Navigator>
   )
 };

@@ -36,6 +36,7 @@ import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import {isEmpty, isNull} from 'lodash';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import { Images } from '../../../../theme/Images';
 const {width, height} = Dimensions.get('window');
 
 let data = ['1', '2', '3', '4', '5'];
@@ -160,7 +161,7 @@ class Index extends Component {
         <Header
           navigation={this.props.navigation}
           iconColor={primaryColor}
-          iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
+          iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
           image={require('../../../assets/blueLogo.png')}
         />
@@ -177,7 +178,8 @@ class Index extends Component {
           />
           <TouchableWithoutFeedback>
             <View style={styles.iconContainer}>
-              <Icon name="search" type="FontAwesome" style={styles.icon}></Icon>
+              {/* <Icon name="search" type="FontAwesome" style={styles.icon}></Icon> */}
+              <Image source={Images.SearchIcon} tintColor={"white"} style={{height:25, width:25}}/>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -194,24 +196,27 @@ class Index extends Component {
           <View style={{marginHorizontal: 5, flex: 1}}>
             <View style={styles.view}>
               {this.state.loading && isEmpty(this.state.Events) ? (
-                <SkeletonContent
-                  containerStyle={{flex: 1, width: '100%'}}
-                  boneColor="whitesmoke"
-                  // layout={[
-                  //     { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100,width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                  // ]}
-                  animationDirection="horizontalRight"
-                  backgroundColor="grey"
-                  loading={true}
-                  // ...
-                />
+                // <SkeletonContent
+                //   containerStyle={{flex: 1, width: '100%'}}
+                //   boneColor="whitesmoke"
+                //   // layout={[
+                //   //     { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100,width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
+                //   // ]}
+                //   animationDirection="horizontalRight"
+                //   backgroundColor="grey"
+                //   loading={true}
+                //   // ...
+                // />
+                <View>
+                  <Text>Loading ....</Text>
+                </View>
               ) : (
                 <FlatList
                   showsVerticalScrollIndicator={false}
@@ -306,7 +311,7 @@ const styles = StyleSheet.create({
   searchcontainer: {
     flexDirection: 'row',
     backgroundColor: primaryColor,
-    width: '90%',
+    width: '95%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',

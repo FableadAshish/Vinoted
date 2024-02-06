@@ -35,6 +35,7 @@ import BottomIndicator from '../../../component/Indicator/BottomIndicator';
 const { width, height } = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 
@@ -165,20 +166,10 @@ class Index extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={primaryColor}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/blueLogo.png')}
                 />
-                {/* <ScrollView
-                    showsVerticalScrollIndicator={false}
-
-                // refreshControl={
-                //     <RefreshControl
-                //         refreshing={this.state.refreshing}
-                //         onRefresh={() => this.onRefresh()}
-                //     />
-                // }
-                > */}
 
                 <View style={{ marginHorizontal: 5, flex: 1 }}>
 
@@ -200,7 +191,6 @@ class Index extends Component {
 
                             :
                             <FlatList
-                                // showsVerticalScrollIndicator={false}
                                 data={this.state.Wishlist}
                                 keyExtractor={(item, i) => i.toString()}
                                 horizontal={false}
@@ -219,7 +209,6 @@ class Index extends Component {
                                 renderItem={({item, index}) => {
                                     if(!isNull(item.product)) {
                                         return (  
-                                                  // <View style={{ height: 20, width: 100, backgroundColor: "red" }}>
                                             <SearchCard
                                             onPress={() => this.props.navigation.navigate("WishListProductDetail", { ProductDetail: item })}
                                             onPressView={() =>  this.props.navigation.navigate("ChooseProduct", { Testing: item, event: item.event, isFromAdditional: true })}
@@ -233,21 +222,15 @@ class Index extends Component {
                                                 ViewMore={"View"}
                                                 title={!isNull(item.product) && item.product.title}
                                             />
-                                            // </View>
-        
+
                                         )
                                     }
-                                    
                                 }
                                }
                             />
-
                         }
-
                     </View>
-
                 </View>
-                {/* </ScrollView> */}
             </View>
 
         );
@@ -307,7 +290,6 @@ const mapProps = state => ({
     utilities_all: state.root.utilities_all,
     user: state.root.user,
     theme: state.root.theme,
-    // console.log('state.toot.utilities', state.root.utilities_all),
 });
 
 export default connect(

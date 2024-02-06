@@ -1,46 +1,36 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     FlatList,
-    StatusBar,
     View,
     StyleSheet,
     TouchableWithoutFeedback,
     Image,
     Dimensions,
     Text,
-    Alert,
-    ImageBackground,
     ScrollView,
     RefreshControl,
-    TouchableOpacity, ActivityIndicator, BackHandler
+    TouchableOpacity, BackHandler
 } from 'react-native';
 import Header from '../../../component/Header/Header';
-import HTML from "react-native-render-html";
 import {
     white,
-    secondryTextColor,
     AcceptBottonColor,
     primaryColor,
-    ActiveBottonColor,
-    primaryTextColor,
-    inputColor,
     cardBackground,
-    TexColor, sofiaFont
+    sofiaFont
 } from '../../../style/variables';
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
-import { Icon, Toast } from 'native-base';
+import { Toast } from 'native-base';
 import { _getUser } from '../../../api/auth'
 import BottomIndicator from '../../../component/Indicator/BottomIndicator';
 import http from "../../../http";
 import FLEC from "../../../component/Common/FLEC"
-import FPI from '../../../component/Indicator/FPI';
 import moment from 'moment'
-import { color } from 'react-native-reanimated';
 const { width, height } = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 
@@ -280,7 +270,7 @@ class Notification extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={white}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/Logo.png')}
                 />

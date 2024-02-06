@@ -1,42 +1,30 @@
 import React, { Component } from 'react';
 import {
-    Platform,
-    FlatList,
-    StatusBar,
     View,
     StyleSheet,
-    TouchableWithoutFeedback,
     Image,
     Dimensions,
     Text,
-    Alert,
-    ImageBackground,
     ScrollView,
-    RefreshControl,
-    TouchableOpacity,
-    TouchableOpacityBase
+    TouchableOpacity
 } from 'react-native';
 import Header from '../../../component/Header/Header';
-import { Icon, Button } from 'native-base';
-import SkeletonContent from 'react-native-skeleton-content-nonexpo';
-import SearchCard from '../../../component/CustomeComponent/SearchCard'
+import { Icon } from 'native-base';
 import {
     white,
-    secondryTextColor,
     secondryColor,
     primaryColor,
-    cardBackground, sofiaFont
+    sofiaFont
 } from '../../../style/variables';
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import http from '../../../http'
 import moment from 'moment'
-import HTML from "react-native-render-html";
 import FLEC from "../../../component/Common/FLEC"
-import FPI from '../../../component/Indicator/FPI';
 const { width, height } = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 
@@ -74,14 +62,6 @@ const Shimmer = ({ }) => {
                 <ShimmerPlaceHolder style={{ height: 20, width: "40%", borderRadius: 10, marginVertical: 10 }} />
                 <ShimmerPlaceHolder style={{ height: 20, width: "90%", borderRadius: 10, marginVertical: 10, marginBottom: 20 }} />
 
-                {/* <ShimmerPlaceHolder style={{ height: 20, width: "40%", borderRadius: 10, marginVertical: 10 }} />
-                <ShimmerPlaceHolder style={{ height: 20, width: "90%", borderRadius: 10, marginVertical: 10, marginBottom: 20 }} /> */}
-
-                {/* <ShimmerPlaceHolder style={{ height: 20, width: "40%", borderRadius: 10, marginVertical: 10 }} />
-                <ShimmerPlaceHolder style={{ height: 20, width: "90%", borderRadius: 10, marginVertical: 10, marginBottom: 20 }} />
-
-                <ShimmerPlaceHolder style={{ height: 20, width: "40%", borderRadius: 10, marginVertical: 10 }} />
-                <ShimmerPlaceHolder style={{ height: 20, width: "90%", borderRadius: 10, marginVertical: 10, marginBottom: 20 }} /> */}
             </View>
 
         </View>
@@ -147,7 +127,6 @@ class RatingProductDetail extends Component {
     render() {
         const ProductRatings = this.props.route.params.ProductRatings;
         const { ProductDetail, isLike, event, form } = this.state;
-        // const event = this.props.route.params.event;
         console.log("Render Product Detail..", event)
         return (
             <View
@@ -159,7 +138,7 @@ class RatingProductDetail extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={primaryColor}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/blueLogo.png')}
                 />
@@ -167,22 +146,12 @@ class RatingProductDetail extends Component {
                     <Shimmer />
                     :
                     !this.state.loading && isEmpty(this.state.ProductDetail) ? <FLEC text="No data available"
-                    // image={require('../../../assets/logo.png')} 
                     />
                         :
                         <ScrollView
                             showsVerticalScrollIndicator={false}
-                        // refreshControl={
-                        //     <RefreshControl
-                        //         refreshing={this.state.refreshing}
-                        //         onRefresh={() => this.onRefresh()}
-                        //     />
-                        // }
                         >
                             <View style={{ flexGrow: 1, }}>
-                                {/* <TouchableOpacity style={{ width: "100%", alignSelf: "center", backgroundColor: "green" }} onPress={()=>this.AddWishlist()}>
-                            <Icon name={isLike ? "heart" : "hearto"} style={{ color: isLike ? "red" : "gray" }} />
-                        </TouchableOpacity> */}
 
                                 <View style={[styles.view, { flexDirection: "row", marginHorizontal: 5, marginBottom: 20, }]}>
                                     <View style={{ flexDirection: 'column', flex: 0.7 }}>
@@ -196,10 +165,6 @@ class RatingProductDetail extends Component {
                                             <Text style={{ fontFamily: sofiaFont, fontSize: 20, fontWeight: "700", color: primaryColor }}>{ProductDetail.year}</Text>
                                         </View>
 
-                                        {/* <View style={{ marginVertical: 5 }}>
-                                            <Text style={{ color: "gray" }}>Alcohol</Text>
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 20, fontWeight: "700", color: primaryColor }}>{ProductDetail.alcohol}%</Text>
-                                        </View> */}
 
                                         {!isEmpty(event) && event.is_started == 1 && <View style={{ marginVertical: 5 }}>
                                             <Text style={{ color: "gray" }}>Tasted on</Text>
@@ -218,7 +183,8 @@ class RatingProductDetail extends Component {
 
                                 <View style={{ justifyContent: "center", alignItems: "flex-end", paddingHorizontal: 10, height: 50, width: '90%', backgroundColor: secondryColor, borderTopRightRadius: 30, borderBottomRightRadius: 30, marginVertical: 10 }}>
                                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                        <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} />
+                                        {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
+                                        <Image source={Images.BritishPoundIcon} style={{backgroundColor:"white", height:25, width:25}} />
                                         <Text style={[styles.textheading, { color: white }]}> {ProductDetail.price}</Text>
                                     </View>
                                 </View>
@@ -242,33 +208,24 @@ class RatingProductDetail extends Component {
                                                 <Text style={{ color: "gray" }}>Country</Text>
                                                 <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: primaryColor }}>{ProductDetail.country}</Text>
                                             </View>
-                                            {/* <View style={{ marginVertical: 5 }}>
-                                                <Text style={{ color: "gray" }}>Company</Text>
-                                                <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: primaryColor }}>{ProductDetail.company_name}</Text>
-
-                                            </View> */}
                                         </View>
 
                                     </View>
                                 </View>
 
                                 <View style={[styles.view, { marginHorizontal: 5 }]}>
-                                    {/* <HTML style={{ fontSize: 15,color:primaryColor }} html={ProductDetail.description} imagesMaxWidth={Dimensions.get('window').width - 20} /> */}
                                 </View>
-
-
                             </View>
                         </ScrollView>}
                 {isEmpty(ProductDetail) && this.state.loading ?
                     <ShimmerPlaceHolder style={{ height: 50, width: '90%', position: "absolute", bottom: 0, borderTopRightRadius: 30, borderBottomRightRadius: 30, }} />
                     :
                     !this.state.loading && isEmpty(this.state.ProductDetail) ? <FLEC text="No data available"
-                    // image={require('../../../assets/logo.png')} 
                     />
                         : (
                             (
                                 <TouchableOpacity
-                                    onPress={() =>  this.props.navigation.navigate("ChooseProduct", { Testing: form, event: event })}
+                                    onPress={() => this.props.navigation.navigate("ChooseProduct", { Testing: form, event: event })}
                                     style={{
                                         justifyContent: "center", alignItems: "flex-end", paddingHorizontal: 10,
                                         height: 50, width: '90%', backgroundColor: secondryColor, borderTopRightRadius: 30,
@@ -279,14 +236,8 @@ class RatingProductDetail extends Component {
                                         <Text style={[styles.textheading, { color: white }]}> Tasting</Text>
                                     </View>
                                 </TouchableOpacity>)
-
-
-
                         )
-
                 }
-
-               
             </View>
         );
     }

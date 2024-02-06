@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import { connect } from 'react-redux';
 import {connectionChange} from './../store/Actions/common';
@@ -7,15 +5,12 @@ import SplashScreen from 'react-native-splash-screen';
 import { View, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigation from './AuthNavigation';
-import HomeRoute from './Drawer';
-import Bottomtab from './TabNavigation'
 import Chat from '../view/Home/Chat'
 import Messaging from '../view/Home/Messaging'
 import ProEventDetails from '../view/Home/ProEventDetails';
 import Notification from '../view/Home/Notification'
 import { primaryColor } from '../style/variables';
 import AppLoadingMain from '../component/AppInitilization';
-import Home from '../view/Home';
 import DrawerDemo from './Drawer';
 
 
@@ -52,11 +47,6 @@ const MainNavigation = () => {
         component={Messaging}
         options={{headerShown: false}}
       />
-       <Stack.Screen
-        name="Home"
-        component={Bottomtab}
-        options={{ headerShown: false }}
-      /> 
        
        <Stack.Screen
         name="ProEventDetails"

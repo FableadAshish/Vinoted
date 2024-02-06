@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
   FlatList,
@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Header from '../../component/Header/Header';
-import {Icon, Button, Toast} from 'native-base';
+import { Icon, Button, Toast } from 'native-base';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import EventRequest from '../../component/CustomeComponent/EventRequestcard';
 import {
@@ -31,11 +31,11 @@ import {
 } from '../../style/variables';
 import moment from 'moment';
 import http from '../../http';
-import {isEmpty, isNull} from 'lodash';
-import {connect} from 'react-redux';
+import { isEmpty, isNull } from 'lodash';
+import { connect } from 'react-redux';
 import HTML from 'react-native-render-html';
 import BottomIndicator from '../../component/Indicator/BottomIndicator';
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 const SCREEN_HEIGHT = height;
 const SCREEN_WIDTH = width;
 const ASPECT_RATIO = width / height;
@@ -43,8 +43,9 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const GOOGLE_API_KEY = 'AIzaSyBfwJ0clyRHUKSQtfReIcA4CFaIRnfiUwY';
 import LinearGradient from 'react-native-linear-gradient';
-import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import EventRequestWithType from '../../component/CustomeComponent/EventRequestCardWithType';
+import { Images } from '../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 
@@ -52,7 +53,7 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 let data = ['1', '2', '3'];
 
-const Shimmer = ({}) => {
+const Shimmer = ({ }) => {
   return (
     <View
       style={[
@@ -73,7 +74,7 @@ const Shimmer = ({}) => {
           flexDirection: 'row',
           alignSelf: 'center',
         }}>
-        <View style={{flex: 0.3, justifyContent: 'center'}}>
+        <View style={{ flex: 0.3, justifyContent: 'center' }}>
           <View
             style={{
               justifyContent: 'center',
@@ -83,7 +84,7 @@ const Shimmer = ({}) => {
               borderRadius: 50,
             }}>
             <ShimmerPlaceHolder
-              style={{height: 50, width: 50, borderRadius: 25}}
+              style={{ height: 50, width: 50, borderRadius: 25 }}
             />
           </View>
         </View>
@@ -167,7 +168,7 @@ class ProEventDetails extends Component {
 
   componentDidMount() {
     const EventDetail = this.props.route.params.Eventitem;
-    this.setState({form: EventDetail}, () => this.Store());
+    this.setState({ form: EventDetail }, () => this.Store());
     //
   }
 
@@ -197,21 +198,21 @@ class ProEventDetails extends Component {
           o => !isEmpty(o.products) && o.products.type === obj.products.type,
         )
       ) {
-        newArray.push({...obj});
+        newArray.push({ ...obj });
       }
     });
-    this.setState({tempArray: newArray});
+    this.setState({ tempArray: newArray });
     console.log(newArray);
   };
   Store = async () => {
     const EventDetail = this.props.route.params.Eventitem;
-    const {form} = this.state;
-    this.setState({loading: true});
+    const { form } = this.state;
+    this.setState({ loading: true });
     http
       .get(`sommelier/events/${EventDetail.id}`)
       .then(res => {
         console.log('response EventDetail..ppp', res.data.page);
-        this.setState({loading: false, refreshing: false});
+        this.setState({ loading: false, refreshing: false });
         this.setState(
           {
             EventDetail: res.data.page,
@@ -232,13 +233,13 @@ class ProEventDetails extends Component {
       })
       .catch(err => {
         let errors = {};
-        if (err && err.status == 422) {errors = err.errors;}
-        this.setState({errors, loading: false, refreshing: false});
+        if (err && err.status == 422) { errors = err.errors; }
+        this.setState({ errors, loading: false, refreshing: false });
       });
   };
 
   AcceptEvents(status) {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     http
       .post('sommelier/changeeventrequeststatus', {
         event_id: this.state.EventDetail.id,
@@ -246,21 +247,21 @@ class ProEventDetails extends Component {
       })
       .then(res => {
         console.log('response changeeventrequeststatus..', res);
-        this.setState({loading: false, refreshing: false}, () =>
+        this.setState({ loading: false, refreshing: false }, () =>
           Toast.show({
             text: `${res.message}`,
             duration: 2000,
           }),
         );
         setTimeout(
-          () => this.props.navigation.replace('App', {screen: 'Home'}),
+          () => this.props.navigation.replace('App', { screen: 'Home' }),
           2000,
         );
-        this.setState({EventDetail: {}});
+        this.setState({ EventDetail: {} });
       })
       .catch(err => {
         console.log('ERROR on changeeventrequeststatus', err);
-        this.setState({loading: false, refreshing: false});
+        this.setState({ loading: false, refreshing: false });
         if (err.status.data.code == 422) {
           Toast.show({
             text: `${err.status.data.message}`,
@@ -277,7 +278,7 @@ class ProEventDetails extends Component {
       isEmpty(this.state.EventDetail) && (
         <FLEC
           text="No data available"
-          // image={require('../../../assets/logo.png')}
+        // image={require('../../../assets/logo.png')}
         />
       )
     );
@@ -290,7 +291,7 @@ class ProEventDetails extends Component {
   }
 
   onRefresh() {
-    this.setState({refreshing: true, page: 0, EventDetail: {}}, () =>
+    this.setState({ refreshing: true, page: 0, EventDetail: {} }, () =>
       this.Store(),
     );
   }
@@ -366,20 +367,20 @@ class ProEventDetails extends Component {
   };
 
   render() {
-    const {EventDetail} = this.state;
+    const { EventDetail } = this.state;
     const notification = this.props.route.params.notification;
     console.log('tenmpArray', this.state.tempArray);
     if (this.state.loading && isEmpty(EventDetail)) {
       return (
-        <View style={{backgroundColor: white}}>
+        <View style={{ backgroundColor: white }}>
           <Header
             navigation={this.props.navigation}
             iconColor={primaryColor}
-            iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
+            iconProps={Images.BackNavigationIcon}
             onPress={() => this.props.navigation.goBack()}
             image={require('../../assets/blueLogo.png')}
           />
-          <View style={{width: '90%', alignSelf: 'center'}}>
+          <View style={{ width: '90%', alignSelf: 'center' }}>
             <ShimmerPlaceHolder
               style={{
                 height: 150,
@@ -462,13 +463,13 @@ class ProEventDetails extends Component {
         <Header
           navigation={this.props.navigation}
           iconColor={primaryColor}
-          iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
+          iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
           image={require('../../assets/blueLogo.png')}
         />
         {isEmpty(EventDetail) ? (
-          <View style={{backgroundColor: white}}>
-            <View style={{width: '90%', alignSelf: 'center'}}>
+          <View style={{ backgroundColor: white }}>
+            <View style={{ width: '90%', alignSelf: 'center' }}>
               <ShimmerPlaceHolder
                 style={{
                   height: 150,
@@ -547,13 +548,13 @@ class ProEventDetails extends Component {
                 onRefresh={() => this.onRefresh()}
               />
             }>
-            <View style={{marginHorizontal: 5}}>
+            <View style={{ marginHorizontal: 5 }}>
               {!isEmpty(EventDetail) ? (
-                <View style={[styles.view, {backgroundColor: white}]}>
+                <View style={[styles.view, { backgroundColor: white }]}>
                   <Image
-                    style={{height: 150, width: '100%', borderRadius: 30}}
-                    source={{uri: EventDetail.Imagesrc}}
-                    // source={{ uri: "https://vistapointe.net/images/bar-3.jpg" }}
+                    style={{ height: 150, width: '100%', borderRadius: 30 }}
+                    source={{ uri: EventDetail.Imagesrc }}
+                  // source={{ uri: "https://vistapointe.net/images/bar-3.jpg" }}
                   />
                 </View>
               ) : (
@@ -605,15 +606,18 @@ class ProEventDetails extends Component {
                 <View style={styles.view}>
                   <Text style={[styles.textheading]}>{EventDetail.name}</Text>
                   <HTML
-                    style={{
-                      fontFamily: sofiaFont,
-                      fontSize: 15,
-                      color: primaryColor,
-                    }}
-                    html={EventDetail.description}
-                    imagesMaxWidth={Dimensions.get('window').width - 20}
+                    style={[styles.textheading]}
+                    source={{ html: EventDetail.description }}
+                    contentWidth={Dimensions.get('window').width - 20}
+                    baseFontStyle={{ fontFamily: sofiaFont, fontSize: 15, color: primaryColor }}
                   />
+
+                  {/* If you also want to display the plain text version */}
+                  {/* <View>
+                    <Text style={[styles.textheading]}>{EventDetail.description}</Text>
+                  </View> */}
                 </View>
+
               ) : (
                 <View>
                   <ShimmerPlaceHolder
@@ -658,8 +662,8 @@ class ProEventDetails extends Component {
                         flex: 0.5,
                         paddingHorizontal: 10,
                       }}>
-                      <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Date</Text>
+                      <View style={{ marginVertical: 5 }}>
+                        <Text style={{ color: 'gray' }}>Date</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,
@@ -669,8 +673,8 @@ class ProEventDetails extends Component {
                           {moment(EventDetail.date).format('DD/MM/YYYY')}
                         </Text>
                       </View>
-                      <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Status</Text>
+                      <View style={{ marginVertical: 5 }}>
+                        <Text style={{ color: 'gray' }}>Status</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,
@@ -688,8 +692,8 @@ class ProEventDetails extends Component {
                         flex: 0.5,
                         paddingHorizontal: 10,
                       }}>
-                      <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Time</Text>
+                      <View style={{ marginVertical: 5 }}>
+                        <Text style={{ color: 'gray' }}>Time</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,
@@ -699,8 +703,8 @@ class ProEventDetails extends Component {
                           {moment(EventDetail.date).format('HH:mm')}
                         </Text>
                       </View>
-                      <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Location</Text>
+                      <View style={{ marginVertical: 5 }}>
+                        <Text style={{ color: 'gray' }}>Location</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,
@@ -723,7 +727,7 @@ class ProEventDetails extends Component {
               {(!isEmpty(EventDetail) &&
                 !isEmpty(EventDetail.event_my_requests) &&
                 EventDetail.event_my_requests.status == 'Accepted') ||
-              EventDetail.event_my_requests.status == 'Rejected' ? (
+                EventDetail.event_my_requests.status == 'Rejected' ? (
                 <View
                   style={[
                     styles.view,
@@ -738,7 +742,7 @@ class ProEventDetails extends Component {
                     {!isEmpty(EventDetail.eventproducts) ? 'Products' : ''}
                   </Text>
 
-                  <View style={{flexDirection: 'row', marginVertical: 0}}>
+                  <View style={{ flexDirection: 'row', marginVertical: 0 }}>
                     <FlatList
                       showsVerticalScrollIndicator={false}
                       data={EventDetail.eventproducts}
@@ -748,28 +752,28 @@ class ProEventDetails extends Component {
                       showsVerticalScrollIndicator={false}
                       ListEmptyComponent={() => this._renderEmptyProComponent()}
                       // ListFooterComponent={() => this._renderFooterProComponent()}
-                      contentContainerStyle={{flexGrow: 1}}
+                      contentContainerStyle={{ flexGrow: 1 }}
                       // refreshControl={
                       //     <RefreshControl
                       //         refreshing={this.state.refreshing}
                       //         onRefresh={this.onRefresh}
                       //     />
                       // }
-                      renderItem={({item}) => (
+                      renderItem={({ item }) => (
                         <View>
                           {item.products && (
                             <EventRequestWithType
                               onPress={() =>
                                 this.props.navigation.navigate(
                                   'ProductDetail',
-                                  {ProductDetail: item, event: EventDetail},
+                                  { ProductDetail: item, event: EventDetail },
                                 )
                               }
                               onPressMore={() =>
                                 EventDetail.is_started == 1 &&
                                 this.props.navigation.navigate(
                                   'ChooseProduct',
-                                  {Testing: item, event: EventDetail},
+                                  { Testing: item, event: EventDetail },
                                 )
                               }
                               item={item}
@@ -782,7 +786,7 @@ class ProEventDetails extends Component {
                               type={item.products.type}
                               color={item.products ? item.products.type : null}
                               subtitle={
-                                item.products && ` ${item.products.price}`
+                                item.products && `${item.products.price}`
                               }
                               title={item.products && item.products.title}
                             />
@@ -815,14 +819,14 @@ class ProEventDetails extends Component {
                           this._renderEmptyProComponent()
                         }
                         // ListFooterComponent={() => this._renderFooterProComponent()}
-                        contentContainerStyle={{flexGrow: 1}}
+                        contentContainerStyle={{ flexGrow: 1 }}
                         // refreshControl={
                         //     <RefreshControl
                         //         refreshing={this.state.refreshing}
                         //         onRefresh={this.onRefresh}
                         //     />
                         // }
-                        renderItem={({item}) => (
+                        renderItem={({ item }) => (
                           <View
                             style={{
                               justifyContent: 'center',
@@ -847,7 +851,7 @@ class ProEventDetails extends Component {
                                     ),
                                     borderBottomWidth: 0,
                                     shadowColor: 'black',
-                                    shadowOffset: {width: 0, height: 2},
+                                    shadowOffset: { width: 0, height: 2 },
                                     shadowOpacity: 0.9,
                                     shadowRadius: 13,
                                     elevation: 3,
@@ -861,7 +865,7 @@ class ProEventDetails extends Component {
                                   }}
                                 />
                                 <Text
-                                  style={{color: primaryColor, fontSize: 12}}>
+                                  style={{ color: primaryColor, fontSize: 12 }}>
                                   {' '}
                                   {this.renderText(item.products.type)}
                                 </Text>
@@ -877,8 +881,8 @@ class ProEventDetails extends Component {
                 </View>
               ) : (
                 // {/* {!isEmpty(EventDetail) && EventDetail.event_my_requests.status == "Pending" && */}
-                <View style={{flexDirection: 'row', marginVertical: 10}}>
-                  <View style={{flex: 0.5, alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+                  <View style={{ flex: 0.5, alignItems: 'center' }}>
                     <TouchableOpacity
                       onPress={() => this.AcceptEvents('Rejected')}
                       activeOpacity={1}
@@ -903,7 +907,7 @@ class ProEventDetails extends Component {
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <View style={{flex: 0.5, alignItems: 'center'}}>
+                  <View style={{ flex: 0.5, alignItems: 'center' }}>
                     <TouchableOpacity
                       onPress={() => this.AcceptEvents('Accepted')}
                       activeOpacity={1}
@@ -947,7 +951,7 @@ class ProEventDetails extends Component {
                       {!isEmpty(EventDetail.eventproducts) ? 'Products' : ''}
                     </Text>
 
-                    <View style={{flexDirection: 'row', marginVertical: 0}}>
+                    <View style={{ flexDirection: 'row', marginVertical: 0 }}>
                       <FlatList
                         showsVerticalScrollIndicator={false}
                         data={EventDetail.eventproducts}
@@ -959,28 +963,28 @@ class ProEventDetails extends Component {
                           this._renderEmptyProComponent()
                         }
                         // ListFooterComponent={() => this._renderFooterProComponent()}
-                        contentContainerStyle={{flexGrow: 1}}
+                        contentContainerStyle={{ flexGrow: 1 }}
                         // refreshControl={
                         //     <RefreshControl
                         //         refreshing={this.state.refreshing}
                         //         onRefresh={this.onRefresh}
                         //     />
                         // }
-                        renderItem={({item}) => (
+                        renderItem={({ item }) => (
                           <View>
                             {item.products && (
                               <EventRequestWithType
                                 onPress={() =>
                                   this.props.navigation.navigate(
                                     'ProductDetail',
-                                    {ProductDetail: item, event: EventDetail},
+                                    { ProductDetail: item, event: EventDetail },
                                   )
                                 }
                                 onPressMore={() =>
                                   EventDetail.is_started == 1 &&
                                   this.props.navigation.navigate(
                                     'ChooseProduct',
-                                    {Testing: item, event: EventDetail},
+                                    { Testing: item, event: EventDetail },
                                   )
                                 }
                                 item={item}
@@ -1001,6 +1005,9 @@ class ProEventDetails extends Component {
                               />
                             )}
                           </View>
+                          // <View>
+                          //   <Text>Hello</Text>
+                          // </View>
                         )}
                       />
 
@@ -1028,14 +1035,14 @@ class ProEventDetails extends Component {
                             this._renderEmptyProComponent()
                           }
                           // ListFooterComponent={() => this._renderFooterProComponent()}
-                          contentContainerStyle={{flexGrow: 1}}
+                          contentContainerStyle={{ flexGrow: 1 }}
                           // refreshControl={
                           //     <RefreshControl
                           //         refreshing={this.state.refreshing}
                           //         onRefresh={this.onRefresh}
                           //     />
                           // }
-                          renderItem={({item}) => (
+                          renderItem={({ item }) => (
                             <View
                               style={{
                                 justifyContent: 'center',
@@ -1060,7 +1067,7 @@ class ProEventDetails extends Component {
                                       ),
                                       borderBottomWidth: 0,
                                       shadowColor: 'black',
-                                      shadowOffset: {width: 0, height: 2},
+                                      shadowOffset: { width: 0, height: 2 },
                                       shadowOpacity: 0.9,
                                       shadowRadius: 13,
                                       elevation: 3,
@@ -1074,11 +1081,14 @@ class ProEventDetails extends Component {
                                     }}
                                   />
                                   <Text
-                                    style={{color: primaryColor, fontSize: 12}}>
+                                    style={{ color: primaryColor, fontSize: 12 }}>
                                     {' '}
                                     {this.renderText(item.products.type)}
                                   </Text>
                                 </View>
+                                // <View>
+                                //   <Text>Hello</Text>
+                                // </View>
                               )}
                             </View>
                           )}
@@ -1088,6 +1098,9 @@ class ProEventDetails extends Component {
                       </View>
                     )}
                   </View>
+                  //   <View>
+                  //   <Text>Hello</Text>
+                  // </View>
                 )}
             </View>
           </ScrollView>

@@ -13,18 +13,17 @@ export async function _register(user) {
     console.log('This is Form Value', user);
 
     let userData = await http.post('sommelier/signup', user);
-    console.log('User data:', userData);
+    console.log('User data:', userData.data); // parse the data property of the response
 
     // Assuming _setLocalStorage is also an asynchronous function
-    await _setLocalStorage(userData);
+    await _setLocalStorage(userData.data); // pass the data property of the response to _setLocalStorage
 
-    return userData;
+    return userData.data; // return the data property of the response
   } catch (err) {
     console.log('Error in register in Api', err);
     throw err; // Re-throw the error to be caught in the calling function
   }
 }
-
 // }
 
 export async function _login(user) {
@@ -103,16 +102,9 @@ export function _setLocalStorage(data) {
         console.log('_setLocalData from async', err);
         reject(err);
       });
-    // AsyncStorage.setItem(localStorageName, JSON.stringify(data))
-    //     .then(res => {
-    //         console.log("SetResponce", res)
-    //         resolve(true)
-    //     }).catch(err => {
-    //         console.log("SetResponceError", err)
-    //         reject(err)
-    //     });
   });
 }
+
 
 export function _getAcessToken() {
   return new Promise((resolve, reject) => {

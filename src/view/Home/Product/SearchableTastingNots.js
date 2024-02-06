@@ -48,6 +48,7 @@ import moment from 'moment';
 import {color} from 'react-native-reanimated';
 const {width, height} = Dimensions.get('window');
 import Modal from 'react-native-modal';
+import { Images } from '../../../../theme/Images';
 
 let data = ['1', '2', '3'];
 
@@ -396,7 +397,7 @@ class SearchableTastingNots extends Component {
         <Header
           navigation={this.props.navigation}
           iconColor={white}
-          iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
+          iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.navigate('Home')}
           image={require('../../../assets/Logo.png')}
         />
@@ -434,10 +435,11 @@ class SearchableTastingNots extends Component {
             />
             <TouchableWithoutFeedback>
               <View style={styles.iconContainer}>
-                <Icon
+                {/* <Icon
                   name="search"
                   type="FontAwesome"
-                  style={styles.icon}></Icon>
+                  style={styles.icon}></Icon> */}
+                   <Image source={Images.SearchIcon} style={{height:22, width:22}}/>
               </View>
             </TouchableWithoutFeedback>
           </TouchableOpacity>

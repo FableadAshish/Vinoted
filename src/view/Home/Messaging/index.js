@@ -38,6 +38,7 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 import moment from 'moment'
 import * as RootNavigation from '../../../navigation/RootNavigation';
 import { compose } from 'redux';
+import { Images } from '../../../../theme/Images';
 
 let data = [
     '1',
@@ -247,7 +248,7 @@ class Index extends Component {
                     <Header
                         navigation={this.props.navigation}
                         iconColor={primaryColor}
-                        iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                        iconProps={Images.BackNavigationIcon}
                         onPress={() => //this.props.navigation.replace("App",{screen: "Home"})
                         this.props.navigation.goBack()
                     }
@@ -274,7 +275,7 @@ class Index extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={primaryColor}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => //this.props.navigation.replace("App", {screen:"Home"})
                     this.props.navigation.goBack()
                 }
@@ -293,7 +294,9 @@ class Index extends Component {
                         placeholderTextColor={white}
                     />
                     <TouchableWithoutFeedback >
-                        <View style={styles.iconContainer}><Icon onPress={() => this.SearchFilterFunction(this.state.text)} name="search" type="FontAwesome" style={styles.icon} ></Icon></View>
+                        <View style={styles.iconContainer}>
+                            <Image source={Images.SearchIcon} tintColor={"white"} style={{height:25, width:25}}/>
+                        </View>
                     </TouchableWithoutFeedback>
                 </View>
 
@@ -485,7 +488,7 @@ const styles = StyleSheet.create({
     searchcontainer: {
         flexDirection: "row",
         backgroundColor: primaryColor,
-        width: '90%',
+        width: '95%',
         height: 50,
         justifyContent: "center",
         alignItems: "center",

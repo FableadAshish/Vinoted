@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Image,
   BackHandler,
+  TouchableOpacity,
 } from 'react-native';
 import {Icon} from 'native-base';
 import {isEmpty, set, unset, isNull} from 'lodash';
@@ -40,6 +41,7 @@ import Header from '../../../component/Header/Header';
 import Echo from 'laravel-echo';
 import socketio from 'socket.io-client';
 import Pusher from 'pusher-js/react-native';
+import { Images } from '../../../../theme/Images';
 
 const {height, width} = Dimensions.get('window');
 
@@ -260,7 +262,7 @@ class Chat extends React.Component {
     return (
       <Send {...props}>
         {/* <View style={{ height:"100%",backgroundColor: primaryColor }}> */}
-        <Icon
+        {/* <Icon
           //onPress={() => this.handleSend(this.state.normalText)}
           name="send"
           type="Ionicons"
@@ -272,7 +274,9 @@ class Chat extends React.Component {
             marginTop: -2,
             marginBottom: -0.5,
           }}
-        />
+        /> */}
+        <Image source={Images.SendMessage} style={{backgroundColor:primaryColor, padding: 11, marginTop: -2,marginBottom: -0.5, height:55}} tintColor={"white"}/>
+        <Image/>
         {/* </View> */}
       </Send>
     );
@@ -440,7 +444,7 @@ class Chat extends React.Component {
           style={[styles.header, {paddingVertical: 5, backgroundColor: white}]}>
           <View style={styles.leftContainer}>
             <View style={{flex: 0.15}}>
-              <Icon
+              {/* <Icon
                 name="keyboard-arrow-left"
                 type="MaterialIcons"
                 onPress={() => {
@@ -449,7 +453,10 @@ class Chat extends React.Component {
                   // this.props.navigation.push("Home",{screen:"Messaging"});
                 }}
                 style={{color: primaryColor, padding: 10}}
-              />
+              /> */}
+              <TouchableOpacity style={{flex: 0.15}} onPress={()=>{this.props.navigation.goBack()}}>
+                <Image source={Images.BackNavigationIcon} style={{height:21, width:21, color: primaryColor, marginTop:-5}}/>
+              </TouchableOpacity>
             </View>
             <View
               style={{

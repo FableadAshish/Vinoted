@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Text, Icon} from 'native-base';
+import {Icon} from 'native-base';
+import { Text } from 'react-native';
 import Styles from '../../style/comman/Header';
 import PropTypes from 'prop-types';
 import {textColor, white, primaryColor} from '../../style/variables';

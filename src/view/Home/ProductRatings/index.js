@@ -37,6 +37,7 @@ import moment from 'moment'
 const { width, height } = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 
@@ -247,7 +248,7 @@ class Index extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={primaryColor}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/blueLogo.png')}
                 />

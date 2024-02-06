@@ -18,6 +18,7 @@ import { primaryColor, secondryTextColor, TexColor, secondryColor, white, sofiaF
 import { Icon, Toast } from 'native-base';
 import http from '../../http'
 import AsyncStorage from '@react-native-community/async-storage';
+import { Images } from '../../../theme/Images';
 const { height, width } = Dimensions.get("window")
 
 
@@ -106,10 +107,19 @@ export default class ChangePassword extends React.Component {
     return (
 
       <View style={styles.container}>
-        <View style={[styles.header, { paddingVertical: 5, backgroundColor: primaryColor }]}>
-          <Icon name="keyboard-arrow-left" type="MaterialIcons" onPress={() => this.props.navigation.goBack()} style={{ color: white, padding: 10 }}></Icon>
+        <TouchableOpacity style={[styles.header, { paddingVertical: 5, backgroundColor: primaryColor }]} onPress={() => this.props.navigation.goBack()}>
+          {/* <Icon
+            name="keyboard-arrow-left" type="MaterialIcons"
+            onPress={() => this.props.navigation.goBack()}
+            style={{ color: white, padding: 10 }}>
+          </Icon> */}
+          <Image 
+          source={Images.BackNavigationIcon} 
+          style={{height:20, width:20, padding: 10}}
+          tintColor={"white"}
+          />
 
-        </View>
+        </TouchableOpacity>
 
 
         <ImageBackground
@@ -134,7 +144,7 @@ export default class ChangePassword extends React.Component {
               <View style={{ marginVertical: 20, alignItems: "flex-start", width: "100%" }}>
                 <Text style={{ fontFamily: sofiaFont, fontSize: 25, color: secondryTextColor, }}>
                   Change Password
-      </Text>
+                </Text>
               </View>
 
               <TextInput

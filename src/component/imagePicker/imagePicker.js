@@ -24,7 +24,7 @@ const ImagePickerCom = props => {
     }).then(res => {
       setimage(res.path);
       console.log('res gallery'.res);
-    };
+    });
 
   };
 

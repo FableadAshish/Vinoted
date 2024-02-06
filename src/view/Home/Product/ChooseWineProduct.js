@@ -1,31 +1,21 @@
 import React, { Component } from 'react';
 import {
-    Platform,
-    FlatList,
-    StatusBar,
     View,
     StyleSheet,
     TouchableWithoutFeedback,
     Image,
     Dimensions,
     Text,
-    Alert,
-    ImageBackground,
     ScrollView,
-    RefreshControl,
-    TouchableOpacity, ActivityIndicator, PickerIOSComponent
-} from 'react-native';
+    TouchableOpacity, ActivityIndicator} from 'react-native';
 import Header from '../../../component/Header/Header';
-import { Icon, Toast } from 'native-base';
+import { Toast } from 'native-base';
 import Button from '../../../component/Common/Button';
-import SkeletonContent from 'react-native-skeleton-content-nonexpo';
-import SearchCard from '../../../component/CustomeComponent/SearchCard'
 import {
     white,
-    secondryTextColor,
     secondryColor,
     primaryColor,
-    cardBackground, error, black, sofiaFont, lineColor
+    error, sofiaFont, lineColor
 } from '../../../style/variables';
 import { isEmpty, unset, set, isNull } from 'lodash';
 import TextInput from '../../../component/Common/EditTextField';
@@ -41,504 +31,15 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 // import MultiSelect from 'react-native-multiple-select';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
+import { items } from '../../../assets/Data/data';
 
 let data = [
     '1',
     '2',
     '3'
 ]
-
-
-
-// const items = [{
-//     id: '1',
-//     name: 'Citrusy'
-// }, {
-//     id: '2',
-//     name: 'Fruity'
-// }, {
-//     id: '3',
-//     name: 'Oaky'
-// },
-// ];
-
-const items = [
-    // this is the parent or 'item'
-    {
-        name: 'FRUITY',
-        id: 0,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'FRUITY',
-                id: 1,
-            },
-            {
-                name: '(Citrus)',
-                id: 2,
-            },
-            {
-                name: 'grapefruit',
-                id: 3,
-            },
-            {
-                name: 'lemon',
-                id: 4,
-            },
-            {
-                name: 'lime',
-                id: 5,
-            },
-            {
-                name: '(Green fruit)',
-                id: 6,
-            },
-            {
-                name: 'apple',
-                id: 7,
-            },
-            {
-                name: 'pear',
-                id: 8,
-            },
-            {
-                name: 'gooseberry',
-                id: 9,
-            },
-            {
-                name: '(Stone fruit) ',
-                id: 10,
-            },
-            {
-                name: 'apricot',
-                id: 11,
-            },
-            {
-                name: 'peach',
-                id: 12,
-            },
-            {
-                name: '(Red fruit)',
-                id: 13,
-            },
-            {
-                name: 'raspberry',
-                id: 14,
-            },
-            {
-                name: 'strawberry',
-                id: 15,
-            },
-            {
-                name: 'red',
-                id: 16,
-            },
-
-            {
-                name: 'cherry',
-                id: 17,
-            },
-            {
-                name: 'redcurrant',
-                id: 18,
-            },
-            {
-                name: 'plum',
-                id: 19,
-            },
-            {
-                name: '(Black fruit)',
-                id: 20,
-            },
-            {
-                name: 'blackberry',
-                id: 21,
-            },
-            {
-                name: 'black',
-                id: 22,
-            },
-            {
-                name: 'cherry',
-                id: 23,
-            },
-            {
-                name: 'blackcurrant',
-                id: 24,
-            },
-            {
-                name: '(Tropical fruit)',
-                id: 25,
-            },
-            {
-                name: 'banana',
-                id: 26,
-            },
-            {
-                name: 'kiwi',
-                id: 27,
-            },
-            {
-                name: 'lychee',
-                id: 28,
-            },
-            {
-                name: 'mango',
-                id: 29,
-            },
-            {
-                name: 'melon',
-                id: 30,
-            },
-            {
-                name: 'passion fruit',
-                id: 31,
-            },
-            {
-                name: 'pineapple',
-                id: 32,
-            },
-            {
-                name: '(Dried fruit)',
-                id: 33,
-            },
-            {
-                name: 'fig',
-                id: 34,
-            },
-            {
-                name: 'prune',
-                id: 35,
-            },
-            {
-                name: 'raisin',
-                id: 36,
-            },
-
-        ],
-    },
-
-    {
-        name: 'FLORAL',
-        id: 1,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'FLORAL',
-                id: 1,
-            },
-            {
-                name: 'Rose',
-                id: 2,
-            },
-            {
-                name: 'violet',
-                id: 3,
-            },
-            {
-                name: 'elderflower',
-                id: 4,
-            },
-            {
-                name: 'orange',
-                id: 5,
-            },
-            {
-                name: 'blossom',
-                id: 6,
-            },
-            {
-                name: 'perfume',
-                id: 7,
-            },
-
-
-
-        ],
-    },
-
-    {
-        name: 'SPICY',
-        id: 2,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'SPICY',
-                id: 1,
-            },
-            {
-                name: 'Cinnamon',
-                id: 2,
-            },
-            {
-                name: 'cloves',
-                id: 3,
-            },
-            {
-                name: 'ginger',
-                id: 4,
-            },
-            {
-                name: 'nutmeg',
-                id: 5,
-            },
-            {
-                name: 'vanilla',
-                id: 6,
-            },
-            {
-                name: 'pepper',
-                id: 7,
-            },
-            {
-                name: 'liquorice',
-                id: 8,
-            },
-            {
-                name: 'juniper',
-                id: 9,
-            },
-
-        ],
-    },
-
-    {
-        name: 'VEGETAL',
-        id: 3,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'VEGETAL',
-                id: 1,
-            },
-            {
-                name: 'Asparagus',
-                id: 2,
-            },
-            {
-                name: 'bell',
-                id: 3,
-            },
-            {
-                name: 'pepper',
-                id: 4,
-            },
-            {
-                name: 'mushroom',
-                id: 5,
-            },
-            {
-                name: 'olive',
-                id: 6,
-            },
-        ],
-    },
-
-    {
-        name: 'HERBACEOUS',
-        id: 4,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'HERBACEOUS',
-                id: 1,
-            },
-            {
-                name: 'Eucalyptus',
-                id: 2,
-            },
-            {
-                name: 'grass',
-                id: 3,
-            },
-            {
-                name: 'mint',
-                id: 4,
-            },
-            {
-                name: 'leaves',
-                id: 5,
-            },
-
-
-        ],
-    },
-
-    {
-        name: 'OAK - NUTTY',
-        id: 5,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'OAK - NUTTY',
-                id: 1,
-            },
-            {
-                name: 'Cedar',
-                id: 2,
-            },
-            {
-                name: 'smoky',
-                id: 3,
-            },
-            {
-                name: 'tobacco',
-                id: 4,
-            },
-            {
-                name: 'Almond',
-                id: 5,
-            },
-            {
-                name: 'coconut',
-                id: 6,
-            },
-            {
-                name: 'hazelnut',
-                id: 7,
-            },
-            {
-                name: 'walnut',
-                id: 8,
-            },
-
-
-        ],
-    },
-
-    {
-        name: 'COMPLEX',
-        id: 6,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'COMPLEX',
-                id: 1,
-            },
-            {
-                name: 'mineral',
-                id: 2,
-            },
-            {
-                name: 'aromatic',
-                id: 3,
-            },
-            {
-                name: 'chocolate',
-                id: 4,
-            },
-            {
-                name: 'coffee',
-                id: 5,
-            },
-            {
-                name: 'leather',
-                id: 6,
-            },
-            {
-                name: 'meaty',
-                id: 7,
-            },
-            {
-                name: 'earthy',
-                id: 8,
-            },
-            {
-                name: 'petrol',
-                id: 9,
-            },
-            {
-                name: 'stony/steely',
-                id: 10,
-            },
-
-
-        ],
-    },
-
-    {
-        name: 'RIPE',
-        id: 7,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'oxidative',
-                id: 1,
-            },
-            {
-                name: 'oxidative',
-                id: 2,
-            },
-            {
-                name: 'caramel',
-                id: 3,
-            },
-            {
-                name: 'candy',
-                id: 4,
-            },
-            {
-                name: 'honey',
-                id: 5,
-            },
-            {
-                name: 'jam',
-                id: 6,
-            },
-            {
-                name: 'cooked',
-                id: 7,
-            },
-            {
-                name: 'baked',
-                id: 8,
-            },
-            {
-                name: 'stewed',
-                id: 9,
-            },
-
-        ],
-    },
-
-    {
-        name: 'AUTOLYTIC',
-        id: 8,
-        // these are the children or 'sub items'
-        children: [
-            {
-                name: 'Yeast',
-                id: 1,
-            },
-            {
-                name: 'Yeast',
-                id: 2,
-            },
-            {
-                name: 'biscuit',
-                id: 3,
-            },
-            {
-                name: 'bread',
-                id: 4,
-            },
-            {
-                name: 'toast',
-                id: 5,
-            },
-
-
-        ],
-    },
-
-
-
-
-];
-
-
-
 
 const Shimmer = ({ }) => {
     return (
@@ -580,32 +81,6 @@ const Shimmer = ({ }) => {
     )
 }
 
-
-
-const PickerComponent = ({ Title, selectedValue, onValueChange, label, value }) => {
-    return (
-        <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-            <Text style={{ color: "gray" }}>{Title}
-                {/* {<Text>({!isNull(this.state.form.nose) && this.state.form.nose !== undefined ? parseInt(this.state.form.nose) : 0})</Text>} */}
-            </Text>
-            <Picker
-                selectedValue={selectedValue}
-                onValueChange={onValueChange}>
-                {this.props.PickerItem.map((label, value) => {
-                    return (<Picker.Item label={label} value={value} key={index} />)
-                })}
-            </Picker>
-            {!isEmpty(errors) && errors["nose"] && !form.nose && (
-                <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["nose"]}</Text>
-            )}
-        </View>
-    )
-}
-
-
-
-
-
 class ChooseProduct extends Component {
     constructor(props) {
         super(props);
@@ -629,23 +104,19 @@ class ChooseProduct extends Component {
     }
 
     componentDidMount() {
-        if(this.props.route.params) {
-            this.setState({isFromAdditional : this.props.route.params.isFromAdditional})
+        if (this.props.route.params) {
+            this.setState({ isFromAdditional: this.props.route.params.isFromAdditional })
             const Testing = this.props.route.params.Testing;
             const eventTesting = this.props.route.params.event;
-              console.log("Props*****", this.props.route.params )
-                if (eventTesting) {
+            console.log("Props*****", this.props.route.params)
+            if (eventTesting) {
                 this.setState({ eventTesting })
-                }
+            }
 
             console.log("Testinge", Testing)
             this.setState({ Testing, }, () => this.Store())
         }
-        
     }
-
-
-
 
     Store() {
         const { Testing } = this.state;
@@ -694,9 +165,8 @@ class ChooseProduct extends Component {
         if (isEmpty(form.finish) && isNaN(form.finish)) set(errors, 'finish', ['Finish is required']);
         if (isEmpty(form.listing_candidate)) set(errors, 'listing_candidate', ['Listing Candidate is required']);
         if (isEmpty(form.overall) && isNaN(form.overall)) set(errors, 'overall', ['Score is required']);
-         return errors;
+        return errors;
     };
-
 
     onSave = async () => {
         const { form, Testing, selectedItems } = this.state;
@@ -712,9 +182,6 @@ class ChooseProduct extends Component {
         form.alcohol = '25'
         const stringdata = this.state.selectedItems.toString()
         console.log("stringdaat", stringdata)
-        
-
-
         console.log("this.Forrrrmm", form)
         this.setState({ loading: true, });
         http.post(`sommelier/rating`, form).then(res => {
@@ -765,7 +232,6 @@ class ChooseProduct extends Component {
         // }
     }
 
-
     color = () => {
         return (
             <View style={{ flex: 1, backgroundColor: "red" }}>
@@ -783,27 +249,13 @@ class ChooseProduct extends Component {
         this.setState({ form });
     }
 
-
-
     onSelectedItemsChange = selectedItems => {
         this.setState({ selectedItems });
     };
 
-
     render() {
         const { errors, form, Testing, is_favourite, eventTesting, selectedItems } = this.state
         console.log("selectedItems..", eventTesting)
-
-        // const a = !isNull(form.color) && form.color != undefined ? form.color : 0
-        // const b = !isNull(form.taste) && form.taste != undefined ? form.taste : 0
-        // const c = !isNull(form.finish) && form.finish != undefined ? form.finish : 0
-        // const d = !isNull(form.nose) && form.nose != undefined ? form.nose : 0
-        // const overall = parseInt(a) + parseInt(b) + parseInt(c) + parseInt(d)
-        // console.log('pdataTesting', overall);
-        // console.log('pdataTesting', a);
-        // console.log('pdataTesting', b);
-        // console.log('pdataTesting', c);
-        // console.log('pdataTesting', d);
         return (
             <View
                 style={{
@@ -814,27 +266,18 @@ class ChooseProduct extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={primaryColor}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/blueLogo.png')}
                 />
                 {isEmpty(Testing) || isEmpty(form) && this.state.loading ?
-
                     <Shimmer />
-
-
                     :
-
                     <ScrollView
-                        showsVerticalScrollIndicator={false}
-
-                    >
+                        showsVerticalScrollIndicator={false}>
                         <View style={{ marginHorizontal: 5 }}>
-
                             <View style={[styles.view, { flexDirection: "row", marginHorizontal: 5 }]}>
-
                                 <View style={{ flexDirection: 'column', flex: 0.7 }}>
-
                                     <View style={{ marginVertical: 5, }}>
                                         <Text style={[styles.textheading, { fontWeight: "700" }]}>{Testing.product ? Testing.product.title : Testing.products.title}</Text>
                                         {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
@@ -851,16 +294,12 @@ class ChooseProduct extends Component {
                                     </View>
 
                                     {/* {!isEmpty(eventTesting) && eventTesting.is_started == 1 &&  */}
-                                    
+
                                     {!isEmpty(form.event) && form.event.is_started == 1 && this.state.isFromAdditional &&
                                         <View style={{ marginVertical: 5 }}>
                                             <Text style={{ color: "gray", fontFamily: sofiaFont }}>Tasted on</Text>
                                             <Text style={{ fontSize: 20, fontWeight: "700", fontFamily: sofiaFont, color: primaryColor }}>{moment(form.created_at).format("DD MMM,YYYY")}</Text>
                                         </View>}
-                                    {/* <View style={{ marginVertical: 5 }}>
-                                    <Text style={{ color: "gray" }}>Bottles in collections</Text>
-                                    <Text style={{ fontSize: 20, fontWeight: "700", color: primaryColor }}>0</Text>
-                                </View> */}
                                 </View>
 
                                 <View style={{ flexDirection: 'column', flex: 0.3, justifyContent: "center" }}>
@@ -869,114 +308,6 @@ class ChooseProduct extends Component {
                                     />
                                 </View>
                             </View>
-
-
-                            {/* <View style={[styles.view, { marginHorizontal: 5 }]}>
-                                <View >
-                                    <Text style={[styles.textheading, { fontSize: 18 }]}>Ratings</Text>
-                                </View>
-
-                                <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-                                    <Text style={{ color: "gray" }}>Color {<Text>({!isNull(this.state.form.color) && this.state.form.color !== undefined ? parseInt(this.state.form.color) : 0})</Text>}</Text>
-                                    <Slider
-                                        style={{ width: "100%", height: 50, }}
-                                        name="color"
-                                        minimumValue={0}
-                                        maximumValue={25}
-                                        useNativeDriver={true}
-                                        maximumTrackTintColor='lightgray'
-                                        minimumTrackTintColor={"red"}
-                                        thumbStyle={[styles.thumb]}
-                                        animateTransitions={true}
-                                        value={this.state.form.color}
-                                        disabled={!isEmpty(form.event) ? true : false}
-                                        onValueChange={this.handleChange.bind(this, 'color')}
-                                        onSlidingComplete={(value) => this.setState({ ...this.state.form, color: value })}
-                                    />
-                                    {!isEmpty(errors) && errors["color"] && !form.color && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["color"]}</Text>
-                                    )}
-                                </View>
-                                <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-                                    <Text style={{ color: "gray" }}>Nose {<Text>({!isNull(this.state.form.nose) && this.state.form.nose !== undefined ? parseInt(this.state.form.nose) : 0})</Text>}</Text>
-                                    <Slider
-                                        style={{ width: "100%", height: 80, }}
-                                        name="nose"
-                                        minimumValue={0}
-                                        maximumValue={25}
-                                        useNativeDriver={true}
-                                        animateTransitions={true}
-                                        value={this.state.form.nose}
-                                        disabled={!isEmpty(form.event) ? true : false}
-                                        onValueChange={this.handleChange.bind(this, 'nose')}
-                                        maximumTrackTintColor='lightgray'
-                                        minimumTrackTintColor={"lightgreen"}
-                                        thumbStyle={styles.thumb}
-                                        onSlidingComplete={(value) => this.setState({ ...this.state.form, nose: value })}
-                                    />
-                                    {!isEmpty(errors) && errors["nose"] && !form.nose && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["nose"]}</Text>
-                                    )}
-                                </View>
-                                <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-                                    <Text style={{ color: "gray" }}>Taste {<Text>({!isNull(this.state.form.taste) && this.state.form.taste !== undefined ? parseInt(this.state.form.taste) : 0})</Text>}</Text>
-                                    <Slider
-                                        style={{ width: "100%", height: 80, }}
-                                        name="taste"
-                                        minimumValue={0}
-                                        maximumValue={25}
-                                        useNativeDriver={true}
-                                        animateTransitions={true}
-                                        value={this.state.form.taste}
-                                        disabled={!isEmpty(form.event) ? true : false}
-                                        onValueChange={this.handleChange.bind(this, 'taste')}
-                                        maximumTrackTintColor='lightgray'
-                                        minimumTrackTintColor={"lightblue"}
-                                        thumbStyle={styles.thumb}
-                                        onSlidingComplete={(value) => this.setState({ ...this.state.form, taste: value })}
-                                    />
-                                    {!isEmpty(errors) && errors["taste"] && !form.taste && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["taste"]}</Text>
-                                    )}
-                                </View>
-
-                                <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-                                    <Text style={{ color: "gray" }}>Finish {<Text>({!isNull(this.state.form.finish) && this.state.form.finish !== undefined ? parseInt(this.state.form.finish) : 0})</Text>}</Text>
-                                    <Slider
-                                        style={{ width: "100%", height: 80, }}
-                                        minimumValue={0}
-                                        maximumValue={25}
-                                        useNativeDriver={true}
-                                        animateTransitions={true}
-                                        value={this.state.form.finish}
-                                        disabled={!isEmpty(form.event) ? true : false}
-                                        onValueChange={this.handleChange.bind(this, 'finish')}
-                                        maximumTrackTintColor='lightgray'
-                                        minimumTrackTintColor={"red"}
-                                        thumbStyle={styles.thumb}
-                                        onSlidingComplete={(value) => this.setState({ ...this.state.form, finish: value })}
-                                    />
-                                    {!isEmpty(errors) && errors["finish"] && !form.finish && isNaN(form.finish) && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["finish"]}</Text>
-                                    )}
-                                </View>
-                                <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-                                    <Text style={{ color: "gray" }}>OverAll {<Text>({!isNull(overall) && overall !== undefined ? parseInt(overall) : 0})</Text>}</Text>
-                                    <Slider
-                                        style={{ width: "100%", height: 80, }}
-                                        minimumValue={0}
-                                        maximumValue={100}
-                                        name="overall"
-                                        useNativeDriver={true}
-                                        animateTransitions={true}
-                                        value={!isNull(overall) && overall !== undefined && parseInt(overall)}
-                                        disabled={true}
-                                        maximumTrackTintColor='lightgray'
-                                        minimumTrackTintColor={"lightgreen"}
-                                        thumbStyle={styles.thumb}
-                                    />
-                                </View>
-                            </View> */}
 
                             <View style={[styles.view, { marginHorizontal: 5 }]}>
                                 <View >
@@ -1008,7 +339,7 @@ class ChooseProduct extends Component {
 
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Acidity
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1029,10 +360,9 @@ class ChooseProduct extends Component {
                                     )}
                                 </View>
 
-
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Tannin
-                                   </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1053,10 +383,9 @@ class ChooseProduct extends Component {
                                     )}
                                 </View>
 
-
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Body
-                                   </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1077,10 +406,9 @@ class ChooseProduct extends Component {
                                     )}
                                 </View>
 
-
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Sweetness
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1102,12 +430,9 @@ class ChooseProduct extends Component {
                                     )}
                                 </View>
 
-
-
-
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Complexity
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1130,7 +455,7 @@ class ChooseProduct extends Component {
 
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Balance
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1153,7 +478,7 @@ class ChooseProduct extends Component {
 
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Maturity
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1177,7 +502,7 @@ class ChooseProduct extends Component {
 
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Finish
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1200,7 +525,7 @@ class ChooseProduct extends Component {
 
                                 <View style={styles.pickerView}>
                                     <Text style={styles.pickerText}>Listing Candidate
-                                     </Text>
+                                    </Text>
                                     <View style={styles.pickerstyle}>
                                         {isEmpty(form.event) ? <Picker
                                             style={styles.pickerItem}
@@ -1219,7 +544,6 @@ class ChooseProduct extends Component {
                                         <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["listing_candidate"]}</Text>
                                     )}
                                 </View>
-
 
                                 <View style={{ marginHorizontal: 5, marginVertical: 5 }}>
                                     <Text style={{ color: "gray" }}>Score {<Text>({!isNull(this.state.form.overall) && this.state.form.overall !== undefined ? parseInt(this.state.form.overall) : 0})</Text>}</Text>
@@ -1242,41 +566,12 @@ class ChooseProduct extends Component {
                                         <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["overall"]}</Text>
                                     )}
                                 </View>
-
-
                             </View>
-
-
-
 
                             <View style={[styles.view, { marginHorizontal: 5 }]}>
                                 <View>
                                     <Text style={[styles.textheading, { fontSize: 18 }]}>Additional Notes</Text>
                                 </View>
-                                {/* <Text style={{ color: "gray", fontFamily: sofiaFont }}>Alcohol Content</Text> */}
-
-                                {/* <TextInput
-                                    label='eq. 3'
-                                    name="alcohol"
-                                    errors={errors}
-                                    editable={isEmpty(form.event) ? true : false}
-                                    maxLength={3}
-                                    value={form.alcohol}
-                                    Textcolor={primaryColor}
-                                    keyboardType="number-pad"
-                                    onRef={ref => (this.alcohol = ref)}
-                                    onChange={this.handleChange.bind(this, 'alcohol')}
-                                // iconProps={{
-                                //   ios: 'ios-person',
-                                //   android: 'md-person',
-                                // }}
-                                // onSubmitEditing={() => this.password.focus()}
-                                /> */}
-
-
-
-
-                                {/* <Text style={{ color: "gray", fontFamily: sofiaFont }}>Additional Notes</Text> */}
 
                                 <TextInput
                                     label='Description'
@@ -1288,28 +583,7 @@ class ChooseProduct extends Component {
                                     Textcolor={primaryColor}
                                     onRef={ref => (this.description = ref)}
                                     onChange={this.handleChange.bind(this, 'description')}
-
                                 />
-
-                                {/* 
-                                <View style={styles.pickerView}>
-                                    <Text style={styles.pickerText}>Add Flavours
-                                     </Text>
-                                    <View style={styles.pickerstyle}>
-                                        <Picker
-                                            style={styles.pickerItem}
-                                            itemStyle={styles.pickerItem}
-                                            selectedValue={this.state.form.flavour}
-                                            onValueChange={this.handleChange.bind(this, 'flavour')}>
-                                            <Picker.Item label="Select" value={null} />
-                                            <Picker.Item label="Citrusy" value="citrusy" />
-                                            <Picker.Item label="Fruity" value="Fruity" />
-                                        </Picker>
-                                    </View>
-                                    {!isEmpty(errors) && errors["flavour"] && !form.flavour && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["flavour"]}</Text>
-                                    )}
-                                </View> */}
                                 <View style={{ flex: 1, marginBottom: 10 }}>
 
                                     {isEmpty(form.event)
@@ -1333,34 +607,24 @@ class ChooseProduct extends Component {
                                                 </View>
                                             </View>)
                                         :
-
                                         (<>
                                             {!isNull(form.flavours) && <View>
-                                        <Text style={{ color: "gray", fontFamily: sofiaFont, marginVertical: 10 }}>Flavours</Text>
-                                        <Text style={styles.SimpleText}>{!isNull(form.flavours) ? form.flavours.map(item => item).join(', ') : ""}</Text>
-                                    </View>}
-                                    </>
-                                    )
+                                                <Text style={{ color: "gray", fontFamily: sofiaFont, marginVertical: 10 }}>Flavours</Text>
+                                                <Text style={styles.SimpleText}>{!isNull(form.flavours) ? form.flavours.map(item => item).join(', ') : ""}</Text>
+                                            </View>}
+                                        </>
+                                        )
 
                                     }
                                 </View>
-
-
-
-
-
-
-
-                                <TouchableOpacity 
-                                activeOpacity = {1}
-                                style={{ paddingVertical: 10, width: "100%", alignSelf: "center", alignItems: "center", flexDirection: "row", }} 
-                                onPress={() => !isEmpty(form.event)  ? null : this.setState({ form: { ...this.state.form, is_favourite: !this.state.form.is_favourite } })}
+                                    <TouchableOpacity
+                                        activeOpacity={1}
+                                        style={{ paddingVertical: 10, width: "100%", alignSelf: "center", alignItems: "center", flexDirection: "row", }}
+                                        onPress={() => !isEmpty(form.event) ? null : this.setState({ form: { ...this.state.form, is_favourite: !this.state.form.is_favourite } })}
                                     >
-                                    <Icon name={!isEmpty(form) && form.is_favourite == 1 ? "heart" : "hearto"} type="AntDesign" style={{ color: !isEmpty(form) && form.is_favourite == 1 ? primaryColor : "gray" }} />
-                                    <Text style={{ color: primaryColor, paddingHorizontal: 10 }}>Favourite</Text>
-                                </TouchableOpacity>
-
-
+                                        <Image source={(!isEmpty(form) && form.is_favourite == 1) ? Images.HeartIcon : Images.FavouriteSelectedIcon} style={{ height: 20, width: 20, color: !isEmpty(form) && form.is_favourite == 1 ? primaryColor : "gray" }} tintColor={"red"} />
+                                        <Text style={{ color: primaryColor, paddingHorizontal: 10 }}>Favourite</Text>
+                                    </TouchableOpacity>
                                 {isEmpty(form.event) && <View>
                                     {this.state.loading ?
                                         <TouchableWithoutFeedback style={{ width: "100%" }}>
@@ -1402,15 +666,9 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: 1,
         backgroundColor: 'white',
-        // borderBottomRightRadius: 100,
-        // borderTopRightRadius: 100,
-
     },
     pickerView: {
-        // marginHorizontal: 10,
         marginVertical: 5,
-        // borderColor: "grey",
-        // borderWidth: 1
     },
     pickerItem: {
         color: primaryColor,

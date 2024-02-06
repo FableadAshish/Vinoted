@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "97320471525",
+    "project_id": "vinoted-3e553",
+    "storage_bucket": "vinoted-3e553.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97320471525:android:c21afe4d5be9fc42007d0c",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD5WHXiCh8EA6u4QS-UyqmGc9vMSqny7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

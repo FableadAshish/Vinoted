@@ -15,6 +15,7 @@ import {
   textColor,
   sofiaFont,
 } from '../../style/variables';
+import { Images } from '../../../theme/Images';
 const {width, height} = Dimensions.get('window');
 
 const EventRequestWithType = ({
@@ -80,7 +81,7 @@ const EventRequestWithType = ({
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            }}>
+            {/* }}> */}
             <View
               style={{
                 borderWidth: 1,
@@ -99,7 +100,7 @@ const EventRequestWithType = ({
                 marginBottom: 8,
               }}
             />
-            {/* < Text style={{ color: primaryColor, fontSize: 12 }}> {renderColor}</Text> */}
+            < Text style={{ color: primaryColor, fontSize: 12 }}> {color}</Text>
           </View>
         </View>
         <View style={{flex: 0.2, justifyContent: 'center'}}>
@@ -149,7 +150,7 @@ const EventRequestWithType = ({
             </Text>
             {subtitle && (
               <View style={{flexDirection: 'row', marginLeft: 35}}>
-                <Icon
+                {/* <Icon
                   name="pound"
                   type="Foundation"
                   style={{
@@ -158,7 +159,8 @@ const EventRequestWithType = ({
                     paddingTop: 1,
                     marginHorizontal: 0,
                   }}
-                />
+                /> */}
+                <Image source={Images.BritishPoundIcon} style={{height:15, width:15}}/>
                 <Text
                   numberOfLines={1}
                   style={[

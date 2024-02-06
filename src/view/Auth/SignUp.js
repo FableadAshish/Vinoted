@@ -108,11 +108,11 @@ export default class Signup extends React.Component {
     try {
       console.log('Form data in signup', form);
       form.type = 'Sommelier';
-
+    
       const res = await _register(form);
-
+    
       console.log('Form data in signup with res', res);
-
+    
       if (res.success === true) {
         this.setState({loading: false, response: res}, () => {
           Toast.show({
@@ -120,15 +120,17 @@ export default class Signup extends React.Component {
             duration: 2000,
           });
         });
-        this.props.navigation.navigate('VerifyEmail');
         this.setState({form: {}});
       }
+      this.props.navigation.navigate('Login');
+
     } catch (err) {
-      console.log('Error in _register:', err);
-
+      // Handle the error appropriately
+      console.log('Error in onSave:', err);
       this.setState({loading: false});
+    
       let errors = {};
-
+    
       if (
         err &&
         err.status &&
@@ -149,6 +151,7 @@ export default class Signup extends React.Component {
         });
       }
     }
+    
   };
 
   render() {

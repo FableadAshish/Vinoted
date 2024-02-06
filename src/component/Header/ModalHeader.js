@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Icon} from 'native-base';
+import { Icon} from 'native-base';
+import { Text } from 'react-native';
 import PropTypes from 'prop-types';
 import {primaryColor, white, sofiaFont} from '../../style/variables';
 

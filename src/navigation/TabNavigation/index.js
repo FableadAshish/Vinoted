@@ -1,81 +1,63 @@
-/* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-unused-vars */
+
 import React from 'react';
-import {Icon} from 'native-base';
-import {StyleSheet, View} from 'react-native';
-//import { createBottomTabNavigator } from 'react-navigation-tabs';
-import {white, sofiaFont} from '../../style/variables';
+import { StyleSheet, View, Image } from 'react-native';
+import { white, sofiaFont } from '../../style/variables';
 import Home from '../../view/Home';
 import Messaging from '../../view/Home/Messaging';
 import Wishlist from '../../view/Home/Wishlist';
 import Profile from '../../view/Home/Profile';
 import ProductRatings from '../../view/Home/ProductRatings';
 
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Images } from '../../../theme/Images';
+import http from '../../http';
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
+
+ 
   return (
     <Tab.Navigator
-      //     activeColor="black"
-      //   inactiveColor="black"
-      // style={{backgroundColor:"#3f4970"}}
-      barStyle={{backgroundColor: '#3f4970'}}
-      tabBarOptions={{
-        showLabel: false,
-        style: {
-          backgroundColor: '#3f4970',
-        },
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: { backgroundColor: '#3f4970' },
       }}
-      // screenOptions = {{
-      //                 activeTintColor:white,
-      //                 inactiveTintColor:"lightgray",
-      //                 showLabel: false,
-      //                 style:{backgroundColor:black}
-      //             }}
+      tabBarOptions={{
+        activeTintColor: 'black',
+        inactiveTintColor: 'darkgray',
+      }}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         tabBarVisible={false}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
             <View style={[styles.iconView]}>
-              <View style={{flex: 0.8}}>
-                <Icon
-                  type="AntDesign"
-                  name="home"
-                  style={{color: focused ? 'white' : 'darkgray'}}
-                />
+              <View style={{ flex: 0.8 }}>
+                <Image source={Images.HomeTabIcon} style={{ height: 25, width: 25 }} tintColor={"white"} />
               </View>
-              {/* <View style={{flex:0.2,justifyContent:"center"}}>
-          <Text style={[styles.iconText, {color: focused ? "black" : 'darkgray'}]}>Home</Text>
-              </View> */}
             </View>
           ),
+
         }}
+
       />
 
+      {/* https://www.admin.vinoted-admin.com/api/unreadMsg */}
+      
       <Tab.Screen
         name="Messaging"
         component={Messaging}
         options={{
-          //tabBarLabel: 'Home',
-          tabBarIcon: ({focused}) => (
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconView}>
-              <View style={{flex: 0.8}}>
-                <Icon
-                  type="MaterialCommunityIcons"
-                  name="message-text-outline"
-                  style={{color: focused ? 'white' : 'darkgray'}}
-                />
+              <View style={{ flex: 0.8 }}>
+                <Image source={Images.MessageIcon} style={{ height: 25, width: 25 }} tintColor={"white"} />
               </View>
-              {/* <View style={{flex:0.2,justifyContent:"center"}}>
-          <Text style={[styles.iconText, {color: focused ? "black" : 'darkgray'}]}>Message</Text>
-              </View>
-             */}
             </View>
           ),
         }}
@@ -85,19 +67,12 @@ export default function MyTabs() {
         name="Wishlist"
         component={Wishlist}
         options={{
-          //tabBarLabel: 'Home',
-          tabBarIcon: ({focused}) => (
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconView}>
-              <View style={{flex: 0.8}}>
-                <Icon
-                  type="FontAwesome"
-                  name="heart-o"
-                  style={{color: focused ? 'white' : 'darkgray'}}
-                />
+              <View style={{ flex: 0.8 }}>
+                <Image source={Images.HeartIcon} style={{ height: 25, width: 25 }} tintColor={"white"} />
               </View>
-              {/* <View style={{flex:0.2,justifyContent:"center"}}>
-          <Text style={[styles.iconText, {color: focused ? "black" : 'darkgray'}]}>Wishlist</Text>
-              </View> */}
             </View>
           ),
         }}
@@ -107,19 +82,12 @@ export default function MyTabs() {
         name="Calendar"
         component={ProductRatings}
         options={{
-          // tabBarLabel: 'Product',
-          tabBarIcon: ({focused}) => (
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconView}>
-              <View style={{flex: 0.8}}>
-                <Icon
-                  type="AntDesign"
-                  name="calendar"
-                  style={{color: focused ? 'white' : 'darkgray'}}
-                />
+              <View style={{ flex: 0.8 }}>
+                <Image source={Images.ListIcon} style={{ height: 25, width: 25 }} tintColor={"white"} />
               </View>
-              {/* <View style={{flex:0.2,justifyContent:"center"}}>
-          <Text style={[styles.iconText, {color: focused ? "black" : 'darkgray'}]}>Profile</Text>
-              </View> */}
             </View>
           ),
         }}
@@ -129,19 +97,12 @@ export default function MyTabs() {
         name="Profile"
         component={Profile}
         options={{
-          // tabBarLabel: 'Product',
-          tabBarIcon: ({focused}) => (
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
             <View style={styles.iconView}>
-              <View style={{flex: 0.8}}>
-                <Icon
-                  type="Feather"
-                  name="user"
-                  style={{color: focused ? 'white' : 'darkgray'}}
-                />
+              <View style={{ flex: 0.8 }}>
+                <Image source={Images.UserIcon} style={{ height: 25, width: 25 }} tintColor={"white"} />
               </View>
-              {/* <View style={{flex:0.2,justifyContent:"center"}}>
-          <Text style={[styles.iconText, {color: focused ? "black" : 'darkgray'}]}>Profile</Text>
-              </View> */}
             </View>
           ),
         }}

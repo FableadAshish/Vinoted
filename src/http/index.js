@@ -55,6 +55,7 @@ export default {
       client
         .post(url, user)
         .then(res => {
+          console.log('This is Regis Form Res', res, user)
           resolve(res);
         })
         .catch(error => {

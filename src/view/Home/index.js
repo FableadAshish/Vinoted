@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component, useEffect } from 'react';
 import {
-  Platform,
   FlatList,
-  StatusBar,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -10,14 +8,10 @@ import {
   Dimensions,
   Text,
   Alert,
-  ImageBackground,
   ScrollView,
   RefreshControl,
   TouchableOpacity,
-  TextInput,
   BackHandler,
-  AsyncStorage,
-  NativeModules,
 } from 'react-native';
 import Header from '../../component/Header/Header';
 // import {Icon, Button} from 'native-base';
@@ -25,37 +19,28 @@ import EventRequest from '../../component/CustomeComponent/EventRequestcard';
 import {
   white,
   secondryTextColor,
-  secondryColor,
   primaryColor,
   primaryTextColor,
-  cardBackground,
   sofiaFont,
 } from '../../style/variables';
-import {_getUser, _handleAuthUser} from '../../api/auth';
-import SkeletonContent from 'react-native-skeleton-content-nonexpo';
+import { _getUser, _handleAuthUser } from '../../api/auth';
 import FLEC from '../../component/Common/FLEC';
-import FPI from '../../component/Indicator/FPI';
 import BottomIndicator from '../../component/Indicator/BottomIndicator';
-import {isEmpty, isNull} from 'lodash';
-import {connect} from 'react-redux';
+import { isEmpty } from 'lodash';
+import { connect } from 'react-redux';
 import http from '../../http';
 import moment from 'moment';
 import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
-import HTML from 'react-native-render-html';
-import * as RootNavigation from '../../navigation/RootNavigation';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
-import MainNavigation from '../../navigation';
-import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import { Images } from '../../../theme/Images';
+import { requestUserPermission } from '../../push_notification_helper';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
-
-
-let data = ['1', '2', '3'];
-
-const Shimmer = ({}) => {
+const Shimmer = ({ }) => {
   return (
     <View
       style={[
@@ -76,7 +61,7 @@ const Shimmer = ({}) => {
           flexDirection: 'row',
           alignSelf: 'center',
         }}>
-        <View style={{flex: 0.3, justifyContent: 'center'}}>
+        <View style={{ flex: 0.3, justifyContent: 'center' }}>
           <View
             style={{
               justifyContent: 'center',
@@ -86,7 +71,7 @@ const Shimmer = ({}) => {
               borderRadius: 50,
             }}>
             <ShimmerPlaceHolder
-              style={{height: 50, width: 50, borderRadius: 25}}
+              style={{ height: 50, width: 50, borderRadius: 25 }}
             />
           </View>
         </View>
@@ -129,7 +114,7 @@ const Shimmer = ({}) => {
 };
 
 
-const Shimmer2 = ({}) => {
+const Shimmer2 = ({ }) => {
   return (
     <View
       style={{
@@ -179,14 +164,6 @@ const Shimmer2 = ({}) => {
   );
 };
 
-
-
-
-
-
-
-
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -214,7 +191,7 @@ class Home extends Component {
 
     this._backDisable = this.props.navigation.addListener('blur', payload => {
       console.log('calling blur...');
-      if (this.backHandler) {this.backHandler.remove();}
+      if (this.backHandler) { this.backHandler.remove(); }
     });
   }
 
@@ -240,7 +217,7 @@ class Home extends Component {
     return true;
   };
   componentWillUnmount() {
-    if (this.backHandler) {this.backHandler.remove();}
+    if (this.backHandler) { this.backHandler.remove(); }
     this._backEnable();
     this._backDisable();
   }
@@ -304,13 +281,16 @@ class Home extends Component {
   //   }
 
   componentDidMount = async () => {
+
     const getuser = await _getUser();
-    this.setState({user: getuser.data});
-    messaging().subscribeToTopic(`user_id_${getuser.data.user.id}`);
-    messaging().subscribeToTopic('vinoted');
+    console.log("data Loaded", getuser.data)
+    this.setState({ user: getuser.data });
     this.PendingEvents();
     this.Store();
+    requestUserPermission()
 
+    messaging().subscribeToTopic(`user_id_${getuser.data.user.id}`);
+    messaging().subscribeToTopic('vinoted');
   };
   checkNotificationPermission = () => {
     messaging()
@@ -324,7 +304,7 @@ class Home extends Component {
 
   promptForNotificationPermission = () => {
     messaging()
-      .requestPermission({provisional: true})
+      .requestPermission({ provisional: true })
       .then(() => {
         console.log('Permission granted.');
       })
@@ -357,12 +337,16 @@ class Home extends Component {
     });
   };
 
-  // componentDidMount() {
-
-  // }
-
+  unreadMessages = ()=>{
+    
+  }
   Store = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
+
+    http.get("https://www.admin.vinoted-admin.com/api/unreadMsg")
+    .then((res) => console.log("res for unread Message", res))
+    .catch(err => console.log("error for unread Message",err));
+
     http
       .get(`sommelier/events?type=pendingrequest&page=${this.state.page}`)
       .then(res => {
@@ -382,13 +366,14 @@ class Home extends Component {
       })
       .catch(err => {
         let errors = {};
-        if (err && err.status == 422) {errors = err.errors;}
-        this.setState({errors, loading: false, refreshing: false});
+        if (err && err.status == 422) { errors = err.errors; }
+        this.setState({ errors, loading: false, refreshing: false });
       });
+
   };
 
   LoadMoreRandomData = () => {
-    console.log('length', this.state.Events.length);
+    console.log('length is here', this.state.Events.length);
     if (this.state.Events.length < this.state.total) {
       this.setState(
         {
@@ -405,7 +390,7 @@ class Home extends Component {
       isEmpty(this.state.Events) && (
         <FLEC
           text="Currently No Events Waiting For Approval"
-          // image={require('../../../assets/logo.png')}
+        // image={require('../../../assets/logo.png')}
         />
       )
     );
@@ -433,8 +418,10 @@ class Home extends Component {
     this.Store();
   }
 
+
+
   PendingEvents = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     http
       .get(`sommelier/events?type=pendingevent`)
       .then(res => {
@@ -450,8 +437,8 @@ class Home extends Component {
       })
       .catch(err => {
         let errors = {};
-        if (err && err.status == 422) {errors = err.errors;}
-        this.setState({errors, loading: false, refreshing: false});
+        if (err && err.status == 422) { errors = err.errors; }
+        this.setState({ errors, loading: false, refreshing: false });
       });
   };
 
@@ -460,7 +447,7 @@ class Home extends Component {
   }
 
   render() {
-    const {user, PendingEvent, Events, Eventitem} = this.state;
+    const { user, PendingEvent, Events, Eventitem } = this.state;
     console.log('hgdcjkTEXTPendingEvent', PendingEvent);
     console.log('hgdcjkTEXT', Events);
     return (
@@ -472,7 +459,7 @@ class Home extends Component {
         <Header
           navigation={this.props.navigation}
           iconColor={white}
-          iconProps={{name: 'menu', type: 'MaterialIcons'}}
+          iconProps={Images.MenuBarIcon}
           onPress={() => this.props.navigation.toggleDrawer()}
           image={require('../../assets/Logo.png')}
         />
@@ -483,23 +470,23 @@ class Home extends Component {
               onRefresh={() => this.onRefresh()}
             />
           }>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             {!this.state.loading && !isEmpty(user) ? (
               <View
                 style={{
                   marginHorizontal: 10,
                   marginBottom: 15,
                   alignItems: 'flex-start',
-                  width: '100%',
+                  width: '90%',
                 }}>
-                <Text
+                {/* <Text
                   style={{
                     fontFamily: sofiaFont,
                     fontSize: 25,
                     color: secondryTextColor,
                   }}>
                   Welcome {user.user.name}!
-                </Text>
+                </Text> */}
               </View>
             ) : (
               <View
@@ -531,10 +518,14 @@ class Home extends Component {
                   color: primaryColor,
                   fontFamily: sofiaFont,
                 }}>
-                Search Here...
+                Search Here..
               </Text>
               <TouchableWithoutFeedback>
                 <View style={styles.iconContainer}>
+                  <Image
+                    source={Images.SearchIcon}
+                    style={{ height: 25, width: 25 }}
+                  />
                   {/* <Icon
                     name="search"
                     type="FontAwesome"
@@ -543,16 +534,16 @@ class Home extends Component {
               </TouchableWithoutFeedback>
             </TouchableOpacity>
 
-            <View style={{marginHorizontal: 10, marginTop: 10}}>
-              <Text style={[styles.textheading, {color: white}]}>
+            <View style={{ marginHorizontal: 10, marginTop: 10 }}>
+              <Text style={[styles.textheading, { color: white }]}>
                 Upcoming Events
               </Text>
             </View>
 
             <View
-              style={{height: 170, flexDirection: 'row', marginVertical: 20}}>
+              style={{ height: 170, flexDirection: 'row', marginVertical: 20 }}>
               {this.state.loading && isEmpty(this.state.PendingEvent) ? (
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Shimmer2 />
                   <Shimmer2 />
                   <Shimmer2 />
@@ -587,14 +578,14 @@ class Home extends Component {
                   // ListFooterComponent={this.state.loading && !isEmpty(this.state.PendingEvent) ? (
                   //     <BottomIndicator />
                   // ) : null}
-                  contentContainerStyle={{flexGrow: 1}}
+                  contentContainerStyle={{ flexGrow: 1 }}
                   refreshControl={
                     <RefreshControl
                       refreshing={this.state.refreshing}
                       onRefresh={this.onRefresh}
                     />
                   }
-                  renderItem={({item}) => (
+                  renderItem={({ item }) => (
                     <TouchableOpacity
                       onPress={() =>
                         this.props.navigation.push('ProEventDetails', {
@@ -612,8 +603,8 @@ class Home extends Component {
                           },
                         ]}>
                         <Image
-                          style={{height: 80, width: '100%', borderRadius: 10}}
-                          source={{uri: item.Imagesrc}}
+                          style={{ height: 80, width: '100%', borderRadius: 10 }}
+                          source={{ uri: item.Imagesrc }}
                         />
                         <Text
                           numberOfLines={1}
@@ -681,11 +672,11 @@ class Home extends Component {
                   paddingHorizontal: 0,
                 },
               ]}>
-              <View style={{marginHorizontal: 10}}>
+              <View style={{ marginHorizontal: 10 }}>
                 <Text style={styles.textheading}>Requested Events</Text>
               </View>
 
-              <View style={[styles.view, {flex: 1, minHeight: 300}]}>
+              <View style={[styles.view, { flex: 1, minHeight: 300 }]}>
                 {this.state.loading && isEmpty(this.state.Events) ? (
                   <View>
                     <Shimmer />
@@ -704,14 +695,14 @@ class Home extends Component {
                     onEndReached={this.LoadMoreRandomData}
                     ListEmptyComponent={() => this._renderEmptyComponent()}
                     ListFooterComponent={() => this._renderFooterComponent()}
-                    contentContainerStyle={{flexGrow: 1}}
+                    contentContainerStyle={{ flexGrow: 1 }}
                     refreshControl={
                       <RefreshControl
                         refreshing={this.state.refreshing}
                         onRefresh={this.onRefresh}
                       />
                     }
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                       <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.push('ProEventDetails', {
@@ -797,7 +788,7 @@ const styles = StyleSheet.create({
   searchcontainer: {
     flexDirection: 'row',
     backgroundColor: white,
-    width: '90%',
+    width: '95%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',

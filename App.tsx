@@ -1,20 +1,22 @@
 import React from 'react';
-
-import { Provider } from 'react-redux';
-import { Alert, View, Text, Image } from 'react-native';
+// import messaging from '@react-native-firebase/messaging';
+import {Provider} from 'react-redux';
+import {Alert, View, Text, Image} from 'react-native';
 import store from './src/store';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import MainNavigation from './src/navigation/index';
 import * as RootNavigation from './src/navigation/RootNavigation';
-import { navigationRef, isReadyRef } from './src/navigation/RootNavigation';
+import {navigationRef, isReadyRef} from './src/navigation/RootNavigation';
 // import {Root, Toast, Button} from 'native-base';
-import messaging from '@react-native-firebase/messaging';
 import NotificationPopup from 'react-native-push-notification-popup';
 // import Notification from './src/view/Home/Notification';
-import { primaryColor, white, black, sofiaFont } from './src/style/variables';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {primaryColor, white, black, sofiaFont} from './src/style/variables';
+import {
+  GestureHandlerRootView,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 // import SplashScreen from 'react-native-splash-screen';
-import { NativeBaseProvider } from 'native-base';
+import {NativeBaseProvider} from 'native-base';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,12 +25,15 @@ export default class App extends React.Component {
       form: {},
       initialRoute: 'Notification',
     };
+  
+    // Bind getFcmToken function to component instance
+    // this.getFcmToken = this.getFcmToken.bind(this);
   }
 
   componentDidMount() {
     this.unsuscrib();
     // this.forgroundmessanging();
-    console.log("check Subs")
+    console.log('check Subs');
     isReadyRef.current = true;
     console.log('isNavigation Mounted: ', isReadyRef.current);
     console.log('current root state', navigationRef.current.getRootState());
@@ -39,8 +44,36 @@ export default class App extends React.Component {
     console.log('isNavigation Mounted: ', isReadyRef.current);
   }
 
+  // getFcmToken = async () => {
+  //   try {
+  //     let getToken = await AsyncStorage.getItem('fcmToken');
+  //     console.log('Token Retrieved Again', getToken);
+  
+  //     if (!getToken) {
+  //       let fcmToken = await messaging().getToken();
+  //       await AsyncStorage.setItem('fcmToken', JSON.stringify(fcmToken));
+  //       this.setState({ fcmToken });
+  //     }
+  //   } catch (error) {
+  //     console.log('Error Retrieving Token', error);
+  //   }
+  // };
+
+  requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+
+    }
+  };
+
+  
   unsuscrib = async () => {
-    console.log("Hello This is")
+    console.log('Hello This is');
     await messaging().onMessage(async remoteMessage => {
       const notification = remoteMessage.notification;
       console.log('helowin', remoteMessage.notification);
@@ -48,9 +81,9 @@ export default class App extends React.Component {
         onPress: () =>
           remoteMessage.data.action_item == 'new_message'
             ? RootNavigation.push('Chat', {
-              item: { id: remoteMessage.data.action_id },
-            })
-            : RootNavigation.push('Notification', { isFromProp: true }), //NavigationIssue
+                item: {id: remoteMessage.data.action_id},
+              })
+            : RootNavigation.push('Notification', {isFromProp: true}), //NavigationIssue
         appTitle: 'Vinoted App',
         timeText: 'Now',
         title: `${notification.title}`,
@@ -72,10 +105,10 @@ export default class App extends React.Component {
       setTimeout(() => {
         if (remoteMessage.data.action_item == 'new_message') {
           RootNavigation.push('Chat', {
-            item: { id: remoteMessage.data.action_id },
+            item: {id: remoteMessage.data.action_id},
           });
         } else {
-          RootNavigation.push('Notification', { isFromProp: true }); //NavigationIssue
+          RootNavigation.push('Notification', {isFromProp: true}); //NavigationIssue
         }
       }, 1000);
     });
@@ -93,10 +126,10 @@ export default class App extends React.Component {
             notification.data.action_item == 'new_message'
           ) {
             RootNavigation.push('Chat', {
-              item: { id: notification.data.action_id },
+              item: {id: notification.data.action_id},
             });
           } else {
-            RootNavigation.push('Notification', { isFromProp: true });
+            RootNavigation.push('Notification', {isFromProp: true});
           }
         }, 4000); //NavigationIssue
       }
@@ -125,9 +158,9 @@ export default class App extends React.Component {
     // })
   };
 
-  renderCustomPopup = ({ appIconSource, appTitle, timeText, title, body }) => (
+  renderCustomPopup = ({appIconSource, appTitle, timeText, title, body}) => (
     <TouchableOpacity
-      onPress={() => RootNavigation.replace('Notification')}
+      onPress={() => RootNavigation.push('Notification')}
       style={{
         borderRadius: 10,
         backgroundColor: white,
@@ -148,10 +181,10 @@ export default class App extends React.Component {
         }}>
         <Image
           source={require('./src/assets/blueLogo.png')}
-          style={{ height: 20, width: '30%' }}
+          style={{height: 20, width: '30%'}}
         />
       </View>
-      <View style={{ paddingHorizontal: 10 }}>
+      <View style={{paddingHorizontal: 10}}>
         <Text
           style={{
             color: primaryColor,
@@ -162,7 +195,7 @@ export default class App extends React.Component {
           {title}
         </Text>
         <Text
-          style={{ color: 'lightgray', fontSize: 12, fontFamily: sofiaFont }}
+          style={{color: 'lightgray', fontSize: 12, fontFamily: sofiaFont}}
           numberOfLines={2}>
           {body}
         </Text>
@@ -175,25 +208,27 @@ export default class App extends React.Component {
     console.disableYellowBox = true;
     return (
       // <Root>
-      <NativeBaseProvider>
-        <Provider store={store}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              isReadyRef.current = true;
-            }}>
-            <MainNavigation />
-            {/* <View>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <NativeBaseProvider>
+          <Provider store={store}>
+            <NavigationContainer
+              ref={navigationRef}
+              onReady={() => {
+                isReadyRef.current = true;
+              }}>
+              <MainNavigation />
+              {/* <View>
               <Text>Helo</Text>
             </View> */}
 
-            <NotificationPopup
-              ref={ref => (this.popup = ref)}
-              renderPopupContent={this.renderCustomPopup}
-            />
-          </NavigationContainer>
-        </Provider>
-      </NativeBaseProvider>
+              <NotificationPopup
+                ref={ref => (this.popup = ref)}
+                renderPopupContent={this.renderCustomPopup}
+              />
+            </NavigationContainer>
+          </Provider>
+        </NativeBaseProvider>
+      </GestureHandlerRootView>
       //  </Root>
     );
   }

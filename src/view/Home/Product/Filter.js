@@ -42,6 +42,8 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
+import { Images } from '../../../../theme/Images';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 
@@ -76,8 +78,8 @@ class ChooseProduct extends Component {
             currentDate: new Date(),
             ShowDate: false,
             checked: false,
-            namekey:'',
-            value:'',
+            namekey: '',
+            value: '',
             page: 0,
         };
     }
@@ -86,13 +88,13 @@ class ChooseProduct extends Component {
         this.setState({ modalVisible: visible })
     }
 
-    componentWillUnmount=()=> {
+    componentWillUnmount = () => {
         this._unsubscribe()
     }
-    
+
 
     componentDidMount() {
-        
+
         this.Store()
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
             console.log('hello',);
@@ -105,42 +107,42 @@ class ChooseProduct extends Component {
             {
                 id: 1,
                 name: 'W - White ',
-                value:'White',
+                value: 'White',
                 checked: false,
             },
             {
                 id: 2,
                 name: 'R - Red ',
-                value:'Red',
+                value: 'Red',
                 checked: false,
             },
             {
                 id: 3,
                 name: 'RO - Rose',
-                value:'Rose',
+                value: 'Rose',
                 checked: false,
             },
             {
                 id: 4,
                 name: 'SP - Sparkling',
-                value:'sparkling',
+                value: 'sparkling',
                 checked: false,
             },
             {
                 id: 5,
                 name: 'SW - Sweet',
-                value:'Sweet',
+                value: 'Sweet',
                 checked: false,
             },
             {
                 id: 6,
                 name: 'Other - Other',
-                value:'Other',
+                value: 'Other',
                 checked: false,
             },
-        
+
         ]
-        this.setState({ loading: true,data });
+        this.setState({ loading: true, data });
         http.get(`sommelier/suppliers?page=${this.state.page}`).then(res => {
             console.log("response UsersList..", res)
             this.setState({
@@ -185,10 +187,10 @@ class ChooseProduct extends Component {
 
     onSave = async () => {
         const { form } = this.state;
-        console.log("Formdataon Filter",form)
+        console.log("Formdataon Filter", form)
         // this.props.navigation.navigate("SearchableTastingNots",{Search:form})
-        this.props.navigation.navigate("SearchableTastingNots",{Search:form})
-        this.setState({form:{wineType:[]},data:[]})
+        this.props.navigation.navigate("SearchableTastingNots", { Search: form })
+        this.setState({ form: { wineType: [] }, data: [] })
         // { 
         //     Object.entries(form).map(([key, value]) => {
         //      console.log("Key value", key, value)
@@ -200,7 +202,7 @@ class ChooseProduct extends Component {
         // http.get(`sommelier/eventproductrating?page=${this.state.page}&${namekey}=${value}`).then(res => {
         //     console.log("responce of ProductRatinge noted", res)
         //     this.props.navigation.navigate("MyTestingNotes",{Search:res})
-            
+
 
         // }).catch(err => {
         //     console.log("errr Notification", err)
@@ -280,7 +282,7 @@ class ChooseProduct extends Component {
                 winetype.push(item)
             }
         })
-        this.setState({ form: { ...this.state.form, wineType: winetype },...this.state.data}, () => console.log("Formafterset", this.state.form.wineType))
+        this.setState({ form: { ...this.state.form, wineType: winetype }, ...this.state.data }, () => console.log("Formafterset", this.state.form.wineType))
 
 
     }
@@ -292,8 +294,8 @@ class ChooseProduct extends Component {
     }
 
     render() {
-        const { errors, form, Testing, is_favourite, eventTesting, selectedItems, checked,data } = this.state
-        console.log("thdatawinetype",data)
+        const { errors, form, Testing, is_favourite, eventTesting, selectedItems, checked, data } = this.state
+        console.log("thdatawinetype", data)
 
         return (
             <View
@@ -304,7 +306,7 @@ class ChooseProduct extends Component {
                 <Header
                     navigation={this.props.navigation}
                     iconColor={white}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/Logo.png')}
                 />
@@ -341,7 +343,7 @@ class ChooseProduct extends Component {
                                 onPress={() => this.setModalVisible(true)}
                                 style={styles.pickerView}>
                                 <Text style={styles.pickerText}>Wine Name
-                                    </Text>
+                                </Text>
                                 <View style={styles.pickerstyle}>
                                     <Text style={{ color: this.state.form.product_name ? white : "grey", marginLeft: 15, fontSize: 15, fontFamily: sofiaFont }}>{!isEmpty(this.state.form.product_name) ? this.state.form.product_name : 'Select'}</Text>
 
@@ -352,13 +354,15 @@ class ChooseProduct extends Component {
 
                             <View style={styles.pickerView}>
                                 <Text style={styles.pickerText}>Type
-                                    </Text>
+                                </Text>
 
                                 {data.map((item, i) => {
                                     return (<TouchableOpacity
                                         onPress={() => this.onCheck(item, i)}
                                         style={{ flexDirection: "row", alignItems: "center", marginVertical: 2 }}>
-                                        <Icon name={item.checked ? "check-square" : "checkbox-passive"} type={item.checked ? "Feather" : 'Fontisto'} style={{ fontSize: 20, color: item.checked == true ? "white" : "grey", paddingHorizontal: 10 }} />
+                                        {/* <Icon name={item.checked ? "check-square" : "checkbox-passive"} type={item.checked ? "Feather" : 'Fontisto'} style={{ fontSize: 20, color: item.checked == true ? "white" : "grey", paddingHorizontal: 10 }} /> */}
+                                        <Image source={item.checked ? Images.CheckedSquareIcon : Images.EmptyCheckSquareIcon} style={{ marginHorizontal: 10, height: 20, width: 20 }} tintColor={item.checked == true ? "white" : "grey"} />
+
                                         <Text style={[styles.pickerText, { color: item.checked == true ? "white" : "grey" }]}>{item.name}</Text>
                                     </TouchableOpacity>)
                                 })}
@@ -368,7 +372,7 @@ class ChooseProduct extends Component {
 
                             <View style={styles.pickerView}>
                                 <Text style={styles.pickerText}>Supplier Name
-                                     </Text>
+                                </Text>
                                 <View style={styles.pickerstyle}>
                                     <Picker
                                         style={styles.pickerItem}
@@ -391,13 +395,13 @@ class ChooseProduct extends Component {
 
                             <View style={[styles.pickerView, { borderBottomColor: lineColor, borderBottomWidth: 1 }]}>
                                 <Text style={styles.pickerText}>Tasting Date
-                                     </Text>
+                                </Text>
                                 <TouchableOpacity
                                     //  onPress={() => this.showDatePicker("date")} 
                                     onPress={() => this.showDatePicker("date")}
                                     style={{ flexDirection: "row", alignItems: "center", marginVertical: 2, width: "100%", }}>
-                                    <Text style={[styles.pickerText, { color: "grey", width: "90%" }]}>{!isEmpty(form.date) ? form.date : "Select Date"}</Text>
-                                    <Icon name="calendar-alt" type="FontAwesome5" style={{ fontSize: 20, color: white, }} />
+                                    <Text style={[styles.pickerText, { color: "grey", width: "90%",   }]}>{!isEmpty(form.date) ? form.date : "Select Date"}</Text>
+                                    <Image source={Images.CalendarIcon} style={{ fontSize: 20}} tintColor={Colors.white} />
 
                                 </TouchableOpacity>
                                 {/* {!isEmpty(errors) && errors["supplier_name"] && !form.supplier_name && (
@@ -462,7 +466,7 @@ class ChooseProduct extends Component {
                                 <Header
                                     navigation={this.props.navigation}
                                     iconColor={primaryColor}
-                                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                                    iconProps={Images.BackNavigationIcon}
                                     onPress={() => { this.setModalVisible(false) }}
                                     image={require('../../../assets/blueLogo.png')}
                                 />
@@ -480,7 +484,10 @@ class ChooseProduct extends Component {
                                     // placeholderTextColor={primaryColor}
                                     />
                                     <TouchableWithoutFeedback >
-                                        <View style={styles.iconContainer}><Icon name="search" type="FontAwesome" style={styles.icon} ></Icon></View>
+                                        <View style={styles.iconContainer}>
+                                            {/* <Icon name="search" type="FontAwesome" style={styles.icon} ></Icon> */}
+                                            <Image source={Images.SearchIcon} style={{ height: 22, width: 22 }} />
+                                        </View>
                                     </TouchableWithoutFeedback>
                                 </View>
 
@@ -543,7 +550,7 @@ const styles = StyleSheet.create({
         color: "grey",
         fontFamily: sofiaFont
     },
-    pickerText: { color: "white", fontFamily: sofiaFont, marginVertical: 5 },
+    pickerText: { color: "white", fontFamily: sofiaFont, marginVertical: 5, },
     track: {
         height: 20,
         width: 20,
@@ -625,7 +632,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: white,
         elevation: 1,
-        width: '90%',
+        width: '95%',
         height: 50,
         justifyContent: "center",
         alignItems: "center",

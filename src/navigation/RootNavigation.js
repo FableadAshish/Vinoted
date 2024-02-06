@@ -6,6 +6,7 @@ export const isReadyRef = React.createRef();
 
 export const navigationRef = React.createRef();
 
+console.log("navigationRef", navigationRef)
 // export function navigate(routeName, params){
 //   navigationRef.current.dispatch(
 //     StackActions.navigate(routeName,
@@ -34,6 +35,8 @@ export function resetAppAndNavigate(routeName, params) {
 }
 
 export function replace(routeName, params) {
+  console.log("This is Route Name", routeName)
+  console.log("This is params Name", params)
   navigationRef.current.dispatch(StackActions.replace(routeName, params));
 }
 

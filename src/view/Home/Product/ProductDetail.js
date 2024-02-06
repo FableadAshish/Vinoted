@@ -37,6 +37,7 @@ import FPI from '../../../component/Indicator/FPI';
 const { width, height } = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 
@@ -160,7 +161,7 @@ class ProductDetail extends Component {
                     navigation={this.props.navigation}
                     backgroundColor={'#F1FAEE'}
                     iconColor={primaryColor}
-                    iconProps={{ name: "keyboard-arrow-left", type: "MaterialIcons" }}
+                    iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
                     image={require('../../../assets/blueLogo.png')}
                 />
@@ -227,7 +228,8 @@ class ProductDetail extends Component {
                                 <View style={{ flexGrow: 1, backgroundColor: white, }}>
                                     <View style={{ justifyContent: "center", alignItems: "flex-end", paddingHorizontal: 10, height: 50, width: '90%', backgroundColor: secondryColor, borderTopRightRadius: 30, borderBottomRightRadius: 30, marginVertical: 10 }}>
                                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                            <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 0 }} />
+                                            {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 0 }} /> */}
+                                            <Image source={Images.BritishPoundIcon} style={{marginRight:-5, height:30, width:30}}/>
                                             <Text style={[styles.textheading, { color: white }]}> {ProductDetail.price}</Text>
                                         </View>
                                     </View>
