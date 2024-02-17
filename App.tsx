@@ -1,7 +1,7 @@
 import React from 'react';
 // import messaging from '@react-native-firebase/messaging';
 import {Provider} from 'react-redux';
-import {Alert, View, Text, Image} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import store from './src/store';
 import {NavigationContainer} from '@react-navigation/native';
 import MainNavigation from './src/navigation/index';
@@ -10,15 +10,17 @@ import {navigationRef, isReadyRef} from './src/navigation/RootNavigation';
 // import {Root, Toast, Button} from 'native-base';
 import NotificationPopup from 'react-native-push-notification-popup';
 // import Notification from './src/view/Home/Notification';
-import {primaryColor, white, black, sofiaFont} from './src/style/variables';
+import {primaryColor, white, sofiaFont} from './src/style/variables';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import {
   GestureHandlerRootView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 // import SplashScreen from 'react-native-splash-screen';
 import {NativeBaseProvider} from 'native-base';
-
+EStyleSheet.build({});
 export default class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -207,7 +209,6 @@ export default class App extends React.Component {
   render() {
     console.disableYellowBox = true;
     return (
-      // <Root>
       <GestureHandlerRootView style={{flex: 1}}>
         <NativeBaseProvider>
           <Provider store={store}>
@@ -229,7 +230,6 @@ export default class App extends React.Component {
           </Provider>
         </NativeBaseProvider>
       </GestureHandlerRootView>
-      //  </Root>
     );
   }
 }
