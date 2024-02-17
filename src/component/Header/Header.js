@@ -1,11 +1,17 @@
 import React from 'react';
-import { View, Image, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
-import { Icon } from 'native-base';
+import {
+  View,
+  Image,
+  TouchableWithoutFeedback,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {Icon} from 'native-base';
 import PropTypes from 'prop-types';
 import Styles from '../../style/comman/Header';
-import { upperCase, isEmpty } from 'lodash';
-import { white, textColor, primaryColor, sofiaFont } from '../../style/variables';
-import { Images } from '../../../theme/Images';
+import {upperCase, isEmpty} from 'lodash';
+import {white, textColor, primaryColor, sofiaFont} from '../../style/variables';
+import {Images} from '../../../theme/Images';
 
 const header = ({
   navigation,
@@ -25,10 +31,10 @@ const header = ({
     <View
       style={[
         Styles.header,
-        { paddingVertical: 5, backgroundColor: backgroundColor },
+        {paddingVertical: 5, backgroundColor: backgroundColor},
       ]}>
       <View style={Styles.leftContainer}>
-        <View style={{ flex: 0.2 }}>
+        <View style={{flex: 0.2}}>
           {/* <Icon
             {...iconProps}
             onPress={onPress}
@@ -36,7 +42,7 @@ const header = ({
           <TouchableOpacity onPress={onPress}>
             <Image
               source={iconProps}
-              style={{ color: "red", padding: 10, height: 22, width: 22 }}
+              style={{color: 'red', padding: 10, height: 22, width: 22}}
               tintColor={iconColor}
             />
           </TouchableOpacity>
@@ -74,7 +80,7 @@ const header = ({
             </Text>
           )}
         </View>
-        <View style={{ flex: 0.2, alignItems: 'flex-end' }}>
+        <View style={{flex: 0.2, alignItems: 'flex-end'}}>
           {/* <Icon name="dots-three-vertical" type="Entypo" style={{fontSize:20, color:iconColor, padding: 10 }} onPress={() =>{}}></Icon> */}
         </View>
       </View>

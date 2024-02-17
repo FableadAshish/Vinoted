@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Dimensions,
   TouchableOpacity,
@@ -33,6 +33,9 @@ const CardList = ({
   onPress,
   onPressEnquiry,
 }) => {
+  useEffect(() => {
+    ShowCount;
+  }, [ShowCount]);
   return (
     <TouchableOpacity onPress={onPress}>
       <View
