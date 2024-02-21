@@ -159,7 +159,6 @@ class CKEDITER extends Component {
 
     onRemoveImage = ({url, id}) => {        
         // do what you have to do after removing an image
-        // console.log(`image removed (url : ${url})`);
         
     }
 

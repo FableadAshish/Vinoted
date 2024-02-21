@@ -43,7 +43,7 @@ class SideBar extends React.Component {
 
   async componentDidMount() {
     const getuser = await _getUser();
-    console.log('getuserrrr', getuser);
+    // console.log('getuserrrr', getuser);
   }
 
   handleChange(name, value) {
@@ -71,29 +71,29 @@ class SideBar extends React.Component {
 
   onServerLogout = async () => {
     const getuser = await _getUser();
-    console.log('getuserrrr', getuser);
+    // console.log('getuserrrr', getuser);
     _logout()
       .then(res => {
-        console.log('Logout Res', res);
+        // console.log('Logout Res', res);
         this.props.navigation.dispatch(DrawerActions.closeDrawer());
         this.props.navigation.replace('Auth');
         messaging().unsubscribeFromTopic(`user_id_${getuser.data.user.id}`);
         messaging().unsubscribeFromTopic('vinoted');
       })
       .catch(err => {
-        console.log('errorrr', err);
+        // console.log('errorrr', err);
         let errors = {};
         if (err && err.status == 422) {
           errors = err.errors;
         }
         this.setState({errors});
-        console.log('errorrr 422', err);
+        // console.log('errorrr 422', err);
         // this.setState({isLoading: false});
       });
   };
 
   render() {
-    console.log('HDHDHDHHD in Drawer', this.state.currentUserRole);
+    // console.log('HDHDHDHHD in Drawer', this.state.currentUserRole);
     const {name, errors, borderColor, form} = this.props;
     let isLoggedIn = !isEmpty(this.props.user);
 

@@ -79,7 +79,6 @@ class Index extends Component {
             // total: res.data.enquires.total,
             refreshing: false,
           },
-          () => console.log('Events', this.state.Events),
         );
       })
       .catch(err => {

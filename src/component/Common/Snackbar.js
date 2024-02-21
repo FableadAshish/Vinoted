@@ -19,7 +19,6 @@ export default class Snackbar extends React.Component {
     if(type == 'success') backgroundColor = success;
     else if(type == 'error') backgroundColor = error; 
     else if(type == 'warning') backgroundColor = warning;
-    console.log('Snackbar show')
     this.setState({message,hidden:false,backgroundColor});
     clearTimeout(this._timeOut);
     this.state.opacity.setValue(0);
@@ -40,7 +39,6 @@ export default class Snackbar extends React.Component {
       toValue: 0, duration: 100, useNativeDriver: true,
     }).start(({ finished }) => {
       if (finished) {
-        console.log('Snackbar hie')
 
         this.setState({ hidden: true });
         onDismiss && action();

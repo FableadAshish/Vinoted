@@ -97,7 +97,7 @@ class WishListProductDetail extends Component {
         <Header
           navigation={this.props.navigation}
           iconColor={primaryColor}
-          iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
+          iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
           image={require('../../../assets/blueLogo.png')}
         />
@@ -238,8 +238,8 @@ class WishListProductDetail extends Component {
                                 fontWeight: '700',
                                 color: primaryColor,
                               }}>
-                              {ProductDetail.product.price}
                               <Image source={Images.BritishPoundIcon} />
+                              {ProductDetail.product.price}
                             </Text>
                           </View>
                         </>
@@ -253,35 +253,6 @@ class WishListProductDetail extends Component {
                       source={{uri: ProductDetail.product.Imagesrc}}
                       // source={require('../../../assets/darkBotle.png')}
                     />
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'flex-end',
-                    paddingHorizontal: 10,
-                    height: 50,
-                    width: '90%',
-                    backgroundColor: secondryColor,
-                    borderTopRightRadius: 30,
-                    borderBottomRightRadius: 30,
-                    marginVertical: 10,
-                  }}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      name="pound"
-                      type="Foundation"
-                      style={{
-                        color: white,
-                        fontSize: 30,
-                        paddingTop: 5,
-                        marginHorizontal: 5,
-                      }}
-                    />
-                    <Text style={[styles.textheading, {color: white}]}>
-                      {ProductDetail.product.price}
-                    </Text>
                   </View>
                 </View>
 

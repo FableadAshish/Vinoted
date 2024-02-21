@@ -6,7 +6,7 @@ export const isReadyRef = React.createRef();
 
 export const navigationRef = React.createRef();
 
-console.log("navigationRef", navigationRef)
+// console.log("navigationRef", navigationRef)
 // export function navigate(routeName, params){
 //   navigationRef.current.dispatch(
 //     StackActions.navigate(routeName,
@@ -35,16 +35,16 @@ export function resetAppAndNavigate(routeName, params) {
 }
 
 export function replace(routeName, params) {
-  console.log("This is Route Name", routeName)
-  console.log("This is params Name", params)
+  // console.log("This is Route Name", routeName)
+  // console.log("This is params Name", params)
   navigationRef.current.dispatch(StackActions.replace(routeName, params));
 }
 
 export function navigate(routeName, params) {
-  console.log('isReadyRef...', isReadyRef);
-  console.log('navigationRef...', navigationRef);
+  // console.log('isReadyRef...', isReadyRef);
+  // console.log('navigationRef...', navigationRef);
   //if (isReadyRef.current && navigationRef.current) {
-  console.log('routeName');
+  // console.log('routeName');
   // Perform navigation if the app has mounted
   //navigationRef.current.dispatch(
   CommonActions.navigate({

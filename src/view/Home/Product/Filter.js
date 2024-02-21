@@ -51,7 +51,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import {Images} from '../../../../theme/Images';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 class ChooseProduct extends Component {
   constructor(props) {
@@ -190,7 +189,7 @@ class ChooseProduct extends Component {
 
   onSave = () => {
     const {form} = this.state;
-    console.log('Formdataon Filter Again', form);
+    console.log('Formdataon Filter Again Two Times', form);
     // this.props.navigation.navigate("SearchableTastingNots",{Search:form})
     this.props.navigation.navigate('SearchableTastingNots', {Search: form});
     // this.setState({form: {wineType: []}, data: []});
@@ -222,7 +221,8 @@ class ChooseProduct extends Component {
   };
 
   handleChange(name, value) {
-    console.log('name', name, value);
+    console.log('name is here:', name);
+    console.log('value is here:', value);
 
     let errors = this.state.errors;
     unset(errors, name);
@@ -239,7 +239,7 @@ class ChooseProduct extends Component {
     this.setState({mode: currentMode, ShowDate: true});
   };
 
-  showDatePicker = name => {
+  showDatePicker = () => {
     console.log('date picker');
     this.showMode('date');
     // this.setState({date:name})
@@ -287,16 +287,7 @@ class ChooseProduct extends Component {
   };
 
   render() {
-    const {
-      errors,
-      form,
-      Testing,
-      is_favourite,
-      eventTesting,
-      selectedItems,
-      checked,
-      data,
-    } = this.state;
+    const {form, data} = this.state;
     console.log('thdatawinetype', data);
 
     return (
@@ -405,7 +396,7 @@ class ChooseProduct extends Component {
                       'supplierName',
                     )}>
                     <Picker.Item label="Select" value={null} />
-                    {this.state.SupplierList.map((item, i) => {
+                    {this.state.SupplierList.map(item => {
                       return (
                         <Picker.Item label={item.name} value={item.name} />
                       );

@@ -141,7 +141,7 @@ class Notification extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const userdata = await _getUser();
-        console.log("USERDATAON Sparepart", userdata)
+        // console.log("USERDATAON Sparepart", userdata)
         this.setState({ userData: userdata.data })
         this.fetch();
     }

@@ -997,8 +997,8 @@ class ChooseProduct extends Component {
                   <Image
                     source={
                       !isEmpty(form) && form.is_favourite == 1
-                        ? Images.HeartIcon
-                        : Images.FavouriteSelectedIcon
+                        ? Images.FavouriteSelectedIcon
+                        : Images.HeartIcon
                     }
                     style={{
                       height: 20,

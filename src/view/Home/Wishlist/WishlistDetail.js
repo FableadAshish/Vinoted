@@ -153,7 +153,7 @@ class WishlistDetail extends Component {
 
   componentDidMount() {
     const EventDetail = this.props.route.params.wishlistItem;
-    console.log('WishlistItem........', EventDetail);
+    // console.log('WishlistItem........', EventDetail);
     this.setState({form: EventDetail}, () => this.Store());
     //
   }
@@ -165,7 +165,7 @@ class WishlistDetail extends Component {
     http
       .get(`sommelier/myfavouriterating/${EventDetail.id}`)
       .then(res => {
-        console.log('response myfavouriterating..ppp', res);
+        // console.log('response myfavouriterating..ppp', res);
         this.setState(
           {
             EventDetail: res.data,
@@ -178,8 +178,8 @@ class WishlistDetail extends Component {
             //     longitudeDelta: LONGITUDE_DELTA
             // }
           },
-          () =>
-            console.log('EventDetailEventDetail....', this.state.EventDetail),
+          // () =>
+          //   console.log('EventDetailEventDetail....', this.state.EventDetail),
         );
       })
       .catch(err => {
@@ -197,7 +197,7 @@ class WishlistDetail extends Component {
         status: status,
       })
       .then(res => {
-        console.log('response changeeventrequeststatus..', res);
+        // console.log('response changeeventrequeststatus..', res);
         this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
@@ -207,7 +207,7 @@ class WishlistDetail extends Component {
         setTimeout(() => this.props.navigation.push('Home'), 2000);
       })
       .catch(err => {
-        console.log('ERROR on changeeventrequeststatus', err);
+        // console.log('ERROR on changeeventrequeststatus', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
           Toast.show({

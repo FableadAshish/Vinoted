@@ -146,7 +146,7 @@ class ProEventDetails extends Component {
   filterArray = () => {
     const newArray = [];
     this.state.tempArray.forEach(obj => {
-      console.log('Object of Product', obj);
+      // console.log('Object of Product', obj);
       newArray.some(o => console.log('Product OO TYPe', o));
       if (
         !newArray.some(
@@ -158,7 +158,7 @@ class ProEventDetails extends Component {
     });
     this.setState({tempArray: newArray});
 
-    console.log(newArray);
+    // console.log(newArray);
   };
   Store = async () => {
     const EventDetail = this.props.route.params.Eventitem;
@@ -166,7 +166,7 @@ class ProEventDetails extends Component {
     http
       .get(`sommelier/events/${EventDetail.id}`)
       .then(res => {
-        console.log('response EventDetail..ppp', res.data.page);
+        // console.log('response EventDetail..ppp', res.data.page);
         this.setState({loading: false, refreshing: false});
         this.setState(
           {
@@ -207,7 +207,7 @@ class ProEventDetails extends Component {
         status: status,
       })
       .then(res => {
-        console.log('response EventDetail..ppp..', res);
+        // console.log('response EventDetail..ppp..', res);
         this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
@@ -235,7 +235,7 @@ class ProEventDetails extends Component {
 
   getCount() {
     for (let i = 1; i <= this.state.tempArray.length; i++) {
-      console.log('this.getCount() Again and again and again', i, ']: ', i);
+      // console.log('this.getCount() Again and again and again', i, ']: ', i);
       return this.setState({wineCount: i});
     }
   }
@@ -342,13 +342,13 @@ class ProEventDetails extends Component {
 
   render() {
     const {EventDetail} = this.state;
-    console.log('EventDetail Now Second', this.state.tempArray[2]);
+    // console.log('EventDetail Now Second', this.state.tempArray[2]);
     // for (let i = 1; i <= this.state.tempArrayLength; i++) {
     //   console.log('Event Detail Again[ Rhire fgd juyhh', i, ']: ', i);
     //   // return this.setState({wineCount: i});
     // }
-    console.log('this.state.wineCount', this.state.wineCount);
-    console.log('this.state.tempArrayLengthe', this.state.tempArrayLength);
+    // console.log('this.state.wineCount', this.state.wineCount);
+    // console.log('this.state.tempArrayLengthe', this.state.tempArrayLength);
     if (this.state.loading && isEmpty(EventDetail)) {
       return (
         <View style={{backgroundColor: white}}>
@@ -734,11 +734,6 @@ class ProEventDetails extends Component {
                     />
                     <TouchableWithoutFeedback>
                       <View style={styles.iconContainer}>
-                        {/* <Icon
-                onPress={() => this.SearchFilterFunction(this.state.text)}
-                name="search"
-                type="FontAwesome"
-                style={styles.icon}></Icon> */}
                         <TouchableOpacity>
                           <Image
                             source={Images.SearchIcon}
@@ -899,7 +894,7 @@ class ProEventDetails extends Component {
                         contentContainerStyle={{flexGrow: 1}}
                         renderItem={({item}) => (
                           // This will render If Notification is not accepted
-                          console.log('item=======>wer', item.products),
+                          // console.log('item=======>wer', item.products),
                           (
                             <View>
                               {

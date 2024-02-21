@@ -6,29 +6,25 @@ import Messaging from '../../view/Home/Messaging';
 import Wishlist from '../../view/Home/Wishlist';
 import Profile from '../../view/Home/Profile';
 import ProductRatings from '../../view/Home/ProductRatings';
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Images} from '../../../theme/Images';
 import http from '../../http';
-import {Colors} from '../../../theme/Colors';
-import {Icon} from 'native-base';
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
   const [unRead, setUnread] = useState('');
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     http
-  //       .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-  //       .then(res => setUnread(res))
-  //       .catch(err => console.log(err));
-  //   }, 1000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      http
+        .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
+        .then(res => setUnread(res))
+        .catch(err => console.log(err));
+    }, 2000);
 
-  //   // clear interval when component unmounts
-  //   return () => clearInterval(intervalId);
-  // }, [unRead]);
+    return () => clearInterval(intervalId);
+  }, [unRead]);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -76,7 +72,7 @@ export default function MyTabs() {
                   }
                   tintColor={focused ? 'white' : 'grey'}
                 />
-                {/* {unRead !== 0 ? (
+                {unRead !== 0 ? (
                   <View
                     style={{
                       height: 18,
@@ -101,7 +97,7 @@ export default function MyTabs() {
                   </View>
                 ) : (
                   ''
-                )} */}
+                )}
               </View>
             </View>
           ),

@@ -64,7 +64,7 @@ export default class ForgotPassword extends React.Component {
   }
 
   validate = () => {
-    console.log('on validate console');
+    // console.log('on validate console');
     let errors = {};
     const {email} = this.state.form;
     if (isEmpty(email)) {
@@ -85,7 +85,7 @@ export default class ForgotPassword extends React.Component {
     http
       .post(`auth/forgot-password`, form)
       .then(res => {
-        console.log('response forgot pass..', res);
+        // console.log('response forgot pass..', res);
         this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
@@ -96,7 +96,7 @@ export default class ForgotPassword extends React.Component {
         setTimeout(() => this.props.navigation.navigate('Login'), 2000);
       })
       .catch(err => {
-        console.log('errrrro', err);
+        // console.log('errrrro', err);
         let errors = {};
         if (err && err.status.data.code == 422) {
           errors = err.status.data.errors;

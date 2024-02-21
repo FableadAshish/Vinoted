@@ -171,10 +171,10 @@ class Index extends Component {
   handleBackButtonClick = () => {
     //NavigationIssue
     if (this.props.route.params) {
-      console.log('**Calling');
+      // console.log('**Calling');
       this.props.navigation.replace('App', {screen: 'Home'});
     } else {
-      console.log('%%Calling');
+      // console.log('%%Calling');
       this.props.navigation.goBack(); //Change in  future
       BackHandler.removeEventListener('hardwareBackPress');
     }
@@ -188,7 +188,7 @@ class Index extends Component {
     http
       .get(`chatlist?page=${this.state.page}`)
       .then(res => {
-        console.log('chatres', res);
+        // console.log('chatres', res);
         this.setState({
           UsersList:
             this.state.page === 0
@@ -212,7 +212,7 @@ class Index extends Component {
   };
 
   LoadMoreRandomData = () => {
-    console.log('length', this.state.UsersList.length);
+    // console.log('length', this.state.UsersList.length);
     if (this.state.UsersList.length < this.state.total) {
       this.setState(
         {

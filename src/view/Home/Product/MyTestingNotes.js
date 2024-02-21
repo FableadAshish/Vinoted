@@ -170,7 +170,6 @@ class MyTestingNotes extends Component {
       page: 0,
       total: '',
       arrayholder: [],
-      ProductRating: '',
     };
   }
 
@@ -183,9 +182,10 @@ class MyTestingNotes extends Component {
   async componentDidMount() {
     this._isMounted = true;
     const userdata = await _getUser();
-    console.log('USERDATAON Sparepart', userdata);
+    // console.log('USERDATAON Sparepart', userdata);
     this.setState({userData: userdata.data});
     this.fetch();
+    
     // }
   }
 
@@ -349,23 +349,16 @@ class MyTestingNotes extends Component {
               onRefresh={() => this.onRefresh()}
             />
           }>
-          {/* <TouchableOpacity onPress={()=>this.props.navigation.navigate("Filter")} style={{ height: 50, width: "90%", justifyContent: "center", alignItems: "flex-end", alignSelf: "center", }}>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Text style={{ color: white, paddingHorizontal: 5 }}>Filter</Text>
-                            <Icon name="filter" type="Ionicons" style={{ color: white, fontSize: 20 }} />
-                        </View>
-                    </TouchableOpacity> */}
-
           <TouchableOpacity
             // onPress={() => this.props.navigation.navigate('Filter')}
-            // onPress={() => this.props.navigation.push('Filter')}
+            onPress={() => this.props.navigation.push('Filter')}
             style={styles.searchcontainer}>
             {/* <Text style={{ width: "80%", color: primaryColor, fontFamily: sofiaFont }}>Search Here...</Text> */}
             <TextInput
               style={styles.input}
               editable={false}
               // onChangeText={text => this.onTyping(text)}
-              // onChangeText={text => this.SearchFilterFunction(text)}
+              onChangeText={text => this.SearchFilterFunction(text)}
               value={this.state.searchText}
               underlineColorAndroid="transparent"
               placeholder="Filter Tasting Notes"
@@ -373,10 +366,6 @@ class MyTestingNotes extends Component {
             />
             <TouchableWithoutFeedback>
               <View style={styles.iconContainer}>
-                {/* <Icon
-                  name="search"
-                  type="FontAwesome"
-                  style={styles.icon}></Icon> */}
                 <Image
                   source={Images.SearchIcon}
                   style={{height: 25, width: 25}}
@@ -418,141 +407,118 @@ class MyTestingNotes extends Component {
                   />
                 }
                 renderItem={({item}) => (
-                  <TouchableWithoutFeedback
-                  // onPress={() =>
-                  //   this.props.navigation.navigate('ChooseProduct', {
-                  //     Testing: item,
-                  //     //event: item.event,
-                  //     isFromAdditional: true,
-                  //   })
-                  // }>
-                  >
-                    <View
-                      style={[
-                        styles.view,
-                        {
-                          backgroundColor: white,
-                          alignItems: 'center',
-                          overflow: 'hidden',
-                        },
-                      ]}>
+                  console.log('This is Item', item),
+                  (
+                    <TouchableWithoutFeedback
+                    // onPress={() =>
+                    //   this.props.navigation.navigate('ChooseProduct', {
+                    //     Testing: item,
+                    //     //event: item.event,
+                    //     isFromAdditional: true,
+                    //   })
+                    // }>
+                    >
                       <View
-                        style={{
-                          width: 80,
-                          height: 40,
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                        }}>
-                        <TouchableOpacity
-                          // onPress={() => this.saveItem(item)}
-                          activeOpacity={1}
-                          style={{
-                            // position: "absolute",
-                            // top: 0, right: 0,
-
-                            height: 40,
-                            widht: 30,
-                            justifyContent: 'center',
+                        style={[
+                          styles.view,
+                          {
+                            backgroundColor: white,
                             alignItems: 'center',
-                            borderBottomLeftRadius: 25,
-                            backgroundColor: AcceptBottonColor,
-                            flexDirection: 'row',
-                          }}>
-                          {/* <Icon
-                            name="star"
-                            type="FontAwesome"
-                            style={{fontSize: 20, color: white}}
-                          /> */}
-                          <Image
-                            source={Images.StarIcon}
-                            style={{height: 20, width: 20}}
-                          />
-                          <Text
-                            style={[
-                              styles.text,
-                              {
-                                color: white,
-                                paddingHorizontal: 5,
-                                fontWeight: '700',
-                              },
-                            ]}>
-                            {item.overall}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-
-                      <View
-                        style={{
-                          height: 120,
-                          width: width,
-                          justifyContent: 'center',
-                          flexDirection: 'row',
-                          marginTop: 25,
-                          paddingHorizontal: 10,
-                        }}>
-                        <View style={{flex: 0.3, justifyContent: 'center'}}>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              paddingHorizontal: 5,
-                              height: 100,
-                              width: 100,
-                              borderRadius: 50,
-                            }}>
-                            <Image
-                              style={{height: 50, width: 50, borderRadius: 25}}
-                              resizeMode="contain"
-                              source={{uri: item.product.Imagesrc}}
-                            />
-                          </View>
-                        </View>
+                            overflow: 'hidden',
+                          },
+                        ]}>
                         <View
                           style={{
-                            flex: 0.7,
-                            marginHorizontal: 5,
-                            marginTop: 3,
-                            paddingRight: 12,
-                            justifyContent: 'center',
+                            width: 80,
+                            height: 40,
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
                           }}>
-                          <Text
-                            numberOfLines={1}
-                            style={[
-                              styles.text,
-                              {
-                                fontSize: 20,
-                                width: '100%',
-                                color: primaryColor,
-                                textTransform: 'capitalize',
-                                paddingVertical: 2,
-                              },
-                            ]}
-                            numberOfLines={1}>
-                            {item.product.title}
-                          </Text>
-                          {item.product.description == '' ? (
+                          <TouchableOpacity
+                            activeOpacity={1}
+                            style={{
+                              height: 40,
+                              widht: 30,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderBottomLeftRadius: 25,
+                              backgroundColor: AcceptBottonColor,
+                              flexDirection: 'row',
+                            }}>
+                            <Image
+                              source={Images.StarIcon}
+                              style={{height: 20, width: 20}}
+                            />
                             <Text
-                              numberOfLines={2}
                               style={[
                                 styles.text,
                                 {
-                                  fontSize: 12,
+                                  color: white,
+                                  paddingHorizontal: 5,
+                                  fontWeight: '700',
+                                },
+                              ]}>
+                              {item.overall}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <View
+                          style={{
+                            height: 120,
+                            width: width,
+                            justifyContent: 'center',
+                            flexDirection: 'row',
+                            marginTop: 25,
+                            paddingHorizontal: 10,
+                          }}>
+                          <View style={{flex: 0.3, justifyContent: 'center'}}>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                paddingHorizontal: 5,
+                                height: 100,
+                                width: 100,
+                                borderRadius: 50,
+                              }}>
+                              <Image
+                                style={{
+                                  height: 50,
+                                  width: 50,
+                                  borderRadius: 25,
+                                }}
+                                resizeMode="contain"
+                                source={{uri: item.product.Imagesrc}}
+                              />
+                            </View>
+                          </View>
+                          <View
+                            style={{
+                              flex: 0.7,
+                              marginHorizontal: 5,
+                              marginTop: 3,
+                              paddingRight: 12,
+                              justifyContent: 'center',
+                            }}>
+                            <Text
+                              numberOfLines={1}
+                              style={[
+                                styles.text,
+                                {
+                                  fontSize: 20,
                                   width: '100%',
-                                  color: 'gray',
+                                  color: primaryColor,
                                   textTransform: 'capitalize',
                                   paddingVertical: 2,
                                 },
-                              ]}>
-                              {item.product.description}
+                              ]}
+                              numberOfLines={1}>
+                              {item.product.title}
                             </Text>
-                          ) : (
-                            <View
-                              style={{
-                                maxHeight: 50,
-                                overflow: 'hidden',
-                                justifyContent: 'flex-start',
-                              }}>
-                              <HTML
+                            {item.product.description == '' ? (
+                              <Text
+                                numberOfLines={2}
                                 style={[
                                   styles.text,
                                   {
@@ -560,136 +526,142 @@ class MyTestingNotes extends Component {
                                     width: '100%',
                                     color: 'gray',
                                     textTransform: 'capitalize',
-                                    paddingTop: 20,
+                                    paddingVertical: 2,
                                   },
-                                ]}
-                                source={{html: item.product.description}}
+                                ]}>
+                                {item.product.description}
+                              </Text>
+                            ) : (
+                              <View
+                                style={{
+                                  maxHeight: 50,
+                                  overflow: 'hidden',
+                                  justifyContent: 'flex-start',
+                                }}>
+                                <HTML
+                                  style={[
+                                    styles.text,
+                                    {
+                                      fontSize: 12,
+                                      width: '100%',
+                                      color: 'gray',
+                                      textTransform: 'capitalize',
+                                      paddingTop: 20,
+                                    },
+                                  ]}
+                                  source={{html: item.product.description}}
+                                />
+                              </View>
+                            )}
+                            <View style={{flexDirection: 'row'}}>
+                              <Image
+                                source={Images.BritishPoundIcon}
+                                style={{height: 15, width: 15, marginTop: 3}}
                               />
-                              {/* <Text style={[
-                                styles.text,
-                                {
-                                  fontSize: 12,
-                                  width: '100%',
-                                  color: 'gray',
-                                  textTransform: 'capitalize',
-                                  paddingTop: 20,
-                                },
-                              ]}>{item.product.description}</Text> */}
+                              <Text
+                                numberOfLines={1}
+                                style={[
+                                  styles.text,
+                                  {
+                                    fontSize: 12,
+                                    width: '100%',
+                                    color: 'gray',
+                                    textTransform: 'capitalize',
+                                    paddingVertical: 2,
+                                  },
+                                ]}>
+                                {item.product.price}
+                              </Text>
                             </View>
-                          )}
-                          <View style={{flexDirection: 'row'}}>
-                            {/* <Icon
-                              name="pound"
-                              type="Foundation"
-                              style={{
-                                color: 'lightgray',
-                                fontSize: 15,
-                                paddingTop: 3,
-                                marginHorizontal: 2,
-                              }}
-                            /> */}
-                            <Image
-                              source={Images.BritishPoundIcon}
-                              style={{height: 25, width: 25}}
-                            />
-                            <Text
-                              numberOfLines={1}
-                              style={[
-                                styles.text,
-                                {
-                                  fontSize: 12,
-                                  width: '100%',
-                                  color: 'gray',
-                                  textTransform: 'capitalize',
-                                  paddingVertical: 2,
-                                },
-                              ]}>
-                              {item.product.price}
-                            </Text>
-                          </View>
-                        </View>
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          width: '95%',
-                          flex: 1,
-                          alignSelf: 'center',
-                        }}>
-                        <View
-                          style={{
-                            flexDirection: 'column',
-                            flex: 0.5,
-                            paddingHorizontal: 10,
-                          }}>
-                          <View style={{marginVertical: 5}}>
-                            <Text style={{color: 'gray'}}>Date</Text>
-                            <Text style={{fontSize: 15, color: primaryColor}}>
-                              {moment(item.product.created_at).format(
-                                'DD/MM/YYYY',
-                              )}
-                            </Text>
-                          </View>
-                          <View style={{marginVertical: 5}}>
-                            <Text style={{color: 'gray'}}>Location</Text>
-                            <Text style={{fontSize: 15, color: primaryColor}}>
-                              {item.product.city
-                                ? item.product.city
-                                : item.product.region}
-                            </Text>
                           </View>
                         </View>
 
                         <View
                           style={{
-                            flexDirection: 'column',
-                            flex: 0.5,
-                            paddingHorizontal: 10,
+                            flexDirection: 'row',
+                            width: '95%',
+                            flex: 1,
+                            alignSelf: 'center',
                           }}>
-                          <View style={{marginVertical: 5}}>
-                            <Text style={{color: 'gray'}}>Time</Text>
-                            <Text style={{fontSize: 15, color: primaryColor}}>
-                              {moment(item.product.created_at).format('HH:mm')}
-                            </Text>
-                          </View>
-                          <TouchableOpacity
-                            onPress={() =>
-                              this.props.navigation.navigate('ChooseProduct', {
-                                Testing: item,
-                                //event: item.event,
-                                isFromAdditional: true,
-                              })
-                            }
-                            activeOpacity={1}
+                          <View
                             style={{
-                              marginTop: 3,
-                              height: 40,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderRadius: 15,
-                              backgroundColor: primaryColor,
-                              width: '80%',
-                              flexDirection: 'row',
+                              flexDirection: 'column',
+                              flex: 0.5,
+                              paddingHorizontal: 10,
                             }}>
-                            {/* <Icon name="star" type="FontAwesome" style={{ fontSize: 20, color: white }} /> */}
-                            <Text
-                              style={[
-                                styles.text,
-                                {
-                                  fontSize: 14,
-                                  color: white,
-                                  paddingHorizontal: 5,
-                                  fontWeight: '700',
-                                },
-                              ]}>
-                              Read More
-                            </Text>
-                          </TouchableOpacity>
+                            <View style={{marginVertical: 5}}>
+                              <Text style={{color: 'gray'}}>Date</Text>
+                              <Text style={{fontSize: 15, color: primaryColor}}>
+                                {/* {moment(item.product.created_at).format(
+                                'DD/MM/YYYY',
+                              )} */}
+                                {moment(item.created_at).format('DD/MM/YYYY')}
+                              </Text>
+                            </View>
+                            <View style={{marginVertical: 5}}>
+                              <Text style={{color: 'gray'}}>Location</Text>
+                              <Text style={{fontSize: 15, color: primaryColor}}>
+                                {item.product.city
+                                  ? item.product.city
+                                  : item.product.region}
+                              </Text>
+                            </View>
+                          </View>
+
+                          <View
+                            style={{
+                              flexDirection: 'column',
+                              flex: 0.5,
+                              paddingHorizontal: 10,
+                            }}>
+                            <View style={{marginVertical: 5}}>
+                              <Text style={{color: 'gray'}}>Time</Text>
+                              <Text style={{fontSize: 15, color: primaryColor}}>
+                                {/* {moment(item.product.created_at).format('HH:mm')} */}
+                                {moment(item.created_at).format('HH:mm')}
+                              </Text>
+                            </View>
+                            <TouchableOpacity
+                              onPress={() =>
+                                this.props.navigation.navigate(
+                                  'ChooseProduct',
+                                  {
+                                    Testing: item,
+                                    //event: item.event,
+                                    isFromAdditional: true,
+                                  },
+                                )
+                              }
+                              activeOpacity={1}
+                              style={{
+                                marginTop: 3,
+                                height: 40,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 15,
+                                backgroundColor: primaryColor,
+                                width: '80%',
+                                flexDirection: 'row',
+                              }}>
+                              {/* <Icon name="star" type="FontAwesome" style={{ fontSize: 20, color: white }} /> */}
+                              <Text
+                                style={[
+                                  styles.text,
+                                  {
+                                    fontSize: 14,
+                                    color: white,
+                                    paddingHorizontal: 5,
+                                    fontWeight: '700',
+                                  },
+                                ]}>
+                                Read More
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+                  )
                 )}
               />
             )}

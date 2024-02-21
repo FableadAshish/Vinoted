@@ -107,12 +107,12 @@ export default class Signup extends React.Component {
     this.setState({loading: true});
 
     try {
-      console.log('Form data in signup', form);
+      // console.log('Form data in signup', form);
       form.type = 'Sommelier';
     
       const res = await _register(form);
     
-      console.log('Form data in signup with res', res);
+      // console.log('Form data in signup with res', res);
     
       if (res.success === true) {
         this.setState({loading: false, response: res}, () => {
@@ -127,7 +127,7 @@ export default class Signup extends React.Component {
 
     } catch (err) {
       // Handle the error appropriately
-      console.log('Error in onSave:', err);
+      // console.log('Error in onSave:', err);
       this.setState({loading: false});
     
       let errors = {};

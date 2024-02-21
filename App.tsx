@@ -73,7 +73,7 @@ export default class App extends React.Component {
   };
 
   unsuscrib = async () => {
-    console.log('Hello This is');
+    // console.log('Hello This is');
     await messaging().onMessage(async remoteMessage => {
       const notification = remoteMessage.notification;
       console.log('helowin', remoteMessage.notification);

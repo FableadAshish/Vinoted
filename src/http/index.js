@@ -39,7 +39,7 @@ client.interceptors.response.use(
 export default {
   get: async function (url, data) {
     return new Promise((resolve, reject) => {
-      console.log('data', data);
+      // console.log('data', data);
       client
         .get(url, {params: data})
         .then(res => {
@@ -55,7 +55,7 @@ export default {
       client
         .post(url, user)
         .then(res => {
-          console.log('This is Regis Form Res', res, user)
+          // console.log('This is Regis Form Res', res, user)
           resolve(res);
         })
         .catch(error => {
@@ -64,7 +64,7 @@ export default {
     });
   },
   put: async function (url, data) {
-    console.log("This is Api Post Url", url, data)
+    // console.log("This is Api Post Url", url, data)
     return new Promise((resolve, reject) => {
       client
         .put(url, data)

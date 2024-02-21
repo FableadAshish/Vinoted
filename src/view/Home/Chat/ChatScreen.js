@@ -65,7 +65,7 @@ class Chat extends React.Component {
     if (this.props.route.params) {
       this.props.navigation.navigate('Home', {screen: 'Messaging'});
     } else {
-      console.log('%%Calling');
+      // console.log('%%Calling');
       this.props.navigation.goBack(); //Change in  future
       BackHandler.removeListener('hardwareBackPress');
     }
@@ -73,11 +73,11 @@ class Chat extends React.Component {
   };
 
   createSession() {
-    console.log('calling component', this.props.route.params.item.id);
-    console.log(
-      'calling component to check user',
-      this.props.route.params.item,
-    );
+    // console.log('calling component', this.props.route.params.item.id);
+    // console.log(
+    //   'calling component to check user',
+    //   this.props.route.params.item,
+    // );
     this.setState({loading: true});
     http
       .post('session/create', {friend_id: this.props.route.params.item.id})

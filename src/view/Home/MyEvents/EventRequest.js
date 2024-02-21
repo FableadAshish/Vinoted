@@ -182,7 +182,7 @@ class EventRequest extends Component {
 
   Store = async () => {
     const type = this.props.route.params.type;
-    console.log('Events Type', type);
+    // console.log('Events Type', type);
     this.setState({loading: true, type, Events: []});
     http
       .get(`sommelier/events?type=${type}&page=${this.state.page}`)
@@ -198,7 +198,6 @@ class EventRequest extends Component {
             // total: res.data.enquires.total,
             refreshing: false,
           },
-          () => console.log('Events', this.state.Events),
         );
       })
       .catch(err => {

@@ -107,7 +107,7 @@ class PendingEvents extends Component {
                 , loading: false,
                 // total: res.data.enquires.total,
                 refreshing: false
-            }, () => console.log("Events", this.state.Events))
+            })
 
         }).catch(err => {
             let errors = {};

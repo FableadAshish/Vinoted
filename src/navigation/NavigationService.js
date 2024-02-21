@@ -4,7 +4,7 @@ import { CommonActions,StackActions } from '@react-navigation/native';
 let _navigator;
 
 export function setTopLevelNavigator(navigatorRef) {
-  console.log("navigatorRef",navigatorRef)
+  // console.log("navigatorRef",navigatorRef)
   _navigator = navigatorRef;
 }
 

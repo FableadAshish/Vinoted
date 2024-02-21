@@ -36,7 +36,6 @@ const CountryCode = (props)=>{
     getNationcode();
     getfulldata();
   }, []);
-  //  console.log("nation code",fulldata);
   const getCloseWithData = code => {
 
                     props.closeModal(code);
@@ -75,8 +74,6 @@ const CountryCode = (props)=>{
   const contains = (country, query) => {
 
         if (country.name.includes(query) || country.dialing_code.includes(query)){
-      console.log('countries name contains', country);
-      console.log('query name contains', query);
       return true;
     }
     return false;
@@ -109,7 +106,6 @@ const CountryCode = (props)=>{
       />
     );
   };
-  console.log('fulldata', fulldata);
   return (
     <Modal
       isVisible={ModalShow}

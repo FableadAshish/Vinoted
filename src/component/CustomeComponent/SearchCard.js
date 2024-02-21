@@ -32,7 +32,6 @@ const SearchCard = ({
   imagelist,
   onPress,
 }) => {
-  console.log('item ', item);
   return (
     <TouchableOpacity onPress={onPress}>
       <View

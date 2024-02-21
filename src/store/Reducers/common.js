@@ -59,7 +59,7 @@ export default reducers = function (state = initalState, actions) {
         profile_image: actions.profile_image,
       };
     case Set_Prority_color:
-      console.log('Set_Prority_color--- ');
+      // console.log('Set_Prority_color--- ');
       return {
         ...state,
         priority_color: actions.priority_color,

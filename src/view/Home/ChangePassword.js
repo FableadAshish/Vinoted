@@ -63,7 +63,7 @@ export default class ChangePassword extends React.Component {
   }
 
   validate = () => {
-    console.log('on validate console');
+    // console.log('on validate console');
     let errors = {};
     const {current_password, password, password_confirmation} = this.state.form;
     if (isEmpty(current_password)) {
@@ -93,7 +93,7 @@ export default class ChangePassword extends React.Component {
     http
       .post('auth/change-password', form)
       .then(async res => {
-        console.log('response forgot pass..', res);
+        // console.log('response forgot pass..', res);
 
         this.setState({loading: false, refreshing: false}, () =>
           Toast.show({

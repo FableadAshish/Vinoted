@@ -23,7 +23,7 @@ const ImagePickerCom = props => {
       cropping: true,
     }).then(res => {
       setimage(res.path);
-      console.log('res gallery'.res);
+
     });
 
   };
@@ -35,7 +35,7 @@ const ImagePickerCom = props => {
       cropping: true,
     }).then(res => {
       setimage(res.path);
-      console.log(res);
+
     });
   };
 

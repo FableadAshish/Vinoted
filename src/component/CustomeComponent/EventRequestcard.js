@@ -40,7 +40,6 @@ const EventRequest = ({
   imagelist,
   onPress,
 }) => {
-  console.log('EventRequest ', item);
   return (
     <TouchableOpacity
       style={{width: '100%', alignSelf: 'center'}}

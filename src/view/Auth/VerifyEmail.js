@@ -51,7 +51,7 @@ export default class VerifyEmail extends React.Component {
 
     componentDidMount = async () => {
         const usergetotp = await _getUser();
-        console.log("Get User", usergetotp);
+        // console.log("Get User", usergetotp);
         // if (usergetotp) {
         //     Toast.show({
         //         text: `${usergetotp.message}`,
@@ -99,7 +99,7 @@ export default class VerifyEmail extends React.Component {
         if (!isEmpty(errors)) return this.setState({ errors });
         this.setState({ loading: true, errors });
         _verifyOTP(this.state.form).then(async (res) => {
-            console.log("Form data in Res", res);
+            // console.log("Form data in Res", res);
             _handleAuthUser();
             this.setState({userData:{
                 data:{
@@ -113,7 +113,7 @@ export default class VerifyEmail extends React.Component {
             this.props.navigation.navigate("App")
 
         }).catch(err => {
-            console.log("errrrro", err);
+            // console.log("errrrro", err);
             let errors = {};
             if (err && err.status.data.code == 422) {
                 errors = err.status.data.errors;
@@ -143,7 +143,7 @@ export default class VerifyEmail extends React.Component {
         const { form, userData } = this.state;
         form.email = userData.user.email;
         this.setState({ isloading: true });
-        console.log('form resend', form);
+        // console.log('form resend', form);
         let url = 'auth/resend/otp';
         http
             .post(url, this.state.form)
@@ -154,10 +154,10 @@ export default class VerifyEmail extends React.Component {
                     // buttonText: 'Ok',
                     duration: 2000,
                 });
-                console.log('resend otp res : ', res);
+                // console.log('resend otp res : ', res);
             }).catch(err => {
                 this.setState({ isloading: false });
-                console.log("errrrro", err);
+                // console.log("errrrro", err);
                 let errors = {};
                 if (err && err.status.data.code == 422) {
                     errors = err.status.data.errors;

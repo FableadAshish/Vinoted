@@ -92,7 +92,7 @@ export function setUserRole(role = '') {
 }
 
 export function setUtilities(utilities_all = []) {
-  console.log('helodfkldl', utilities_all);
+  // console.log('helodfkldl', utilities_all);
   return dispatch => {
     dispatch({
       type: UTILITIES_ALL,
@@ -102,7 +102,7 @@ export function setUtilities(utilities_all = []) {
 }
 
 export function setCms(cms_data = []) {
-  console.log('helodfkldl cms data..', cms_data);
+  // console.log('helodfkldl cms data..', cms_data);
   return dispatch => {
     dispatch({
       type: CMS_DATA,
@@ -112,7 +112,7 @@ export function setCms(cms_data = []) {
 }
 
 export function setCategories(categories_all = []) {
-  console.log('categories.....', categories_all);
+  // console.log('categories.....', categories_all);
   return dispatch => {
     dispatch({
       type: CATEGORIES_ALL,
@@ -122,7 +122,7 @@ export function setCategories(categories_all = []) {
 }
 
 export const unreadMessages = payload => {
-  console.log('unreadMessages', payload);
+  // console.log('unreadMessages', payload);
   return dispatch => {
     dispatch({
       type: UNREAD_MESSAGES,

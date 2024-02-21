@@ -180,7 +180,7 @@ class Home extends Component {
 
   UNSAFE_componentWillMount() {
     this._backEnable = this.props.navigation.addListener('focus', () => {
-      console.log('focused first time');
+      // console.log('focused first time');
       this.backHandler = BackHandler.addEventListener(
         'backPress',
         this.handleBackButton.bind(this),
@@ -188,7 +188,7 @@ class Home extends Component {
     });
 
     this._backDisable = this.props.navigation.addListener('blur', () => {
-      console.log('calling blur...');
+      // console.log('calling blur...');
       if (this.backHandler) {
         this.backHandler.remove();
       }
@@ -202,7 +202,7 @@ class Home extends Component {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          // onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
@@ -284,20 +284,20 @@ class Home extends Component {
   Store = async () => {
     this.setState({loading: true});
 
-    http
-      .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-      .then(res => console.log('res for unread Message', res))
-      .catch(err => console.log('error for unread Message', err));
+    // http
+    //   .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
+    //   .then(res => console.log('res for unread Message', res))
+    //   .catch(err => console.log('error for unread Message', err));
 
-    http
-      .post('https://www.admin.vinoted-admin.com/api/session/21/read')
-      .then(res => console.log('res for read Message', res))
-      .catch(err => console.log('error for read Message', err));
+    // http
+    //   .post('https://www.admin.vinoted-admin.com/api/session/21/read')
+    //   .then(res => console.log('res for read Message', res))
+    //   .catch(err => console.log('error for read Message', err));
 
     http
       .get(`sommelier/events?type=pendingrequest&page=${this.state.page}`)
       .then(res => {
-        console.log('response Events..', res);
+        // console.log('response Events..', res);
         this.setState(
           {
             Events:
@@ -308,7 +308,6 @@ class Home extends Component {
             // total: res.data.enquires.total,
             refreshing: false,
           },
-          () => console.log('Events', this.state.Events),
         );
       })
       .catch(err => {
@@ -321,7 +320,7 @@ class Home extends Component {
   };
 
   LoadMoreRandomData = () => {
-    console.log('length is here', this.state.Events.length);
+    // console.log('length is here', this.state.Events.length);
     if (this.state.Events.length < this.state.total) {
       this.setState(
         {
@@ -371,14 +370,14 @@ class Home extends Component {
     http
       .get('sommelier/events?type=pendingevent')
       .then(res => {
-        console.log('response pendingevent..', res);
+        // console.log('response pendingevent..', res);
         this.setState(
           {
             PendingEvent: res.data.page.data,
             loading: false,
             refreshing: false,
           },
-          () => console.log('Events111', this.state.PendingEvent),
+          // () => console.log('Events111', this.state.PendingEvent),
         );
       })
       .catch(err => {
@@ -391,13 +390,13 @@ class Home extends Component {
   };
 
   SearchFilterFunction(text) {
-    console.log('hgdcjkTEXT', text);
+    // console.log('hgdcjkTEXT', text);
   }
 
   render() {
     const {user, PendingEvent, Events} = this.state;
-    console.log('hgdcjkTEXTPendingEvent', PendingEvent);
-    console.log('hgdcjkTEXT', Events);
+    // console.log('hgdcjkTEXTPendingEvent', PendingEvent);
+    // console.log('hgdcjkTEXT', Events);
     return (
       <View
         style={{

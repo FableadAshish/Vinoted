@@ -48,7 +48,7 @@ import moment from 'moment';
 import {color} from 'react-native-reanimated';
 const {width, height} = Dimensions.get('window');
 import Modal from 'react-native-modal';
-import { Images } from '../../../../theme/Images';
+import {Images} from '../../../../theme/Images';
 
 let data = ['1', '2', '3'];
 
@@ -154,8 +154,6 @@ const Shimmer = ({}) => {
   );
 };
 
-
-
 class SearchableTastingNots extends Component {
   constructor(props) {
     super(props);
@@ -167,7 +165,7 @@ class SearchableTastingNots extends Component {
       loading: false,
       visible: false,
       refreshing: false,
-      userData: {},
+      // userData: {},
       ProductRating: [],
       page: 0,
       total: '',
@@ -201,19 +199,22 @@ class SearchableTastingNots extends Component {
   };
 
   componentWillUnmount = () => {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    BackHandler.removeEventListener(
+      'hardwareBackPress',
+      this.handleBackButtonClick,
+    );
   };
 
   handleBackButtonClick = () => {
-    this.props.navigation.navigate('MyTestingNotes');
+    this.props.navigation.navigate('Home');
     return true;
   };
 
   async componentDidMount() {
     this._isMounted = true;
-    const userdata = await _getUser();
-    console.log('USERDATAON Sparepart', userdata);
-    this.setState({userData: userdata.data});
+    // const userdata = await _getUser();
+    // console.log('USERDATAON Sparepart lease', userdata);
+    // this.setState({userData: userdata.data});
     const Search = this.props.route.params.Search;
     if (Search) {
       {
@@ -250,7 +251,7 @@ class SearchableTastingNots extends Component {
         }`,
       )
       .then(res => {
-        console.log('responce of ProductRatinge noted Third', res);
+        console.log('responce of ProductRatinge noted Again Second', res.data);
         if (res.data != null) {
           this.setState({
             arrayholder: res.data,
@@ -272,7 +273,7 @@ class SearchableTastingNots extends Component {
         }
       })
       .catch(err => {
-        console.log('errr Filteration', err);
+        console.log('errr Notification', err);
         this.setState({loading: false, refreshing: false});
         // this._snk.show("OIROOR")
       });
@@ -334,7 +335,6 @@ class SearchableTastingNots extends Component {
             duration: 2000,
           }),
         );
-        // setTimeout(() =>  this.fetch(), 2000)
       })
       .catch(err => {
         console.log('ERROR on changeeventrequeststatus', err);
@@ -387,7 +387,7 @@ class SearchableTastingNots extends Component {
 
   render() {
     const {item} = this.state;
-    console.log('pdataNotedd', this.state.ProductRating);
+    console.log('pdataNotedd Again', this.state.ProductRating);
     return (
       <View
         style={{
@@ -403,31 +403,15 @@ class SearchableTastingNots extends Component {
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}
-          // refreshControl={
-          //     <RefreshControl
-          //         refreshing={this.state.refreshing}
-          //         onRefresh={() => this.onRefresh()}
-          //     />
-          // }
-        >
-          {/* <TouchableOpacity onPress={()=>this.props.navigation.navigate("Filter")} style={{ height: 50, width: "90%", justifyContent: "center", alignItems: "flex-end", alignSelf: "center", }}>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Text style={{ color: white, paddingHorizontal: 5 }}>Filter</Text>
-                            <Icon name="filter" type="Ionicons" style={{ color: white, fontSize: 20 }} />
-                        </View>
-                    </TouchableOpacity> */}
-
+          contentContainerStyle={{flexGrow: 1}}>
           <TouchableOpacity
             // onPress={() => this.props.navigation.navigate("Search")}
             onPress={() => this.props.navigation.navigate('Filter')}
             style={styles.searchcontainer}>
-            {/* <Text style={{ width: "80%", color: primaryColor, fontFamily: sofiaFont }}>Search Here...</Text> */}
             <TextInput
               style={styles.input}
               editable={false}
-              // onChangeText={text => this.onTyping(text)}
-              // onChangeText={text => this.SearchFilterFunction(text)}
+              onChangeText={text => this.SearchFilterFunction(text)}
               value={this.state.searchText}
               underlineColorAndroid="transparent"
               placeholder="Search by Name "
@@ -435,11 +419,10 @@ class SearchableTastingNots extends Component {
             />
             <TouchableWithoutFeedback>
               <View style={styles.iconContainer}>
-                {/* <Icon
-                  name="search"
-                  type="FontAwesome"
-                  style={styles.icon}></Icon> */}
-                   <Image source={Images.SearchIcon} style={{height:22, width:22}}/>
+                <Image
+                  source={Images.SearchIcon}
+                  style={{height: 22, width: 22}}
+                />
               </View>
             </TouchableWithoutFeedback>
           </TouchableOpacity>
@@ -465,7 +448,6 @@ class SearchableTastingNots extends Component {
                 horizontal={false}
                 scrollEventThrottle={16}
                 onEndReachedThreshold={0.5}
-                showsVerticalScrollIndicator={false}
                 onEndReached={this.LoadMoreRandomData}
                 ListEmptyComponent={() => this._renderEmptyComponent()}
                 ListFooterComponent={() => this._renderFooterComponent()}
@@ -499,9 +481,6 @@ class SearchableTastingNots extends Component {
                           onPress={() => this.saveItem(item)}
                           activeOpacity={1}
                           style={{
-                            // position: "absolute",
-                            // top: 0, right: 0,
-
                             height: 40,
                             widht: 30,
                             justifyContent: 'center',
@@ -510,10 +489,9 @@ class SearchableTastingNots extends Component {
                             backgroundColor: AcceptBottonColor,
                             flexDirection: 'row',
                           }}>
-                          <Icon
-                            name="star"
-                            type="FontAwesome"
-                            style={{fontSize: 20, color: white}}
+                          <Image
+                            source={Images.StarIcon}
+                            style={{height: 22, width: 22}}
                           />
                           <Text
                             style={[
@@ -572,8 +550,7 @@ class SearchableTastingNots extends Component {
                                 textTransform: 'capitalize',
                                 paddingVertical: 2,
                               },
-                            ]}
-                            numberOfLines={1}>
+                            ]}>
                             {item.product.title}
                           </Text>
                           {item.product.description == '' ? (
@@ -609,20 +586,15 @@ class SearchableTastingNots extends Component {
                                     paddingTop: 20,
                                   },
                                 ]}
-                                html={item.product.description}
+                                source={{html: item.product.description}}
                               />
                             </View>
                           )}
                           <View style={{flexDirection: 'row'}}>
-                            <Icon
-                              name="pound"
-                              type="Foundation"
-                              style={{
-                                color: 'lightgray',
-                                fontSize: 15,
-                                paddingTop: 3,
-                                marginHorizontal: 5,
-                              }}
+                            <Image
+                              source={Images.BritishPoundIcon}
+                              style={{height: 22, width: 22}}
+                              tintColor={'gray'}
                             />
                             <Text
                               numberOfLines={1}
@@ -631,7 +603,7 @@ class SearchableTastingNots extends Component {
                                 {
                                   fontSize: 12,
                                   width: '100%',
-                                  color: 'lightgray',
+                                  color: 'gray',
                                   textTransform: 'capitalize',
                                   paddingVertical: 2,
                                 },
@@ -658,9 +630,7 @@ class SearchableTastingNots extends Component {
                           <View style={{marginVertical: 5}}>
                             <Text style={{color: 'gray'}}>Date</Text>
                             <Text style={{fontSize: 15, color: primaryColor}}>
-                              {moment(item.product.created_at).format(
-                                'DD/MM/YYYY',
-                              )}
+                              {moment(item.created_at).format('DD/MM/YYYY')}
                             </Text>
                           </View>
                           <View style={{marginVertical: 5}}>
@@ -682,7 +652,7 @@ class SearchableTastingNots extends Component {
                           <View style={{marginVertical: 5}}>
                             <Text style={{color: 'gray'}}>Time</Text>
                             <Text style={{fontSize: 15, color: primaryColor}}>
-                              {moment(item.product.created_at).format('HH:mm')}
+                              {moment(item.created_at).format('HH:mm')}
                             </Text>
                           </View>
                           <TouchableOpacity
@@ -698,7 +668,11 @@ class SearchableTastingNots extends Component {
                               width: '80%',
                               flexDirection: 'row',
                             }}>
-                            {/* <Icon name="star" type="FontAwesome" style={{ fontSize: 20, color: white }} /> */}
+                            {/* <Icon
+                              name="star"
+                              type="FontAwesome"
+                              style={{fontSize: 20, color: white}}
+                            /> */}
                             <Text
                               style={[
                                 styles.text,
@@ -758,13 +732,9 @@ class SearchableTastingNots extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="cross"
-                    type="Entypo"
-                    style={{fontSize: 18, color: primaryColor}}
-                    onPress={() => {
-                      this.setModalVisible(false);
-                    }}
+                  <Image
+                    source={Images.CancelIcon}
+                    style={{height: 30, width: 30}}
                   />
                 </TouchableOpacity>
                 <View style={styles.modelheader}>
@@ -774,8 +744,6 @@ class SearchableTastingNots extends Component {
                         color: primaryColor,
                         fontWeight: 'bold',
                         fontSize: 20,
-                        // paddingVertical: 5,
-                        // textAlignVertical: "top",
                         fontFamily: sofiaFont,
                       },
                     ]}>
@@ -872,10 +840,6 @@ class SearchableTastingNots extends Component {
                         {item.listing_candidate}
                       </Text>
                     </View>
-                    {/* <View style={{ marginVertical: 5 }}>
-                                            <Text style={{ color: "gray" }}>Alcohol</Text>
-                                            <Text style={{ fontSize: 15, color: primaryColor }}>{item.alcohol}</Text>
-                                        </View> */}
                   </View>
                 </View>
                 <View
@@ -910,7 +874,23 @@ class SearchableTastingNots extends Component {
                     flexDirection: 'row',
                     paddingHorizontal: 10,
                   }}>
-                  <Icon
+                      <Image
+                    source={
+                      !isEmpty(item) && item.is_favourite == 1
+                        ? Images.FavouriteSelectedIcon
+                        : Images.HeartIcon
+                    }
+                    style={{
+                      height: 20,
+                      width: 20,
+                      color:
+                        !isEmpty(item) && item.is_favourite == 1
+                          ? primaryColor
+                          : 'gray',
+                    }}
+                    tintColor={'red'}
+                  />
+                  {/* <Icon
                     name={
                       !isEmpty(item) && item.is_favourite == 1
                         ? 'heart'
@@ -923,7 +903,7 @@ class SearchableTastingNots extends Component {
                           ? primaryColor
                           : 'gray',
                     }}
-                  />
+                  /> */}
                   <Text style={{color: primaryColor, paddingHorizontal: 10}}>
                     Favourite
                   </Text>
@@ -956,8 +936,6 @@ const styles = StyleSheet.create({
   text: {
     color: white,
     fontSize: 14,
-    // paddingVertical: 5,
-    // textAlignVertical: "top",
     fontFamily: sofiaFont,
   },
   view: {
@@ -965,7 +943,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 5,
     paddingBottom: 10,
-    // paddingHorizontal: 5,
   },
   modelView: {
     height: '80%',
