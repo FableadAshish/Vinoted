@@ -1,7 +1,7 @@
-import {combineReducers} from 'redux'
+import {combineReducers} from 'redux';
 import commonReducer from './reducers';
-import {reducer as form} from 'redux-form'
+import {reducer as form} from 'redux-form';
 export default reducers = combineReducers({
-    root:commonReducer,
-    form:form,
-})    
+  root: commonReducer,
+  form: form,
+});

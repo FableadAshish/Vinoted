@@ -6,7 +6,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 60,
-    paddingLeft: 10,
+    paddingLeft: 20,
+    paddingTop: 25,
     justifyContent: 'space-between',
   },
   headerIcon: {

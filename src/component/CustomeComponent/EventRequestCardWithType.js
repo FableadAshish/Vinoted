@@ -15,7 +15,7 @@ import {
   textColor,
   sofiaFont,
 } from '../../style/variables';
-import { Images } from '../../../theme/Images';
+import {Images} from '../../../theme/Images';
 const {width, height} = Dimensions.get('window');
 
 const EventRequestWithType = ({
@@ -36,9 +36,10 @@ const EventRequestWithType = ({
   date,
   imagelist,
   onPress,
+  id,
+  countId,
+  noMore,
 }) => {
-  console.log('colorcolorcolor ', color);
-
   const getColor = color => {
     if (color === 'White') {
       return '#FBD301';
@@ -58,6 +59,7 @@ const EventRequestWithType = ({
       return 'black';
     }
   };
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View
@@ -75,13 +77,15 @@ const EventRequestWithType = ({
           <View
             style={{
               width: '100%',
-              flexDirection: 'column',
+              flexDirection: 'row',
               marginHorizontal: 0,
               marginBottom: 0,
               justifyContent: 'center',
               alignItems: 'center',
+              gap: 5,
             }}>
             {/* }}> */}
+            {/* <Text style={{color: primaryColor, fontSize: 12, marginBottom:8}}> {countId+ ('.')}</Text> */}
             <View
               style={{
                 borderWidth: 1,
@@ -100,7 +104,7 @@ const EventRequestWithType = ({
                 marginBottom: 8,
               }}
             />
-            < Text style={{ color: primaryColor, fontSize: 12 }}> {color}</Text>
+            {/* ThisChange */}
           </View>
         </View>
         <View style={{flex: 0.2, justifyContent: 'center'}}>
@@ -160,7 +164,10 @@ const EventRequestWithType = ({
                     marginHorizontal: 0,
                   }}
                 /> */}
-                <Image source={Images.BritishPoundIcon} style={{height:15, width:15}}/>
+                <Image
+                  source={Images.BritishPoundIcon}
+                  style={{height: 15, width: 15}}
+                />
                 <Text
                   numberOfLines={1}
                   style={[
@@ -245,7 +252,29 @@ const EventRequestWithType = ({
             justifyContent: 'flex-end',
             paddingHorizontal: 10,
           }}>
-          {more && (
+          {noMore == true ? (
+            <TouchableOpacity
+              onPress={onPressMore}
+              style={{
+                height: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'flex-end',
+                borderRadius: 15,
+                backgroundColor: primaryColor,
+                width: '90%',
+                // opacity: 0.6,
+                marginVertical: 10,
+              }}>
+              <Text
+                style={[
+                  styles.text,
+                  {color: white, paddingHorizontal: 2, fontWeight: '700'},
+                ]}>
+                <Text>Tasting</Text>
+              </Text>
+            </TouchableOpacity>
+          ) :(
             <TouchableOpacity
               onPress={onPressMore}
               style={{
@@ -256,7 +285,6 @@ const EventRequestWithType = ({
                 borderRadius: 15,
                 backgroundColor: MoreButton,
                 width: '90%',
-                opacity: 0.6,
                 marginVertical: 10,
               }}>
               <Text
@@ -264,11 +292,11 @@ const EventRequestWithType = ({
                   styles.text,
                   {color: textColor, paddingHorizontal: 2, fontWeight: '700'},
                 ]}>
-                {more}
+                <Text>Tasted</Text>
               </Text>
             </TouchableOpacity>
           )}
-          {morefromHome && (
+          {/* {morefromHome && (
             <TouchableOpacity
               onPress={onPress}
               style={{
@@ -290,7 +318,7 @@ const EventRequestWithType = ({
                 {morefromHome}
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

@@ -57,10 +57,10 @@ class Profile extends Component {
       refreshing: false,
       editable: false,
       errors: {},
-      selectedImage: null
+      selectedImage: null,
     };
-    this.setSelectedImage = this.setSelectedImage.bind(this);
-
+    // this.setSelectedImage = this.setSelectedImage.bind(this);
+    this.handleChangeImage = this.handleChangeImage.bind(this);
   }
   componentDidMount() {
     this.utilities_all();
@@ -165,65 +165,6 @@ class Profile extends Component {
     this.setState({ form });
   }
 
-  setSelectedImage = (image) => {
-    this.setState({ selectedImage: image });
-  }
-  
-
-  handleImagePicker = () => {
-    ImagePicker.openPicker({
-      width,
-      height,
-      cropping: true,
-    })
-      .then((image) => {
-        this.setSelectedImage(image.path);
-        this.setHeight(height);
-        this.setWidth(width);
-        console.log(image);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  handleCameraPicker = () => {
-    ImagePicker.openCamera({
-      width,
-      height,
-      cropping: true,
-    })
-      .then((image) => {
-        this.setSelectedImage({ selectedImage: image.path });
-        this.setHeight(height);
-        this.setWidth(width);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  handleCropImage = () => {
-    if (selectedImage) {
-      ImagePicker.openCropper({
-        path: selectedImage,
-        width,
-        height,
-        cropping: true,
-        cropperCircleOverlay: false, // Set to true if you want a circular crop
-        freeStyleCropEnabled: true,
-      })
-        .then((image) => {
-          this.setSelectedImage(image.path);
-          setHeight(250);
-          setWidth(170);
-          console.log(image);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
   _handleImageCropper = fileType => {
     // this.setState({imageModalVisible: false});
     // ActionSheet.show(
@@ -244,7 +185,6 @@ class Profile extends Component {
     // );
     // console.log("Hell")
   };
-
 
   fromGallery = fileType => {
     ImagePicker.openPicker({
@@ -334,8 +274,8 @@ class Profile extends Component {
     }
 
     const { form } = this.state;
-    const fd = new FormData()
-    console.log("This is FD Form Again", form);
+    const fd = new FormData();
+    console.log('This is FD Form Again', form);
     if (!isEmpty(this.state.form.photo)) {
       fd.append('photo', {
         name: this.state.form.photo.fileName
@@ -608,9 +548,7 @@ class Profile extends Component {
               loading={true}
               // ...
             /> */}
-            <View>
-              {/* <Loader /> */}
-            </View>
+            <View>{/* <Loader /> */}</View>
           </ScrollView>
         ) : (
           <ScrollView
@@ -627,7 +565,7 @@ class Profile extends Component {
                 <TouchableWithoutFeedback
                   //  onPress={this.chooseFile.bind(this)}
                   // onPress={() => this._handleImageCropper('photo')}>
-                  onPress={()=>this.handleImagePicker('photo')}>
+                  onPress={() => this.fromGallery('photo')}>
                   <View style={[styles.view, { alignItems: 'center' }]}>
                     {!isEmpty(form.photo) ? (
                       <Image
@@ -856,201 +794,6 @@ class Profile extends Component {
                       </Text>
                     )}
                 </View>
-
-                {/* <View style={{ marginVertical: 10, width: "100%", height: 70 }}>
-                                    <Text style={[styles.textTile, { color: "gray" }]}>Phone Number</Text>
-                                    {editable ?
-                                        <View style={{ width: "100%", height: 50, borderBottomWidth: 1, borderBottomColor: white, }}>
-                                            <View style={{ flexDirection: "row", width: "100%", height: 50, }}>
-
-                                                <View style={{ flex: 0.4 }}>
-                                                    <View>
-
-                                                        {!isEmpty(this.state.country) && (
-                                                            <Picker
-                                                                note
-                                                                name="dialing_code"
-                                                                mode="dropdown"
-                                                                style={{ color: white, }}
-                                                                selectedValue={this.state.form.dialing_code}
-                                                                onValueChange={this.handleChange.bind(this, 'dialing_code')}>
-
-                                                                {this.state.country.map((l, i) => {
-                                                                    return (
-                                                                        // <Picker.Item
-                                                                        //     value="ghjj"
-                                                                        //     label="fg"
-                                                                        //     // key={i}
-                                                                        // />
-                                                                        <Picker.Item
-                                                                            value={`${l.dialing_code}`}
-                                                                            label={`${l.dialing_code}`}
-                                                                            key={i}
-                                                                        />
-                                                                    );
-                                                                })}
-                                                            </Picker>
-                                                        )}
-                                                    </View>
-                                                    {!isEmpty(errors) && errors["dialing_code"] && isEmpty(this.state.form.dialing_code) && (
-                                                        <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["dialing_code"]}</Text>
-                                                    )}
-                                                </View>
-                                                <View style={[{ flex: 0.6, paddingRight: 20 }]}>
-                                                    <TextInput
-                                                        name="phone"
-                                                        placeholder="Phone"
-                                                        maxLength={10}
-                                                        keyboardType="number-pad"
-                                                        placeholderTextColor="lightgray"
-                                                        value={form.phone}
-                                                        style={{ fontFamily: sofiaFont, fontSize: 15, marginTop: 1, color: white, width: "100%", }}
-                                                        onChangeText={this.handleChange.bind(this, 'phone')}
-                                                    />
-                                                </View>
-                                            </View>
-
-                                        </View>
-                                        :
-                                        <View >
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: white, width: "100%", paddingVertical: 10 }}>{!isEmpty(form.dialing_code) && form.phone && form.dialing_code}{!isEmpty(form.dialing_code) && form.phone && "-"}{!isEmpty(form.phone) ? form.phone : "Phone Number"}</Text>
-                                        </View>}
-                                    {!isEmpty(errors) && errors["phone"] && isEmpty(this.state.form.phone) && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["phone"]}</Text>
-                                    )}
-                                </View> */}
-
-                {/* <View style={{ marginVertical: 10, justifyContent: "center" }}>
-                                    <Text style={[styles.textTile, { color: "gray" }]}>Address</Text>
-                                    {editable ?
-                                        <View style={[{ borderBottomWidth: 1, borderBottomColor: white }]}>
-                                            <TextInput
-                                                name="address_1"
-                                                placeholder="Address"
-                                                placeholderTextColor="lightgray"
-                                                value={form.address_1}
-                                                style={{ fontFamily: sofiaFont, fontSize: 15, color: white, }}
-                                                onChangeText={this.handleChange.bind(this, 'address_1')}
-                                            />
-                                        </View>
-                                        :
-                                        <View >
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: white, width: "100%", paddingVertical: 10 }} numberOfLines={2}>{!isEmpty(form.address_1) ? form.address_1 : "Address"}</Text>
-                                        </View>}
-                                    {!isEmpty(errors) && errors["address_1"] && isEmpty(this.state.form.address_1) && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["address_1"]}</Text>
-                                    )}
-                                </View> */}
-
-                {/* <View style={{ marginVertical: 10, justifyContent: "center" }}>
-                                    <Text style={[styles.textTile, { color: "gray" }]}>City</Text>
-                                    {editable ?
-                                        <View style={[{ borderBottomWidth: 1, borderBottomColor: white }]}>
-                                            <TextInput
-                                                name="city"
-                                                placeholder="City"
-                                                placeholderTextColor="lightgray"
-                                                value={form.city}
-                                                style={{ fontFamily: sofiaFont, fontSize: 15, color: white, }}
-                                                onChangeText={this.handleChange.bind(this, 'city')}
-                                            />
-                                        </View>
-                                        :
-                                        <View >
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: white, width: "100%", paddingVertical: 10 }}>{!isEmpty(form.city) ? form.city : "City"}</Text>
-                                        </View>}
-                                    {!isEmpty(errors) && errors["city"] && isEmpty(this.state.form.city) && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["city"]}</Text>
-                                    )}
-                                </View>
-
-
-                                <View style={{ marginVertical: 10, justifyContent: "center" }}>
-                                    <Text style={[styles.textTile, { color: "gray" }]}>State</Text>
-                                    {editable ?
-                                        <View style={[{ borderBottomWidth: 1, borderBottomColor: white }]}>
-                                            <TextInput
-                                                name="state"
-                                                placeholder="State"
-                                                placeholderTextColor="lightgray"
-                                                value={form.state}
-                                                style={{ fontFamily: sofiaFont, fontSize: 15, color: white, }}
-                                                onChangeText={this.handleChange.bind(this, 'state')}
-                                            />
-                                        </View>
-                                        :
-                                        <View >
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: white, width: "100%", paddingVertical: 10 }}>{!isEmpty(form.state) ? form.state : "State"}</Text>
-                                        </View>}
-                                    {!isEmpty(errors) && errors["state"] && isEmpty(this.state.form.state) && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["state"]}</Text>
-                                    )}
-                                </View>
-
-                                <View style={{ marginVertical: 10, justifyContent: "center" }}>
-                                    <Text style={[styles.textTile, { color: "gray" }]}>Post code</Text>
-                                    {editable ?
-                                        <View style={[{ borderBottomWidth: 1, borderBottomColor: white }]}>
-                                            <TextInput
-                                                name="postcode"
-                                                placeholder="Postcode"
-                                                placeholderTextColor="lightgray"
-                                                keyboardType="email-address"
-                                                value={form.postcode}
-                                                style={{ fontFamily: sofiaFont, fontSize: 15, color: white, }}
-                                                onChangeText={this.handleChange.bind(this, 'postcode')}
-                                            />
-                                        </View>
-                                        :
-                                        <View >
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: white, width: "100%", paddingVertical: 10 }}>{!isEmpty(form.postcode) ? form.postcode : "Post Code"}</Text>
-                                        </View>}
-                                    {!isEmpty(errors) && errors["postcode"] && isEmpty(this.state.form.postcode) && (
-                                        <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["postcode"]}</Text>
-                                    )}
-                                </View>
-                                <View style={{ marginVertical: 10, justifyContent: "center" }}>
-                                    <Text style={[styles.textTile, { color: "gray" }]}>Country</Text>
-                                    {editable ?
-                                        <View >
-                                            <View>
-
-                                                {!isEmpty(this.state.country) && (
-                                                    <Picker
-                                                        note
-                                                        name="country_code"
-                                                        mode="dropdown"
-                                                        style={{ color: white, }}
-                                                        selectedValue={this.state.form.country_code}
-                                                        onValueChange={this.handleChange.bind(this, 'country_code')}>
-
-                                                        {this.state.country.map((l, i) => {
-                                                            return (
-                                                                // <Picker.Item
-                                                                //     value="ghjj"
-                                                                //     label="fg"
-                                                                //     // key={i}
-                                                                // />
-                                                                <Picker.Item
-                                                                    value={`${l.code}`}
-                                                                    label={`${l.name}`}
-                                                                    key={i}
-                                                                />
-                                                            );
-                                                        })}
-                                                    </Picker>
-                                                )}
-                                                <View style={{ backgroundColor: white, height: 1, width: "100%" }}></View>
-                                            </View>
-                                            {!isEmpty(errors) && errors["country_code"] && isEmpty(this.state.form.country_code) && (
-                                                <Text style={{ fontFamily: sofiaFont, fontSize: 10, color: 'red' }}>{errors["country_code"]}</Text>
-                                            )}
-                                        </View>
-                                        :
-                                        <View >
-                                            <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: white, width: "100%", paddingVertical: 10 }}>{!isEmpty(form.country_code) ? form.country_name : "Country Name"}</Text>
-                                        </View>}
-                                </View> */}
               </View>
 
               {editable ? (

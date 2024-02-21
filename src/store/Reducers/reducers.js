@@ -12,7 +12,8 @@ import {
   CATEGORIES_ALL,
   SET_THEME,
   USER_ROLE,
-  CMS_DATA
+  CMS_DATA,
+  UNREAD_MESSAGES,
 } from '../constants';
 
 const initalState = {
@@ -21,17 +22,18 @@ const initalState = {
   showError: false,
   toast: {},
   user: {},
-  theme : {},
+  theme: {},
   cartCount: 0,
   isConnected: false,
   connectionInfo: {},
   utilities_all: [],
   categories_all: [],
-  role : '',
-  cms_data : []
+  role: '',
+  cms_data: [],
+  UNREAD_MESSAGES: 0,
 };
 
-export default (reducers = function(state = initalState, actions) {
+export default reducers = function (state = initalState, actions) {
   switch (actions.type) {
     case LOADING:
       return {
@@ -43,7 +45,7 @@ export default (reducers = function(state = initalState, actions) {
         ...state,
         user: actions.user,
       };
-      case USER_ROLE:
+    case USER_ROLE:
       return {
         ...state,
         role: actions.role,
@@ -53,7 +55,7 @@ export default (reducers = function(state = initalState, actions) {
         ...state,
         theme: actions.theme,
       };
-      case CMS_DATA:
+    case CMS_DATA:
       return {
         ...state,
         cms_data: actions.cms_data,
@@ -112,7 +114,12 @@ export default (reducers = function(state = initalState, actions) {
         ...state,
         categories_all: actions.categories_all,
       };
+    case UNREAD_MESSAGES:
+      return {
+        ...state,
+        UNREAD_MESSAGES: UNREAD_MESSAGES,
+      };
     default:
       return state;
   }
-});
+};

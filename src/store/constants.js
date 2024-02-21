@@ -16,6 +16,8 @@ export const SET_THEME = 'SET_THEME';
 export const SET_CART = 'SET_CART';
 export const RESET_CART = 'RESET_CART';
 
+export const UNREAD_MESSAGES = 'UNREAD_MESSAGES';
+
 //academic
 export const ADD_COURSE = 'ADD_COURSE';
 export const REMOVE_COURSE = 'REMOVE_COURSE';

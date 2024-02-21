@@ -39,10 +39,10 @@ const header = ({
             {...iconProps}
             onPress={onPress}
             style={{color: iconColor, padding: 10}}></Icon> */}
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity onPress={onPress} style={{width:50}}>
             <Image
               source={iconProps}
-              style={{color: 'red', padding: 10, height: 22, width: 22}}
+              style={{color: 'red', padding: 8, height: 15, width: 15}}
               tintColor={iconColor}
             />
           </TouchableOpacity>

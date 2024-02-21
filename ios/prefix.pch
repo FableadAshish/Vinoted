@@ -1,12 +1,9 @@
-//
-//  prefix.pch
-//  AwesomeProject
-//
-//  Created by iMac on 08/02/24.
-//
+#import <Availability.h>
 
-#ifndef prefix_h
-#define prefix_h
+#ifndef AwesomeProjectVersionNumber
+#define AwesomeProjectVersionNumber 1.
+#endif
 
-
-#endif /* prefix_h */
+#ifndef AwesomeProjectVersionString
+#define AwesomeProjectVersionString @"1."
+#endif

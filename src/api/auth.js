@@ -26,7 +26,7 @@ export async function _register(user) {
 }
 // }
 
-export async function _login(user) {
+export async function _(user) {
   try {
     let url = 'auth/login';
     let userLoginData = await http.post(url, user); // Note the 'await' here
@@ -39,17 +39,44 @@ export async function _login(user) {
   }
 }
 
-  // let url = 'auth/login';
-  // http
-  //   .post(url, user)
-  //   .then(async res => {
-  //     store.dispatch(setUser(res));
-  //     resolve(_handleAuthentication(res));
-  //   })
-  //   .catch(err => {
-  //     reject(err);
-  //     console.log('Error in log in Api', err);
-  //   });
+// export function _login(user) {
+//   return new Promise(async (resolve, reject) => {
+//     let url = 'auth/login';
+//     http
+//       .post(url, user)
+//       .then(async res => {
+//         store.dispatch(setUser(res));
+//         resolve(_handleAuthentication(res));
+//       })
+//       .catch(err => {
+//         reject(err);
+//         console.log('Error in log in Api', err);
+//       });
+//   });
+// }
+export async function _login(user) {
+  try {
+    let url = 'auth/login';
+    const res = await http.post(url, user);
+    store.dispatch(setUser(res));
+    return _handleAuthentication(res);
+  } catch (error) {
+    console.log('Error in log in Api', error);
+    throw error;
+  }
+}
+
+// let url = 'auth/login';
+// http
+//   .post(url, user)
+//   .then(async res => {
+//     store.dispatch(setUser(res));
+//     resolve(_handleAuthentication(res));
+//   })
+//   .catch(err => {
+//     reject(err);
+//     console.log('Error in log in Api', err);
+//   });
 // }
 // }
 
@@ -105,7 +132,6 @@ export function _setLocalStorage(data) {
   });
 }
 
-
 export function _getAcessToken() {
   return new Promise((resolve, reject) => {
     _getUser()
@@ -131,7 +157,7 @@ export function _getUser() {
     await AsyncStorage.getItem(localStorageName)
       .then(res => {
         console.log('getuserFunction', JSON.parse(res));
-        console.log('localStorageName', JSON.parse(res).data.access_token);
+        console.log('localStorageName', JSON.parse(res).access_token);
         resolve(JSON.parse(res));
       })
       .catch(err => {
@@ -143,31 +169,30 @@ export function _getUser() {
 
 export function _handleAuthUser(userData) {
   return new Promise((resolve, reject) => {
-    _getUser().then(res => {
-      const { user } = res.data;
-      console.log("This is user foor Verification:", user)
-          if (isEmpty(res) && isEmpty(res.data)) {
-              console.log("idhar aaya111111")
-              RootNavigation.replace('Auth');
-              resolve(true)
-          } 
-          else if(user.email_verified_at==null){
-              console.log("VerifyEmail......handle2222")
-              RootNavigation.replace("Auth",{screen:'VerifyEmail'});
-              resolve(user)
-          }
-          else {
-              console.log("idhar aaya33333")
-              RootNavigation.replace('App');
-              resolve(user)
-          }
-      }).catch(err => {
+    _getUser()
+      .then(res => {
+        const {user} = res.data;
+        console.log('This is user foor Verification:', user);
+        if (isEmpty(res) && isEmpty(res.data)) {
+          console.log('idhar aaya111111');
           RootNavigation.replace('Auth');
-          reject(false);
+          resolve(true);
+        } else if (user.email_verified_at == null) {
+          console.log('VerifyEmail......handle2222');
+          RootNavigation.replace('Auth', {screen: 'VerifyEmail'});
+          resolve(user);
+        } else {
+          console.log('idhar aaya33333');
+          RootNavigation.replace('App');
+          resolve(user);
+        }
       })
-  })
+      .catch(err => {
+        RootNavigation.replace('Auth');
+        reject(false);
+      });
+  });
 }
-
 
 export function _logout() {
   return new Promise(async (resolve, reject) => {

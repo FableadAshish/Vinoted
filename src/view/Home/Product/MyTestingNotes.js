@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   FlatList,
@@ -32,27 +32,27 @@ import {
   TexColor,
   sofiaFont,
 } from '../../../style/variables';
-import { isEmpty, isNull } from 'lodash';
-import { connect } from 'react-redux';
+import {isEmpty, isNull} from 'lodash';
+import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-import { Icon, Toast } from 'native-base';
-import { _getUser } from '../../../api/auth';
+import {Icon, Toast} from 'native-base';
+import {_getUser} from '../../../api/auth';
 import BottomIndicator from '../../../component/Indicator/BottomIndicator';
 import http from '../../../http';
 import FLEC from '../../../component/Common/FLEC';
 import FPI from '../../../component/Indicator/FPI';
 import moment from 'moment';
-import { color } from 'react-native-reanimated';
-const { width, height } = Dimensions.get('window');
+import {color} from 'react-native-reanimated';
+const {width, height} = Dimensions.get('window');
 import Modal from 'react-native-modal';
 import Search from '../Search';
-import { Images } from '../../../../theme/Images';
+import {Images} from '../../../../theme/Images';
 
 let data = ['1', '2', '3'];
 
-const Shimmer = ({ }) => {
+const Shimmer = ({}) => {
   return (
     <View
       style={[
@@ -74,7 +74,7 @@ const Shimmer = ({ }) => {
           flexDirection: 'row',
           alignSelf: 'center',
         }}>
-        <View style={{ flex: 0.3, justifyContent: 'center' }}>
+        <View style={{flex: 0.3, justifyContent: 'center'}}>
           <View
             style={{
               justifyContent: 'center',
@@ -84,7 +84,7 @@ const Shimmer = ({ }) => {
               borderRadius: 50,
             }}>
             <ShimmerPlaceHolder
-              style={{ height: 50, width: 50, borderRadius: 25 }}
+              style={{height: 50, width: 50, borderRadius: 25}}
             />
           </View>
         </View>
@@ -154,8 +154,6 @@ const Shimmer = ({ }) => {
   );
 };
 
-
-
 class MyTestingNotes extends Component {
   constructor(props) {
     super(props);
@@ -177,7 +175,7 @@ class MyTestingNotes extends Component {
   }
 
   onRefresh() {
-    this.setState({ refreshing: true, page: 0, ProductRating: [] }, () =>
+    this.setState({refreshing: true, page: 0, ProductRating: []}, () =>
       this.fetch(),
     );
   }
@@ -186,13 +184,13 @@ class MyTestingNotes extends Component {
     this._isMounted = true;
     const userdata = await _getUser();
     console.log('USERDATAON Sparepart', userdata);
-    this.setState({ userData: userdata.data });
+    this.setState({userData: userdata.data});
     this.fetch();
     // }
   }
 
   fetch = async () => {
-    this.setState({ loading: true });
+    this.setState({loading: true});
     http
       .get(`sommelier/eventproductrating?page=${this.state.page}`)
       .then(res => {
@@ -212,7 +210,7 @@ class MyTestingNotes extends Component {
       })
       .catch(err => {
         console.log('errr Notification', err);
-        this.setState({ loading: false, refreshing: false });
+        this.setState({loading: false, refreshing: false});
         // this._snk.show("OIROOR")
       });
   };
@@ -234,7 +232,7 @@ class MyTestingNotes extends Component {
       !this.state.loading &&
       isEmpty(this.state.ProductRating) && (
         <FLEC
-          textStyle={{ color: white }}
+          textStyle={{color: white}}
           text="Currently No Tasting Notes Available."
         />
       )
@@ -248,7 +246,7 @@ class MyTestingNotes extends Component {
   }
 
   updateState(state) {
-    this.setState({ ...state });
+    this.setState({...state});
   }
 
   componentWillUnmount() {
@@ -257,7 +255,7 @@ class MyTestingNotes extends Component {
 
   AcceptEvents(status, id) {
     console.log('eventidAcceptEvents', id);
-    this.setState({ loading: true });
+    this.setState({loading: true});
     http
       .post('sommelier/changeeventrequeststatus', {
         event_id: id,
@@ -266,7 +264,7 @@ class MyTestingNotes extends Component {
       .then(res => {
         console.log('response changeeventrequeststatus..', res);
         this.props.navigation.push('Home');
-        this.setState({ loading: false, refreshing: false }, () =>
+        this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
             // buttonText: 'Ok',
@@ -277,7 +275,7 @@ class MyTestingNotes extends Component {
       })
       .catch(err => {
         console.log('ERROR on changeeventrequeststatus', err);
-        this.setState({ loading: false, refreshing: false });
+        this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
           Toast.show({
             text: `${err.status.data.message}`,
@@ -289,11 +287,11 @@ class MyTestingNotes extends Component {
   }
 
   setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
+    this.setState({modalVisible: visible});
   }
 
   saveItem = item => {
-    this.setState({ item }, () => this.setModalVisible(true));
+    this.setState({item}, () => this.setModalVisible(true));
   };
 
   SearchFilterFunction(text) {
@@ -325,8 +323,10 @@ class MyTestingNotes extends Component {
   }
 
   render() {
-    const { item } = this.state;
+    const {item} = this.state;
+    // const {SearchData} = this.props.route.params;
     console.log('pdataNotedd', item);
+    // console.log('Search Filter Function', SearchData);
     return (
       <View
         style={{
@@ -339,11 +339,10 @@ class MyTestingNotes extends Component {
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
           image={require('../../../assets/Logo.png')}
-
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{flexGrow: 1}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -358,7 +357,7 @@ class MyTestingNotes extends Component {
                     </TouchableOpacity> */}
 
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Filter")}
+            // onPress={() => this.props.navigation.navigate('Filter')}
             // onPress={() => this.props.navigation.push('Filter')}
             style={styles.searchcontainer}>
             {/* <Text style={{ width: "80%", color: primaryColor, fontFamily: sofiaFont }}>Search Here...</Text> */}
@@ -378,7 +377,10 @@ class MyTestingNotes extends Component {
                   name="search"
                   type="FontAwesome"
                   style={styles.icon}></Icon> */}
-                <Image source={Images.SearchIcon} style={{ height: 25, width: 25 }} />
+                <Image
+                  source={Images.SearchIcon}
+                  style={{height: 25, width: 25}}
+                />
               </View>
             </TouchableWithoutFeedback>
           </TouchableOpacity>
@@ -408,14 +410,14 @@ class MyTestingNotes extends Component {
                 onEndReached={this.LoadMoreRandomData}
                 ListEmptyComponent={() => this._renderEmptyComponent()}
                 ListFooterComponent={() => this._renderFooterComponent()}
-                contentContainerStyle={{ flexGrow: 1 }}
+                contentContainerStyle={{flexGrow: 1}}
                 refreshControl={
                   <RefreshControl
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                   />
                 }
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                   <TouchableWithoutFeedback
                   // onPress={() =>
                   //   this.props.navigation.navigate('ChooseProduct', {
@@ -462,7 +464,10 @@ class MyTestingNotes extends Component {
                             type="FontAwesome"
                             style={{fontSize: 20, color: white}}
                           /> */}
-                          <Image source={Images.StarIcon} style={{ height: 20, width: 20 }} />
+                          <Image
+                            source={Images.StarIcon}
+                            style={{height: 20, width: 20}}
+                          />
                           <Text
                             style={[
                               styles.text,
@@ -486,7 +491,7 @@ class MyTestingNotes extends Component {
                           marginTop: 25,
                           paddingHorizontal: 10,
                         }}>
-                        <View style={{ flex: 0.3, justifyContent: 'center' }}>
+                        <View style={{flex: 0.3, justifyContent: 'center'}}>
                           <View
                             style={{
                               justifyContent: 'center',
@@ -496,9 +501,9 @@ class MyTestingNotes extends Component {
                               borderRadius: 50,
                             }}>
                             <Image
-                              style={{ height: 50, width: 50, borderRadius: 25 }}
+                              style={{height: 50, width: 50, borderRadius: 25}}
                               resizeMode="contain"
-                              source={{ uri: item.product.Imagesrc }}
+                              source={{uri: item.product.Imagesrc}}
                             />
                           </View>
                         </View>
@@ -558,7 +563,7 @@ class MyTestingNotes extends Component {
                                     paddingTop: 20,
                                   },
                                 ]}
-                                source={{ html: item.product.description }}
+                                source={{html: item.product.description}}
                               />
                               {/* <Text style={[
                                 styles.text,
@@ -572,7 +577,7 @@ class MyTestingNotes extends Component {
                               ]}>{item.product.description}</Text> */}
                             </View>
                           )}
-                          <View style={{ flexDirection: 'row' }}>
+                          <View style={{flexDirection: 'row'}}>
                             {/* <Icon
                               name="pound"
                               type="Foundation"
@@ -583,7 +588,10 @@ class MyTestingNotes extends Component {
                                 marginHorizontal: 2,
                               }}
                             /> */}
-                            <Image source={Images.BritishPoundIcon} style={{ height: 25, width: 25 }} />
+                            <Image
+                              source={Images.BritishPoundIcon}
+                              style={{height: 25, width: 25}}
+                            />
                             <Text
                               numberOfLines={1}
                               style={[
@@ -615,17 +623,17 @@ class MyTestingNotes extends Component {
                             flex: 0.5,
                             paddingHorizontal: 10,
                           }}>
-                          <View style={{ marginVertical: 5 }}>
-                            <Text style={{ color: 'gray' }}>Date</Text>
-                            <Text style={{ fontSize: 15, color: primaryColor }}>
+                          <View style={{marginVertical: 5}}>
+                            <Text style={{color: 'gray'}}>Date</Text>
+                            <Text style={{fontSize: 15, color: primaryColor}}>
                               {moment(item.product.created_at).format(
                                 'DD/MM/YYYY',
                               )}
                             </Text>
                           </View>
-                          <View style={{ marginVertical: 5 }}>
-                            <Text style={{ color: 'gray' }}>Location</Text>
-                            <Text style={{ fontSize: 15, color: primaryColor }}>
+                          <View style={{marginVertical: 5}}>
+                            <Text style={{color: 'gray'}}>Location</Text>
+                            <Text style={{fontSize: 15, color: primaryColor}}>
                               {item.product.city
                                 ? item.product.city
                                 : item.product.region}
@@ -639,9 +647,9 @@ class MyTestingNotes extends Component {
                             flex: 0.5,
                             paddingHorizontal: 10,
                           }}>
-                          <View style={{ marginVertical: 5 }}>
-                            <Text style={{ color: 'gray' }}>Time</Text>
-                            <Text style={{ fontSize: 15, color: primaryColor }}>
+                          <View style={{marginVertical: 5}}>
+                            <Text style={{color: 'gray'}}>Time</Text>
+                            <Text style={{fontSize: 15, color: primaryColor}}>
                               {moment(item.product.created_at).format('HH:mm')}
                             </Text>
                           </View>
@@ -707,7 +715,7 @@ class MyTestingNotes extends Component {
             onBackdropPress={() => {
               this.setModalVisible(false);
             }}>
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{flex: 1, justifyContent: 'center'}}>
               <View style={styles.modelView}>
                 <TouchableOpacity
                   onPress={() => {
@@ -727,7 +735,7 @@ class MyTestingNotes extends Component {
                   <Icon
                     name="cross"
                     type="Entypo"
-                    style={{ fontSize: 18, color: primaryColor }}
+                    style={{fontSize: 18, color: primaryColor}}
                     onPress={() => {
                       this.setModalVisible(false);
                     }}
@@ -763,40 +771,40 @@ class MyTestingNotes extends Component {
                       flex: 0.5,
                       paddingHorizontal: 10,
                     }}>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Intensity</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Intensity</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.intensity}
                       </Text>
                     </View>
 
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Tanin</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Tanin</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.tannin}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Sweetness</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Sweetness</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.sweetness}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Balance</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Balance</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.balance}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Finish</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Finish</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.finish}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Score</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Score</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.overall}
                       </Text>
                     </View>
@@ -808,33 +816,33 @@ class MyTestingNotes extends Component {
                       flex: 0.5,
                       paddingHorizontal: 10,
                     }}>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Acidity</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Acidity</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.acidity}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Body</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Body</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.body}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Complexity</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Complexity</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.complexity}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Maturity</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Maturity</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.maturity}
                       </Text>
                     </View>
-                    <View style={{ marginVertical: 5 }}>
-                      <Text style={{ color: 'gray' }}>Listing Candidate</Text>
-                      <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Listing Candidate</Text>
+                      <Text style={{fontSize: 15, color: primaryColor}}>
                         {item.listing_candidate}
                       </Text>
                     </View>
@@ -850,8 +858,8 @@ class MyTestingNotes extends Component {
                     marginHorizontal: 5,
                     paddingHorizontal: 10,
                   }}>
-                  <Text style={{ color: 'gray' }}>Description</Text>
-                  <Text style={{ fontSize: 15, color: primaryColor }}>
+                  <Text style={{color: 'gray'}}>Description</Text>
+                  <Text style={{fontSize: 15, color: primaryColor}}>
                     {item.description}
                   </Text>
                 </View>
@@ -862,8 +870,8 @@ class MyTestingNotes extends Component {
                       marginHorizontal: 5,
                       paddingHorizontal: 10,
                     }}>
-                    <Text style={{ color: 'gray' }}>Flavours</Text>
-                    <Text style={{ fontSize: 15, color: primaryColor }}>
+                    <Text style={{color: 'gray'}}>Flavours</Text>
+                    <Text style={{fontSize: 15, color: primaryColor}}>
                       {item.flavours.map(item => item).join(', ')}
                     </Text>
                   </View>
@@ -890,7 +898,7 @@ class MyTestingNotes extends Component {
                           : 'gray',
                     }}
                   />
-                  <Text style={{ color: primaryColor, paddingHorizontal: 10 }}>
+                  <Text style={{color: primaryColor, paddingHorizontal: 10}}>
                     Favourite
                   </Text>
                 </TouchableOpacity>

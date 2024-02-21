@@ -201,11 +201,11 @@ class SearchableTastingNots extends Component {
   };
 
   componentWillUnmount = () => {
-    BackHandler.removeListener('hardwareBackPress', this.handleBackButtonClick);
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   };
 
   handleBackButtonClick = () => {
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('MyTestingNotes');
     return true;
   };
 
@@ -250,7 +250,7 @@ class SearchableTastingNots extends Component {
         }`,
       )
       .then(res => {
-        console.log('responce of ProductRatinge noted', res);
+        console.log('responce of ProductRatinge noted Third', res);
         if (res.data != null) {
           this.setState({
             arrayholder: res.data,
@@ -272,7 +272,7 @@ class SearchableTastingNots extends Component {
         }
       })
       .catch(err => {
-        console.log('errr Notification', err);
+        console.log('errr Filteration', err);
         this.setState({loading: false, refreshing: false});
         // this._snk.show("OIROOR")
       });

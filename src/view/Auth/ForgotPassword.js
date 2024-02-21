@@ -1,6 +1,6 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/self-closing-comp */
+
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -14,8 +14,9 @@ import {
   ActivityIndicator,
   Dimensions,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
-import { isEmpty, unset, set } from 'lodash';
+import {isEmpty, unset, set} from 'lodash';
 import Snackbar from '../../component/Common/Snackbar';
 import TextInput from '../../component/Common/EditTextField';
 import Button from '../../component/Common/Button';
@@ -26,9 +27,9 @@ import {
   secondryColor,
   sofiaFont,
 } from '../../style/variables';
-import { Icon, Toast } from 'native-base';
+import {Icon, Toast} from 'native-base';
 import http from '../../http';
-import { Images } from '../../../theme/Images';
+import {Images} from '../../../theme/Images';
 Dimensions.get('window');
 
 // import {
@@ -52,20 +53,20 @@ export default class ForgotPassword extends React.Component {
   }
 
   componentDidMount = () => {
-    this.setState({ form: { ...this.state.form } });
+    this.setState({form: {...this.state.form}});
   };
 
   handleChange(name, value) {
     let errors = this.state.errors;
     unset(errors, name);
-    let form = { ...this.state.form, [name]: value };
-    this.setState({ form });
+    let form = {...this.state.form, [name]: value};
+    this.setState({form});
   }
 
   validate = () => {
     console.log('on validate console');
     let errors = {};
-    const { email } = this.state.form;
+    const {email} = this.state.form;
     if (isEmpty(email)) {
       set(errors, 'email', ['Email is required']);
     }
@@ -75,17 +76,17 @@ export default class ForgotPassword extends React.Component {
   onSave = async () => {
     let errors = this.validate();
     if (!isEmpty(errors)) {
-      return this.setState({ errors });
+      return this.setState({errors});
     }
 
-    const { form } = this.state;
+    const {form} = this.state;
     form.type = 'Sommelier';
-    this.setState({ loading: true });
+    this.setState({loading: true});
     http
       .post(`auth/forgot-password`, form)
       .then(res => {
         console.log('response forgot pass..', res);
-        this.setState({ loading: false, refreshing: false }, () =>
+        this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
             buttonText: 'Ok',
@@ -99,16 +100,16 @@ export default class ForgotPassword extends React.Component {
         let errors = {};
         if (err && err.status.data.code == 422) {
           errors = err.status.data.errors;
-          this.setState({ loading: false, errors });
+          this.setState({loading: false, errors});
         } else if (err && err.status.data.code == 401) {
-          this.setState({ loading: false });
+          this.setState({loading: false});
           Toast.show({
             text: `${err.status.data.message}`,
             // buttonText: 'Ok',
             duration: 2000,
           });
         } else {
-          this.setState({ loading: false });
+          this.setState({loading: false});
           Toast.show({
             text: `${err.status.data.message}`,
             // buttonText: 'Ok',
@@ -119,28 +120,42 @@ export default class ForgotPassword extends React.Component {
   };
 
   render() {
-    const { form, errors, loading } = this.state;
+    const {form, errors, loading} = this.state;
     return (
       <View style={styles.container}>
         <View
           style={[
             styles.header,
-            { paddingVertical: 5, backgroundColor: primaryColor },
+            {paddingVertical: 5, backgroundColor: primaryColor},
           ]}>
-          <Image
-            source={Images.BackNavigationIcon}
-            style={{ height: 22, width: 22, padding: 10 }}
-            tintColor={"white"}
+          <TouchableOpacity
             onPress={() => this.props.navigation.goBack()}
-          />
+            style={{
+              height: 30,
+              width: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 15,
+                marginLeft: 15,
+            }}>
+            <Image
+              source={Images.BackNavigationIcon}
+              style={{
+                height: 15,
+                width: 15,
+                padding: 5,
+              }}
+              tintColor={'white'}
+            />
+          </TouchableOpacity>
         </View>
         <ImageBackground
           source={require('../../assets/ImageBackgroung.png')}
-          style={{ height: '100%', width: '100%', paddingBottom: 0 }}>
+          style={{height: '100%', width: '100%', paddingBottom: 0}}>
           <Snackbar ref={ref => (this._snk = ref)} />
 
           <ScrollView
-            contentContainerStyle={{ flex: 1 }}
+            contentContainerStyle={{flex: 1}}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
             <View
@@ -191,8 +206,8 @@ export default class ForgotPassword extends React.Component {
               />
 
               {this.state.loading ? (
-                <TouchableWithoutFeedback style={{ width: '100%' }}>
-                  <View style={[styles.button, { marginTop: 70 }]}>
+                <TouchableWithoutFeedback style={{width: '100%'}}>
+                  <View style={[styles.button, {marginTop: 70}]}>
                     <ActivityIndicator
                       animating={this.state.loading}
                       size="large"
@@ -209,7 +224,7 @@ export default class ForgotPassword extends React.Component {
                     borderRadius: 20,
                     marginTop: 70,
                   }}
-                  textsyles={{ color: '#fff', fontSize: 12 }}
+                  textsyles={{color: '#fff', fontSize: 12}}
                   onPress={this.onSave}
                 />
               )}

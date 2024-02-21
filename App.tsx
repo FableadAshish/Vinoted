@@ -1,5 +1,5 @@
 import React from 'react';
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import {Provider} from 'react-redux';
 import {View, Text, Image} from 'react-native';
 import store from './src/store';
@@ -12,6 +12,7 @@ import NotificationPopup from 'react-native-push-notification-popup';
 // import Notification from './src/view/Home/Notification';
 import {primaryColor, white, sofiaFont} from './src/style/variables';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   GestureHandlerRootView,
   TouchableOpacity,
@@ -20,16 +21,15 @@ import {
 import {NativeBaseProvider} from 'native-base';
 EStyleSheet.build({});
 export default class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       form: {},
       initialRoute: 'Notification',
     };
-  
+
     // Bind getFcmToken function to component instance
-    // this.getFcmToken = this.getFcmToken.bind(this);
+    this.getFcmToken = this.getFcmToken.bind(this);
   }
 
   componentDidMount() {
@@ -46,20 +46,20 @@ export default class App extends React.Component {
     console.log('isNavigation Mounted: ', isReadyRef.current);
   }
 
-  // getFcmToken = async () => {
-  //   try {
-  //     let getToken = await AsyncStorage.getItem('fcmToken');
-  //     console.log('Token Retrieved Again', getToken);
-  
-  //     if (!getToken) {
-  //       let fcmToken = await messaging().getToken();
-  //       await AsyncStorage.setItem('fcmToken', JSON.stringify(fcmToken));
-  //       this.setState({ fcmToken });
-  //     }
-  //   } catch (error) {
-  //     console.log('Error Retrieving Token', error);
-  //   }
-  // };
+  getFcmToken = async () => {
+    try {
+      let getToken = await AsyncStorage.getItem('fcmToken');
+      console.log('Token Retrieved Again', getToken);
+
+      if (!getToken) {
+        let fcmToken = await messaging().getToken();
+        await AsyncStorage.setItem('fcmToken', JSON.stringify(fcmToken));
+        this.setState({fcmToken});
+      }
+    } catch (error) {
+      console.log('Error Retrieving Token', error);
+    }
+  };
 
   requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -69,11 +69,9 @@ export default class App extends React.Component {
 
     if (enabled) {
       console.log('Authorization status:', authStatus);
-
     }
   };
 
-  
   unsuscrib = async () => {
     console.log('Hello This is');
     await messaging().onMessage(async remoteMessage => {

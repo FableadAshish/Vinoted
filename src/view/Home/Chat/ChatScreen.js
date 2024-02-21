@@ -1,21 +1,15 @@
 import React from 'react';
+import styles from './Styles/ChatScreenStyles';
 import {
-  StyleSheet,
   View,
-  ToastAndroid,
-  ScrollView,
   Dimensions,
-  TouchableWithoutFeedback,
   Text,
-  ImageBackground,
   Image,
   BackHandler,
   TouchableOpacity,
 } from 'react-native';
-import {Icon} from 'native-base';
-import {isEmpty, set, unset, isNull} from 'lodash';
+import {isEmpty, isNull} from 'lodash';
 import {connect} from 'react-redux';
-import * as RootNavigation from '../../../navigation/RootNavigation';
 import {
   GiftedChat,
   Composer,
@@ -30,20 +24,17 @@ import {
   white,
   primaryColor,
   secondryColor,
-  cardBackground,
   inputColor,
   sofiaFont,
 } from '../../../style/variables';
 import {_getUser} from '../../../api/auth';
 import http from '../../../http';
 import Moment from 'moment';
-import Header from '../../../component/Header/Header';
 import Echo from 'laravel-echo';
-import socketio from 'socket.io-client';
 import Pusher from 'pusher-js/react-native';
-import { Images } from '../../../../theme/Images';
+import {Images} from '../../../../theme/Images';
 
-const {height, width} = Dimensions.get('window');
+Dimensions.get('window');
 
 class Chat extends React.Component {
   constructor() {
@@ -68,18 +59,9 @@ class Chat extends React.Component {
 
   componentWillUnmount = () => {
     this._unsubscribe();
-    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   };
 
   handleBackButtonClick = () => {
-    // console.log("Navigationofon Chat",RootNavigation.navigationRef.current)
-    // if (RootNavigation && RootNavigation.navigationRef.current.getCurrentRoute().length > 1) {
-    //     RootNavigation.push("App");
-    //     return true;
-    // }
-    // return false;
-    // Promise.resolve('Success').then((value)=> {
-    //     console.log('Success',value); // "Success"
     if (this.props.route.params) {
       this.props.navigation.navigate('Home', {screen: 'Messaging'});
     } else {
@@ -88,20 +70,19 @@ class Chat extends React.Component {
       BackHandler.removeListener('hardwareBackPress');
     }
     return true;
-    // this.props.navigation.pop();
-    //         return true
-    //   }).catch(error=> {
-    //     console.log("error",error);
-    //   });
   };
 
   createSession() {
     console.log('calling component', this.props.route.params.item.id);
+    console.log(
+      'calling component to check user',
+      this.props.route.params.item,
+    );
     this.setState({loading: true});
     http
       .post('session/create', {friend_id: this.props.route.params.item.id})
       .then(res => {
-        console.log('response create SessiononChate', res);
+        console.log('response create SessiononChate 24', res);
         this.setState(
           {
             loading: false,
@@ -126,11 +107,12 @@ class Chat extends React.Component {
   async componentDidMount() {
     this.createSession();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-      console.log('hello');
+      console.log('hello seesion created');
       this.createSession();
     });
     // this.LoadMessages();
     let today = Moment().format('DD/MM/YYYY');
+    console.log('today', today);
     this.setState({currentDate: today});
     const userdata = await _getUser();
     this.setState({userData: userdata.data});
@@ -275,8 +257,18 @@ class Chat extends React.Component {
             marginBottom: -0.5,
           }}
         /> */}
-        <Image source={Images.SendMessage} style={{backgroundColor:primaryColor, padding: 11, marginTop: -2,marginBottom: -0.5, height:55}} tintColor={"white"}/>
-        <Image/>
+        <Image
+          source={Images.SendMessage}
+          style={{
+            backgroundColor: primaryColor,
+            padding: 11,
+            marginTop: -2,
+            marginBottom: -0.5,
+            height: 55,
+          }}
+          tintColor={'white'}
+        />
+        <Image />
         {/* </View> */}
       </Send>
     );
@@ -454,8 +446,20 @@ class Chat extends React.Component {
                 }}
                 style={{color: primaryColor, padding: 10}}
               /> */}
-              <TouchableOpacity style={{flex: 0.15}} onPress={()=>{this.props.navigation.goBack()}}>
-                <Image source={Images.BackNavigationIcon} style={{height:21, width:21, color: primaryColor, marginTop:-5}}/>
+              <TouchableOpacity
+                style={{flex: 0.15}}
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Image
+                  source={Images.BackNavigationIcon}
+                  style={{
+                    height: 21,
+                    width: 21,
+                    color: primaryColor,
+                    marginTop: -5,
+                  }}
+                />
               </TouchableOpacity>
             </View>
             <View
@@ -579,25 +583,6 @@ class Chat extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 60,
-    paddingLeft: 10,
-    justifyContent: 'space-between',
-  },
-  headerIcon: {
-    color: white,
-    fontSize: 35,
-    fontFamily: sofiaFont,
-  },
-  leftContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
 
 const mapProps = state => ({
   user: state.root.user,

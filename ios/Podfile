@@ -27,7 +27,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'AwesomeProject' do
+target 'Vinoted' do
   config = use_native_modules!
 
   use_react_native!(
@@ -36,12 +36,12 @@ target 'AwesomeProject' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    #:flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'AwesomeProjectTests' do
+  target 'VinotedTests' do
     inherit! :complete
     # Pods for testing
   end

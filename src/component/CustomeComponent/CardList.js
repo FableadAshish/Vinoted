@@ -16,7 +16,9 @@ import {
   textColor,
   sofiaFont,
 } from '../../style/variables';
+import {unreadMessages} from '../../store/Actions/common';
 const {width, height} = Dimensions.get('window');
+import {useDispatch, useSelector} from 'react-redux';
 
 const CardList = ({
   subtitle,
@@ -33,9 +35,11 @@ const CardList = ({
   onPress,
   onPressEnquiry,
 }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    ShowCount;
-  }, [ShowCount]);
+    dispatch(unreadMessages(ShowCount));
+  }, []);
   return (
     <TouchableOpacity onPress={onPress}>
       <View
@@ -147,11 +151,6 @@ const CardList = ({
               </Text>
             </TouchableOpacity>
           )}
-          {/* <View style={{ position: "absolute", bottom: 0, right: 0 }}>
-                        {date && <Text style={[styles.text, { textAlign: "right", color: ShowCount ? "green" : "gray", paddingHorizontal: 2, fontWeight: "700" }]}>
-                            {date}
-                        </Text>}
-                    </View> */}
         </View>
 
         {ShowCount && (
@@ -194,39 +193,6 @@ const CardList = ({
   );
 };
 export default CardList;
-
-//   #D52020
-
-// export default class CardList extends Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-
-//         };
-//     }
-//     onNavigete() {
-//         // this.props.navigation.navigate("VendorsList")
-//     }
-
-//     render() {
-//         return (
-//             <View style={{ flex: 1, marginVertical: 10,marginHorizontal:10 }}>
-//                 <Text style={{fontSize:15,fontWeight:"700"}}>
-//                     Vendor from Udaipur
-//                 </Text>
-//                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-//               <View style={{ flexDirection: "row" }}>
-//                 <Card onPress={this.onNavigete.bind(this)}  />
-//                 <Card onPress={this.onNavigete.bind(this)}  />
-//                 <Card  onPress={this.onNavigete.bind(this)} />
-//               </View>
-//             </ScrollView>
-//             </View>
-//         )
-//     }
-
-// }
 
 const styles = StyleSheet.create({
   view: {

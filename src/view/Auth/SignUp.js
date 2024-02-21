@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   BackHandler,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import {_register} from '../../api/auth';
 import {isEmpty, unset, set} from 'lodash';
@@ -266,6 +267,63 @@ export default class Signup extends React.Component {
                 onChange={this.handleChange.bind(this, 'password_confirmation')}
                 onSubmitEditing={() => this.onSave()}
               />
+
+<View style={{width: '100%'}}>
+                <Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#fff',
+                      // alignSelf: 'center',
+                      fontFamily: sofiaFont,
+                      marginVertical: 5,
+                      paddingHorizontal: 5,
+                    }}>
+                    By using this app you agree to the
+                  </Text>{' '}
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#fff',
+                      // alignSelf: 'center',
+                      fontFamily: sofiaFont,
+                      marginVertical: 5,
+                      paddingHorizontal: 5,
+                      textDecorationLine: 'underline',
+                    }}
+                    onPress={() =>
+                      Linking.openURL('https://www.vinoted.com/user-agreement')
+                    }>
+                    User Agreement
+                  </Text>{' '}
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#fff',
+                      // alignSelf: 'center',
+                      fontFamily: sofiaFont,
+                      marginVertical: 5,
+                      paddingHorizontal: 5,
+                    }}>
+                    and
+                  </Text>{' '}
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#fff',
+                      // alignSelf: 'center',
+                      fontFamily: sofiaFont,
+                      marginVertical: 5,
+                      paddingHorizontal: 5,
+                      textDecorationLine: 'underline',
+                    }}
+                    onPress={() =>
+                      Linking.openURL('https://www.vinoted.com/privacy-policy')
+                    }>
+                    Privacy Policy
+                  </Text>
+                </Text>
+              </View>
               {this.state.loading ? (
                 <TouchableWithoutFeedback style={{width: '100%'}}>
                   <View style={[styles.button]}>

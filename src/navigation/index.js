@@ -5,7 +5,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { View, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigation from './AuthNavigation';
-import Chat from '../view/Home/Chat'
+import Chat from '../view/Home/Chat/ChatScreen'
 import Messaging from '../view/Home/Messaging'
 import ProEventDetails from '../view/Home/ProEventDetails';
 import Notification from '../view/Home/Notification'
