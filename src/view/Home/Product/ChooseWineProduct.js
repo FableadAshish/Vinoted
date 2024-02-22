@@ -13,6 +13,7 @@ import {
 import Header from '../../../component/Header/Header';
 import {Toast} from 'native-base';
 import Button from '../../../component/Common/Button';
+import ModalSelector from 'react-native-modal-selector';
 import {
   white,
   secondryColor,
@@ -25,7 +26,8 @@ import {isEmpty, unset, set, isNull} from 'lodash';
 import TextInput from '../../../component/Common/EditTextField';
 import {connect} from 'react-redux';
 import http from '../../../http';
-import Slider from 'react-native-smooth-slider';
+// import Slider from 'react-native-smooth-slider';
+import Slider from '@react-native-community/slider';
 import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 
@@ -38,7 +40,9 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Images} from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {items} from '../../../assets/Data/data';
+import {value} from 'react-native-extended-stylesheet';
 
 let data = ['1', '2', '3'];
 
@@ -205,6 +209,8 @@ class ChooseProduct extends Component {
       slideValue: '',
       eventTesting: {},
       selectedItems: [],
+      index: 0,
+      textInputValue: '',
     };
   }
 
@@ -215,14 +221,15 @@ class ChooseProduct extends Component {
       });
       const Testing = this.props.route.params.Testing;
       const eventTesting = this.props.route.params.event;
-      console.log('Props*****', this.props.route.params);
+      // console.log('Props*****', this.props.route.params);
       if (eventTesting) {
         this.setState({eventTesting});
       }
 
-      console.log('Testinge', Testing);
+      // console.log('Testinge', Testing);
       this.setState({Testing}, () => this.Store());
     }
+    this.setState(prevState => ({index: prevState.index + 1}));
   }
 
   Store() {
@@ -234,7 +241,7 @@ class ChooseProduct extends Component {
         product_id: Testing.product_id,
       })
       .then(res => {
-        console.log('response MYRatings..###', res);
+        // console.log('response MYRatings..###', res);
         if (res.data) {
           this.setState({
             form: {...this.state.form, ...res.data},
@@ -325,7 +332,7 @@ class ChooseProduct extends Component {
     http
       .post('sommelier/rating', form)
       .then(res => {
-        console.log('response Ratings..', res);
+        // console.log('response Ratings..', res);
         this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
@@ -381,12 +388,19 @@ class ChooseProduct extends Component {
     );
   };
 
-  handleChange(name, value) {
-    console.log('name', name, value);
+  // handleChange(name, value) {
+  //   console.log('name', name, value);
 
-    let errors = this.state.errors;
-    unset(errors, name);
-    let form = {...this.state.form, [name]: value};
+  //   let errors = this.state.errors;
+  //   unset(errors, name);
+  //   let form = {...this.state.form, [name]: value};
+  //   this.setState({form});
+  // }
+  handleChange(value, name) {
+    console.log('This is value', value);
+    console.log('This is name', name);
+    let form = {...this.state.form};
+    form[name] = value;
     this.setState({form});
   }
 
@@ -395,9 +409,10 @@ class ChooseProduct extends Component {
   };
 
   render() {
-    const {errors, form, Testing, is_favourite, eventTesting, selectedItems} =
+    const {errors, form, Testing, index, eventTesting, selectedItems} =
       this.state;
-    console.log('selectedItems..', eventTesting);
+    // console.log('selectedItems..', eventTesting);
+
     return (
       <View
         style={{
@@ -520,27 +535,26 @@ class ChooseProduct extends Component {
                 <View style={styles.pickerView}>
                   <Text style={styles.pickerText}>Intensity</Text>
                   <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.intensity}
-                        onValueChange={this.handleChange.bind(
-                          this,
-                          'intensity',
-                        )}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Low" value="Low" />
-                        <Picker.Item label="Medium" value="Medium" />
-                        <Picker.Item label="High" value="High" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.intensity}
-                      </Text>
+                    {isEmpty(form.event) && (
+                      <ModalSelector
+                        data={[
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        initValue="Select"
+                        onChange={option => {
+                          // option.label, "intensity", option.key
+                          this.handleChange(
+                            option.label,
+                            'intensity',
+                            option.key,
+                          );
+                        }}
+                        selectedKey={this.state.form.intensity}
+                      />
                     )}
                   </View>
-
                   {!isEmpty(errors) && errors.intensity && !form.intensity && (
                     <Text
                       style={{
@@ -554,320 +568,481 @@ class ChooseProduct extends Component {
                 </View>
 
                 <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Acidity</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.acidity}
-                        onValueChange={this.handleChange.bind(this, 'acidity')}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Low" value="Low" />
-                        <Picker.Item label="Medium" value="Medium" />
-                        <Picker.Item label="High" value="High" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.acidity}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) && errors.acidity && !form.acidity && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.acidity}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Tannin</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.tannin}
-                        onValueChange={this.handleChange.bind(this, 'tannin')}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Low" value="Low" />
-                        <Picker.Item label="Medium" value="Medium" />
-                        <Picker.Item label="High" value="High" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.tannin}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) && errors.tannin && !form.tannin && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.tannin}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Body</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.body}
-                        onValueChange={this.handleChange.bind(this, 'body')}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Light" value="Light" />
-                        <Picker.Item label="Medium" value="Medium" />
-                        <Picker.Item label="Full" value="Full" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.body}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) && errors.body && !form.body && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.body}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Sweetness</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.sweetness}
-                        onValueChange={this.handleChange.bind(
-                          this,
-                          'sweetness',
-                        )}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Dry" value="Dry" />
-                        <Picker.Item label="Off-Dry" value="Off-Dry" />
-                        <Picker.Item label="Sweet" value="Sweet" />
-                        <Picker.Item label="Luscious" value="Luscious" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.sweetness}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) && errors.sweetness && !form.sweetness && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.sweetness}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Complexity</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.complexity}
-                        onValueChange={this.handleChange.bind(
-                          this,
-                          'complexity',
-                        )}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Low" value="Low" />
-                        <Picker.Item label="Medium" value="Medium" />
-                        <Picker.Item label="High" value="High" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.complexity}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) &&
-                    errors.complexity &&
-                    !form.complexity && (
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Acidity</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Low'},
+                            {key: this.state.index++, label: 'Medium'},
+                            {key: this.state.index++, label: 'High'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'acidity',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.acidity}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.acidity}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) && errors.acidity && !form.acidity && (
                       <Text
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 12,
                           color: error,
                         }}>
-                        {errors.complexity}
-                      </Text>
-                    )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Balance</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.balance}
-                        onValueChange={this.handleChange.bind(this, 'balance')}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Low" value="Low" />
-                        <Picker.Item label="Medium" value="Medium" />
-                        <Picker.Item label="High" value="High" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.balance}
+                        {errors.acidity}
                       </Text>
                     )}
                   </View>
-                  {!isEmpty(errors) && errors.balance && !form.balance && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.balance}
-                    </Text>
-                  )}
-                </View>
 
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Maturity</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.maturity}
-                        onValueChange={this.handleChange.bind(
-                          this,
-                          'maturity',
-                        )}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Tired" value="Tired" />
-                        <Picker.Item label="Too Young" value="Too Young" />
-                        <Picker.Item
-                          label="Ready to Drink"
-                          value="Ready to Drink"
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Tannin</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.tannin}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'tannin',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Low" value="Low" />
+                        //   <Picker.Item label="Medium" value="Medium" />
+                        //   <Picker.Item label="High" value="High" />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Low'},
+                            {key: this.state.index++, label: 'Medium'},
+                            {key: this.state.index++, label: 'High'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'tannin',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.tannin}
                         />
-                        <Picker.Item
-                          label="Ready to drink - can age"
-                          value="Ready to drink - can age"
-                        />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.maturity}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) && errors.maturity && !form.maturity && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.maturity}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Finish</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.finish}
-                        onValueChange={this.handleChange.bind(this, 'finish')}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item label="Short" value="short" />
-                        <Picker.Item label="Medium" value="medium" />
-                        <Picker.Item label="Long" value="long" />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.finish}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) && errors.finish && !form.finish && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.finish}
-                    </Text>
-                  )}
-                </View>
-
-                <View style={styles.pickerView}>
-                  <Text style={styles.pickerText}>Listing Candidate</Text>
-                  <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) ? (
-                      <Picker
-                        style={styles.pickerItem}
-                        itemStyle={styles.pickerItem}
-                        selectedValue={this.state.form.listing_candidate}
-                        onValueChange={this.handleChange.bind(
-                          this,
-                          'listing_candidate',
-                        )}>
-                        <Picker.Item label="Select" value={null} />
-                        <Picker.Item
-                          label="By the glass"
-                          value="By the glass"
-                        />
-                        <Picker.Item
-                          label="By the bottle"
-                          value="By the bottle"
-                        />
-                      </Picker>
-                    ) : (
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.listing_candidate}
-                      </Text>
-                    )}
-                  </View>
-                  {!isEmpty(errors) &&
-                    errors.listing_candidate &&
-                    !form.listing_candidate && (
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.tannin}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) && errors.tannin && !form.tannin && (
                       <Text
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 12,
                           color: error,
                         }}>
-                        {errors.listing_candidate}
+                        {errors.tannin}
                       </Text>
                     )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Body</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.body}
+                        //   onValueChange={this.handleChange.bind(this, 'body')}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Light" value="Light" />
+                        //   <Picker.Item label="Medium" value="Medium" />
+                        //   <Picker.Item label="Full" value="Full" />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Light'},
+                            {key: this.state.index++, label: 'Medium'},
+                            {key: this.state.index++, label: 'full'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(option.label, 'body', option.key);
+                          }}
+                          selectedKey={this.state.form.body}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.body}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) && errors.body && !form.body && (
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 12,
+                          color: error,
+                        }}>
+                        {errors.body}
+                      </Text>
+                    )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Sweetness</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.sweetness}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'sweetness',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Dry" value="Dry" />
+                        //   <Picker.Item label="Off-Dry" value="Off-Dry" />
+                        //   <Picker.Item label="Sweet" value="Sweet" />
+                        //   <Picker.Item label="Luscious" value="Luscious" />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Dry'},
+                            {key: this.state.index++, label: 'Off-Dry'},
+                            {key: this.state.index++, label: 'Sweet'},
+                            {key: this.state.index++, label: 'Luscious'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'sweetness',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.sweetness}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.sweetness}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) &&
+                      errors.sweetness &&
+                      !form.sweetness && (
+                        <Text
+                          style={{
+                            fontFamily: sofiaFont,
+                            fontSize: 12,
+                            color: error,
+                          }}>
+                          {errors.sweetness}
+                        </Text>
+                      )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Complexity</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.complexity}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'complexity',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Low" value="Low" />
+                        //   <Picker.Item label="Medium" value="Medium" />
+                        //   <Picker.Item label="High" value="High" />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Low'},
+                            {key: this.state.index++, label: 'Medium'},
+                            {key: this.state.index++, label: 'High'},
+                            // {key: this.state.index++, label: 'Luscious'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'complexity',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.complexity}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.complexity}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) &&
+                      errors.complexity &&
+                      !form.complexity && (
+                        <Text
+                          style={{
+                            fontFamily: sofiaFont,
+                            fontSize: 12,
+                            color: error,
+                          }}>
+                          {errors.complexity}
+                        </Text>
+                      )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Balance</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.balance}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'balance',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Low" value="Low" />
+                        //   <Picker.Item label="Medium" value="Medium" />
+                        //   <Picker.Item label="High" value="High" />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Low'},
+                            {key: this.state.index++, label: 'Medium'},
+                            {key: this.state.index++, label: 'High'},
+                            // {key: this.state.index++, label: 'Luscious'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'balance',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.balance}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.balance}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) && errors.balance && !form.balance && (
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 12,
+                          color: error,
+                        }}>
+                        {errors.balance}
+                      </Text>
+                    )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Maturity</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.maturity}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'maturity',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Tired" value="Tired" />
+                        //   <Picker.Item label="Too Young" value="Too Young" />
+                        //   <Picker.Item
+                        //     label="Ready to Drink"
+                        //     value="Ready to Drink"
+                        //   />
+                        //   <Picker.Item
+                        //     label="Ready to drink - can age"
+                        //     value="Ready to drink - can age"
+                        //   />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'Tired'},
+                            {key: this.state.index++, label: 'Too Young'},
+                            {key: this.state.index++, label: 'Ready to Drink'},
+                            {
+                              key: this.state.index++,
+                              label: 'Ready to drink - can age',
+                            },
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'maturity',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.maturity}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.maturity}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) && errors.maturity && !form.maturity && (
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 12,
+                          color: error,
+                        }}>
+                        {errors.maturity}
+                      </Text>
+                    )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Finish</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.finish}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'finish',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item label="Short" value="short" />
+                        //   <Picker.Item label="Medium" value="medium" />
+                        //   <Picker.Item label="Long" value="long" />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'short'},
+                            {key: this.state.index++, label: 'medium'},
+                            {key: this.state.index++, label: 'long'},
+                            // {key: this.state.index++, label: 'Ready to drink - can age'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'finish',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.finish}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.finish}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) && errors.finish && !form.finish && (
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 12,
+                          color: error,
+                        }}>
+                        {errors.finish}
+                      </Text>
+                    )}
+                  </View>
+
+                  <View style={styles.pickerView}>
+                    <Text style={styles.pickerText}>Listing Candidate</Text>
+                    <View style={styles.pickerstyle}>
+                      {isEmpty(form.event) ? (
+                        // <Picker
+                        //   style={styles.pickerItem}
+                        //   itemStyle={styles.pickerItem}
+                        //   selectedValue={this.state.form.listing_candidate}
+                        //   onValueChange={this.handleChange.bind(
+                        //     this,
+                        //     'listing_candidate',
+                        //   )}>
+                        //   <Picker.Item label="Select" value={null} />
+                        //   <Picker.Item
+                        //     label="By the glass"
+                        //     value="By the glass"
+                        //   />
+                        //   <Picker.Item
+                        //     label="By the bottle"
+                        //     value="By the bottle"
+                        //   />
+                        // </Picker>
+                        <ModalSelector
+                          data={[
+                            {key: this.state.index++, label: 'By the glass'},
+                            {key: this.state.index++, label: 'By the bottle'},
+                            {key: this.state.index++, label: 'long'},
+                            // {key: this.state.index++, label: 'Ready to drink - can age'},
+                          ]}
+                          initValue="Select"
+                          onChange={option => {
+                            // alert(`${option.label} (${option.key}) nom nom nom`);
+                            this.handleChange(
+                              option.label,
+                              'listing_candidate',
+                              option.key,
+                            );
+                          }}
+                          selectedKey={this.state.form.listing_candidate}
+                        />
+                      ) : (
+                        <Text style={styles.SimpleText}>
+                          {this.state.form.listing_candidate}
+                        </Text>
+                      )}
+                    </View>
+                    {!isEmpty(errors) &&
+                      errors.listing_candidate &&
+                      !form.listing_candidate && (
+                        <Text
+                          style={{
+                            fontFamily: sofiaFont,
+                            fontSize: 12,
+                            color: error,
+                          }}>
+                          {errors.listing_candidate}
+                        </Text>
+                      )}
+                  </View>
                 </View>
 
                 <View style={{marginHorizontal: 5, marginVertical: 5}}>
@@ -896,7 +1071,11 @@ class ChooseProduct extends Component {
                     animateTransitions={true}
                     value={this.state.form.overall}
                     disabled={!isEmpty(form.event) ? true : false}
-                    onValueChange={this.handleChange.bind(this, 'overall')}
+                    // onValueChange={this.handleChange(this, 'overall')}
+                    onValueChange={option => {
+                      // alert(`${option.label} (${option.key}) nom nom nom`);
+                      this.handleChange(option, 'overall');
+                    }}
                     onSlidingComplete={value =>
                       this.setState({...this.state.form, overall: value})
                     }
@@ -927,10 +1106,12 @@ class ChooseProduct extends Component {
                   errors={errors}
                   editable={isEmpty(form.event) ? true : false}
                   multiline={true}
-                  value={form.description}
+                  value={this.description}
                   Textcolor={primaryColor}
                   onRef={ref => (this.description = ref)}
-                  onChange={this.handleChange.bind(this, 'description')}
+                  onValueChange={value =>
+                    this.handleChange(value, 'description')
+                  }
                 />
                 <View style={{flex: 1, marginBottom: 10}}>
                   {isEmpty(form.event) ? (
@@ -938,7 +1119,6 @@ class ChooseProduct extends Component {
                       <SectionedMultiSelect
                         items={items}
                         IconRenderer={MaterialIcons}
-                        styles={{button: {backgroundColor: primaryColor}}}
                         uniqueKey="name"
                         subKey="children"
                         selectText="Select Flavours"
@@ -947,6 +1127,9 @@ class ChooseProduct extends Component {
                         readOnlyHeadings={true}
                         onSelectedItemsChange={this.onSelectedItemsChange}
                         selectedItems={this.state.selectedItems}
+                        iconName="keyboard_arrow_down"
+                        iconSize={24}
+                        iconColor="blue"
                       />
                       <View>
                         {this.multiSelect &&
@@ -1008,7 +1191,7 @@ class ChooseProduct extends Component {
                           ? primaryColor
                           : 'gray',
                     }}
-                    tintColor={'red'}
+                    tintColor={primaryColor}
                   />
                   <Text style={{color: primaryColor, paddingHorizontal: 10}}>
                     Favourite

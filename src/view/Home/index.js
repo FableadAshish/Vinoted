@@ -21,6 +21,7 @@ import {
   primaryColor,
   primaryTextColor,
   sofiaFont,
+  secondryTextColor,
 } from '../../style/variables';
 import {_getUser, _handleAuthUser} from '../../api/auth';
 import FLEC from '../../component/Common/FLEC';
@@ -35,7 +36,6 @@ const {width} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import {Images} from '../../../theme/Images';
-import {requestUserPermission} from '../../push_notification_helper';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -180,7 +180,6 @@ class Home extends Component {
 
   UNSAFE_componentWillMount() {
     this._backEnable = this.props.navigation.addListener('focus', () => {
-      // console.log('focused first time');
       this.backHandler = BackHandler.addEventListener(
         'backPress',
         this.handleBackButton.bind(this),
@@ -188,7 +187,6 @@ class Home extends Component {
     });
 
     this._backDisable = this.props.navigation.addListener('blur', () => {
-      // console.log('calling blur...');
       if (this.backHandler) {
         this.backHandler.remove();
       }
@@ -202,7 +200,6 @@ class Home extends Component {
       [
         {
           text: 'Cancel',
-          // onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
@@ -226,7 +223,6 @@ class Home extends Component {
 
   componentDidMount = async () => {
     const getuser = await _getUser();
-    console.log('data Loaded', getuser.data);
     this.setState({user: getuser.data});
     this.PendingEvents();
     this.Store();
@@ -248,12 +244,8 @@ class Home extends Component {
   promptForNotificationPermission = () => {
     messaging()
       .requestPermission({provisional: true})
-      .then(() => {
-        console.log('Permission granted.');
-      })
-      .catch(() => {
-        console.log('Permission rejected.');
-      });
+      .then(() => {})
+      .catch(() => {});
   };
 
   createAndroidNotificationChannel() {
@@ -266,49 +258,30 @@ class Home extends Component {
     firebase.notifications().android.createChannel(channel);
   }
   foregroundState = () => {
-    const unsubscribe = messaging().onMessage(async notification => {
-      console.log('Message handled in the foregroundState!', notification);
-    });
+    const unsubscribe = messaging().onMessage(async () => {});
 
     return unsubscribe;
   };
 
   // Register background handler
   backgroundState = () => {
-    messaging().setBackgroundMessageHandler(async notification => {
-      console.log('Message handled in the background!', notification);
-    });
+    messaging().setBackgroundMessageHandler(async () => {});
   };
 
   unreadMessages = () => {};
   Store = async () => {
     this.setState({loading: true});
-
-    // http
-    //   .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-    //   .then(res => console.log('res for unread Message', res))
-    //   .catch(err => console.log('error for unread Message', err));
-
-    // http
-    //   .post('https://www.admin.vinoted-admin.com/api/session/21/read')
-    //   .then(res => console.log('res for read Message', res))
-    //   .catch(err => console.log('error for read Message', err));
-
     http
       .get(`sommelier/events?type=pendingrequest&page=${this.state.page}`)
       .then(res => {
-        // console.log('response Events..', res);
-        this.setState(
-          {
-            Events:
-              this.state.page === 0
-                ? res.data.page.data
-                : [...this.state.Events, ...res.data.page.data],
-            loading: false,
-            // total: res.data.enquires.total,
-            refreshing: false,
-          },
-        );
+        this.setState({
+          Events:
+            this.state.page === 0
+              ? res.data.page.data
+              : [...this.state.Events, ...res.data.page.data],
+          loading: false,
+          refreshing: false,
+        });
       })
       .catch(err => {
         let errors = {};
@@ -320,7 +293,6 @@ class Home extends Component {
   };
 
   LoadMoreRandomData = () => {
-    // console.log('length is here', this.state.Events.length);
     if (this.state.Events.length < this.state.total) {
       this.setState(
         {
@@ -335,10 +307,7 @@ class Home extends Component {
     return (
       !this.state.loading &&
       isEmpty(this.state.Events) && (
-        <FLEC
-          text="Currently No Events Waiting For Approval"
-          // image={require('../../../assets/logo.png')}
-        />
+        <FLEC text="Currently No Events Waiting For Approval" />
       )
     );
   }
@@ -370,15 +339,11 @@ class Home extends Component {
     http
       .get('sommelier/events?type=pendingevent')
       .then(res => {
-        // console.log('response pendingevent..', res);
-        this.setState(
-          {
-            PendingEvent: res.data.page.data,
-            loading: false,
-            refreshing: false,
-          },
-          // () => console.log('Events111', this.state.PendingEvent),
-        );
+        this.setState({
+          PendingEvent: res.data.page.data,
+          loading: false,
+          refreshing: false,
+        });
       })
       .catch(err => {
         let errors = {};
@@ -389,18 +354,14 @@ class Home extends Component {
       });
   };
 
-  SearchFilterFunction(text) {
-    // console.log('hgdcjkTEXT', text);
-  }
+  SearchFilterFunction() {}
 
   render() {
-    const {user, PendingEvent, Events} = this.state;
-    // console.log('hgdcjkTEXTPendingEvent', PendingEvent);
-    // console.log('hgdcjkTEXT', Events);
+    const {user} = this.state;
     return (
       <View
         style={{
-          // flex: 1,
+          flex: 1,
           backgroundColor: primaryColor,
         }}>
         <Header
@@ -409,6 +370,7 @@ class Home extends Component {
           iconProps={Images.MenuBarIcon}
           onPress={() => this.props.navigation.toggleDrawer()}
           image={require('../../assets/Logo.png')}
+          
         />
         <ScrollView
           refreshControl={
@@ -419,14 +381,25 @@ class Home extends Component {
           }>
           <View>
             {!this.state.loading && !isEmpty(user) ? (
-              <View
-                style={{
-                  marginHorizontal: 10,
-                  marginBottom: 15,
-                  alignItems: 'flex-start',
-                  width: '90%',
-                }}
-              />
+              <>
+                <View
+                  style={{
+                    marginHorizontal: 10,
+                    marginBottom: 15,
+                    alignItems: 'flex-start',
+                    width: '90%',
+                  }}
+                />
+                <Text
+                  style={{
+                    fontFamily: sofiaFont,
+                    fontSize: 25,
+                    color: secondryTextColor,
+                    marginLeft: 10
+                  }}>
+                  Welcome {user.user.name}!
+                </Text>
+              </>
             ) : (
               <View
                 style={{
@@ -444,7 +417,6 @@ class Home extends Component {
                     marginVertical: 3,
                   }}
                 />
-                {/* <ShimmerPlaceHolder style={{ height: 20, width: "80%", borderRadius: 10, marginVertical: 3 }} /> */}
               </View>
             )}
 
@@ -465,17 +437,12 @@ class Home extends Component {
                     source={Images.SearchIcon}
                     style={{height: 25, width: 25}}
                   />
-                  {/* <Icon
-                    name="search"
-                    type="FontAwesome"
-                    style={styles.icon}></Icon> */}
                 </View>
               </TouchableWithoutFeedback>
             </TouchableOpacity>
-
             <View style={{marginHorizontal: 10, marginTop: 10}}>
               <Text style={[styles.textheading, {color: white}]}>
-                Upcoming Events
+                Upcoming Tastings
               </Text>
             </View>
 
@@ -500,7 +467,7 @@ class Home extends Component {
                       textAlign: 'center',
                       fontFamily: sofiaFont,
                     }}>
-                    There Are Currently No Upcoming Events
+                    There Are Currently No Upcoming Tastings
                   </Text>
                 </View>
               ) : (
@@ -511,12 +478,6 @@ class Home extends Component {
                   horizontal={true}
                   scrollEventThrottle={16}
                   onEndReachedThreshold={0.5}
-                  showsVerticalScrollIndicator={false}
-                  // onEndReached={()=>this.LoadMoreRandomData()}
-                  // ListEmptyComponent={!this.state.loading && isEmpty(this.state.PendingEvent) && <FLEC text="No Data Available"/>}
-                  // ListFooterComponent={this.state.loading && !isEmpty(this.state.PendingEvent) ? (
-                  //     <BottomIndicator />
-                  // ) : null}
                   contentContainerStyle={{flexGrow: 1}}
                   refreshControl={
                     <RefreshControl
@@ -612,7 +573,7 @@ class Home extends Component {
                 },
               ]}>
               <View style={{marginHorizontal: 10}}>
-                <Text style={styles.textheading}>Requested Events</Text>
+                <Text style={styles.textheading}>Tasting Invitations</Text>
               </View>
 
               <View style={[styles.view, {flex: 1, minHeight: 500}]}>
@@ -733,6 +694,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 20,
+    marginTop: 10
   },
   icon: {
     fontSize: 20,

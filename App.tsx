@@ -216,10 +216,6 @@ export default class App extends React.Component {
                 isReadyRef.current = true;
               }}>
               <MainNavigation />
-              {/* <View>
-              <Text>Helo</Text>
-            </View> */}
-
               <NotificationPopup
                 ref={ref => (this.popup = ref)}
                 renderPopupContent={this.renderCustomPopup}

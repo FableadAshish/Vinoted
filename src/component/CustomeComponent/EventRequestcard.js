@@ -22,19 +22,14 @@ const {width, height} = Dimensions.get('window');
 const EventRequest = ({
   subtitle,
   type,
-  morbutton,
   homedate,
   hometime,
-  moretextColor,
   region,
   year,
-  doller,
   onPressMore,
   discription,
   more,
   morefromHome,
-  item,
-  isLike,
   title,
   date,
   imagelist,
@@ -54,15 +49,16 @@ const EventRequest = ({
           backgroundColor: white,
           elevation: 1,
           flexDirection: 'row',
+          borderBottomColor: 'grey',
+          borderBottomWidth: 0.4,
         }}>
-        <View style={{flex: 0.2, justifyContent: 'center'}}>
+        <View style={{flex: 0.3, justifyContent: 'center'}}>
           <View
             style={{
               justifyContent: 'center',
               paddingHorizontal: 5,
               height: 80,
-              width: 80,
-              borderRadius: 50,
+              width: '100%',
             }}>
             <Image
               style={{height: 50, width: 50, borderRadius: 25}}
@@ -101,16 +97,6 @@ const EventRequest = ({
             </Text>
             {subtitle && (
               <View style={{flexDirection: 'row', marginLeft: 30}}>
-                {/* <Icon
-                  name="pound"
-                  type="Foundation"
-                  style={{
-                    color: 'gray',
-                    fontSize: 15,
-                    paddingTop: 3,
-                    marginHorizontal: 0,
-                  }}
-                /> */}
                 <Text
                   numberOfLines={1}
                   style={[
@@ -136,9 +122,10 @@ const EventRequest = ({
                 {
                   fontSize: 12,
                   width: '100%',
-                  color: 'lightgray',
+                  color: 'grey',
                   textTransform: 'capitalize',
                   paddingVertical: 0,
+                  marginTop: 5,
                 },
               ]}>
               {homedate} {hometime && '| '}
@@ -155,6 +142,7 @@ const EventRequest = ({
                   color: primaryTextColor,
                   textTransform: 'capitalize',
                   paddingVertical: 0,
+                  marginTop: 5,
                 },
               ]}>
               {type}{' '}

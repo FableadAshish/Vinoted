@@ -84,8 +84,6 @@ const EventRequestWithType = ({
               alignItems: 'center',
               gap: 5,
             }}>
-            {/* }}> */}
-            {/* <Text style={{color: primaryColor, fontSize: 12, marginBottom:8}}> {countId+ ('.')}</Text> */}
             <View
               style={{
                 borderWidth: 1,
@@ -104,7 +102,6 @@ const EventRequestWithType = ({
                 marginBottom: 8,
               }}
             />
-            {/* ThisChange */}
           </View>
         </View>
         <View style={{flex: 0.2, justifyContent: 'center'}}>
@@ -154,16 +151,6 @@ const EventRequestWithType = ({
             </Text>
             {subtitle && (
               <View style={{flexDirection: 'row', marginLeft: 35}}>
-                {/* <Icon
-                  name="pound"
-                  type="Foundation"
-                  style={{
-                    color: 'gray',
-                    fontSize: 15,
-                    paddingTop: 1,
-                    marginHorizontal: 0,
-                  }}
-                /> */}
                 <Image
                   source={Images.BritishPoundIcon}
                   style={{height: 15, width: 15}}
@@ -296,7 +283,7 @@ const EventRequestWithType = ({
               </Text>
             </TouchableOpacity>
           )}
-          {/* {morefromHome && (
+          {morefromHome && (
             <TouchableOpacity
               onPress={onPress}
               style={{
@@ -318,7 +305,7 @@ const EventRequestWithType = ({
                 {morefromHome}
               </Text>
             </TouchableOpacity>
-          )} */}
+          )}
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

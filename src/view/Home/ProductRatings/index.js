@@ -38,25 +38,16 @@ import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import {isEmpty, isNull} from 'lodash';
 import {connect} from 'react-redux';
 import moment from 'moment';
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import {Images} from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const EventRequest = ({
-  subtitle,
   areaname,
-  time,
-  doller,
-  onPressMore,
-  discription,
-  more,
   item,
-  isLike,
   title,
-  date,
-  imagelist,
   onPress,
 }) => {
   return (
@@ -92,13 +83,11 @@ const EventRequest = ({
               width: 60,
               backgroundColor: white,
             }}>
-            {/* <Image style={{ height: 50, width: 50, borderRadius: 25 }} source={{ uri: imagelist }} /> */}
-            {/* {(() => this.sub(moment(item.products.created_at).format('DD'),'th'))()} */}
             <Text style={{color: primaryColor, fontSize: 20}}>
               {moment(item.date).format('DD')}
               <Text style={{fontSize: 10, height: 20}}>th</Text>
             </Text>
-            <Text style={{color: primaryColor, fontSize: 20, marginTop: -10}}>
+            <Text style={{color: primaryColor, fontSize: 20, marginTop: -2}}>
               {moment(item.date).format('MMM')}
             </Text>
           </View>
@@ -141,28 +130,7 @@ const EventRequest = ({
               {areaname}
             </Text>
           )}
-          {/* {date &&
-                        <View style={{ flexDirection: "row", }}>
-                            <Icon name="pound" type="Foundation" style={{ color: "lightgray", fontSize: 15, paddingTop: 3, marginHorizontal: 5 }} />
-                            <Text numberOfLines={1} style={[styles.text, { fontSize: 12, width: "100%", color: "lightgray", textTransform: "capitalize", paddingVertical: 2 }]}>{date}</Text>
-                        </View>
-                    } */}
-          {/* {date && <Text numberOfLines={1} style={[styles.text, { fontSize: 12, width: "100%", color: "lightgray", textTransform: "capitalize", paddingVertical: 2 }]}>{date} {time}</Text>} */}
         </View>
-
-        {/* <TouchableOpacity style={{ flex: 0.3, justifyContent: "flex-end", paddingHorizontal: 10 }}>
-                    {more && <TouchableOpacity onPress={onPressMore}
-                        style={{
-                            height: 30,
-                            justifyContent: 'center', alignItems: 'center', alignSelf: "flex-end",
-                            borderRadius: 15,
-                            backgroundColor: MoreButton, width: "90%", marginVertical: 10,
-                        }}>
-                        <Text style={[styles.text, { color: primaryColor, paddingHorizontal: 2, fontWeight: "700" }]}>
-                            {more}
-                        </Text>
-                    </TouchableOpacity>}
-                </TouchableOpacity> */}
       </View>
     </TouchableOpacity>
   );
@@ -262,32 +230,22 @@ class Index extends Component {
   componentDidMount() {
     this.Store();
   }
-
-  // componentWillMount(){
-  //     this.Store();
-  // }
-
   Store = async () => {
     const type = 'myevent';
-    // const type = this.props.route.params.type;
     console.log('TYPes', type);
     this.setState({loading: true, Products: []});
     this.setState({loading: true, Products: []});
-    // http.get(`sommelier/eventproductnorating?page=${this.state.page}`).then(res => {
     http
       .get(`sommelier/events?type=${type}&page=${this.state.page}`)
       .then(res => {
         console.log('response Products..', res.data.page.data);
         this.setState(
           {
-            // Products: this.state.page === 0 ? res.data : [...this.state.Products, ...res.data]
-            // ,
             Products:
               this.state.page === 0
                 ? res.data.page.data
                 : [...this.state.Products, ...res.data.page.data],
             loading: false,
-            // total: res.data.enquires.total,
             refreshing: false,
           },
           () => console.log('Products', this.state.Products),
@@ -317,12 +275,7 @@ class Index extends Component {
   _renderEmptyComponent() {
     return (
       !this.state.loading &&
-      isEmpty(this.state.Products) && (
-        <FLEC
-          text="No event found"
-          // image={require('../../../assets/logo.png')}
-        />
-      )
+      isEmpty(this.state.Products) && <FLEC text="No event found" />
     );
   }
 
@@ -344,8 +297,6 @@ class Index extends Component {
 
   Type(type) {
     console.log('typeon Function', type);
-    // const {type} =this.state;
-    // const type = this.props.route.params.type;
     if (type == 'past') {
       let past = 'My Products';
       return past;
@@ -365,7 +316,6 @@ class Index extends Component {
         style={{
           flex: 1,
           backgroundColor: white,
-          backgroundColor: 'white',
         }}>
         <Header
           navigation={this.props.navigation}
@@ -376,15 +326,7 @@ class Index extends Component {
         />
 
         <View style={{marginHorizontal: 5, flex: 1}}>
-          {/* <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
-                            <Image
-                                style={{ height: 150, width: "100%", borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
-                                source={{ uri: "https://vistapointe.net/images/bar-3.jpg" }}
-                            />
-                        </View> */}
-
           <View style={{marginHorizontal: 10, marginVertical: 10}}>
-            {/* <Text style={styles.textheading}>{type == "past" ? "Past Events" : type == "pendingevent" ? "Pending Event" : "Event Request"}</Text> */}
           </View>
 
           <View style={styles.view}>
@@ -410,7 +352,6 @@ class Index extends Component {
                   horizontal={false}
                   scrollEventThrottle={16}
                   onEndReachedThreshold={0.5}
-                  showsVerticalScrollIndicator={false}
                   onEndReached={this.LoadMoreRandomData}
                   ListEmptyComponent={() => this._renderEmptyComponent()}
                   ListFooterComponent={() => this._renderFooterComponent()}
@@ -424,7 +365,6 @@ class Index extends Component {
                   renderItem={({item}) => (
                     // <View>
                     <EventRequest
-                      // onPress={() => this.props.navigation.navigate("RatingProductDetail", { ProductDetail: item, })}
                       onPress={() =>
                         this.props.navigation.push('ProEventDetails', {
                           Eventitem: item,
@@ -435,18 +375,15 @@ class Index extends Component {
                           Testing: item,
                         })
                       }
-                      // more={"Tasting"}
                       imagelist={item.products && item.products.Imagesrc}
                       item={item}
                       time={moment(item.date).format('HH:mm')}
                       date={moment(item.date).format('DD/MM/YYYY')}
                       discription={item.supplier.default_address.city}
-                      // subtitle={item.products && ` ${item.products.price}`}
                       areaname={item.address_1}
                       title={item.name}
                     />
 
-                    // </View>
                   )}
                 />
               </View>
@@ -478,7 +415,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 1,
     backgroundColor: white,
-    // elevation: 1,
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 5,
@@ -513,7 +449,6 @@ const mapProps = state => ({
   utilities_all: state.root.utilities_all,
   user: state.root.user,
   theme: state.root.theme,
-  // console.log('state.toot.utilities', state.root.utilities_all),
 });
 
 export default connect(mapProps, null)(Index);

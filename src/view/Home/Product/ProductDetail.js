@@ -233,11 +233,10 @@ class ProductDetail extends Component {
         style={{
           flex: 1,
           backgroundColor: white,
-          backgroundColor: 'white',
         }}>
         <Header
           navigation={this.props.navigation}
-          backgroundColor={'#F1FAEE'}
+          // backgroundColor={'#F1FAEE'}
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
@@ -252,7 +251,7 @@ class ProductDetail extends Component {
           />
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{flexGrow: 1, backgroundColor: '#F1FAEE'}}>
+            <View>
               <View
                 style={{
                   flexDirection: 'row',
@@ -260,7 +259,7 @@ class ProductDetail extends Component {
                   marginBottom: 20,
                   flex: 1,
                   marginVertical: 1,
-                  backgroundColor: '#F1FAEE',
+                  // backgroundColor: '#F1FAEE',
                   // elevation: 1,
                   borderRadius: 5,
                   paddingVertical: 5,
@@ -324,7 +323,8 @@ class ProductDetail extends Component {
                       }}>
                       <Image
                         source={Images.BritishPoundIcon}
-                        style={{height: 20}}
+                        style={{height: 20,}}
+                        tintColor={primaryColor}
                       />
                       {ProductDetail.price}
                     </Text>

@@ -15,16 +15,16 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs() {
   const [unRead, setUnread] = useState('');
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      http
-        .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-        .then(res => setUnread(res))
-        .catch(err => console.log(err));
-    }, 2000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     http
+  //       .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
+  //       .then(res => setUnread(res))
+  //       .catch(err => console.log(err));
+  //   }, 2000);
 
-    return () => clearInterval(intervalId);
-  }, [unRead]);
+  //   return () => clearInterval(intervalId);
+  // }, [unRead]);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -49,7 +49,7 @@ export default function MyTabs() {
                   style={
                     focused ? {height: 28, width: 28} : {height: 25, width: 25}
                   }
-                  tintColor={focused ? 'white' : 'grey'}
+                  tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
               </View>
             </View>
@@ -68,11 +68,11 @@ export default function MyTabs() {
                 <Image
                   source={Images.MessageIcon}
                   style={
-                    focused ? {height: 28, width: 28} : {height: 25, width: 25}
+                    focused ? {height: 28, width: 28,} : {height: 25, width: 25}
                   }
-                  tintColor={focused ? 'white' : 'grey'}
+                  tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
-                {unRead !== 0 ? (
+                {/* {unRead !== 0 ? (
                   <View
                     style={{
                       height: 18,
@@ -97,7 +97,7 @@ export default function MyTabs() {
                   </View>
                 ) : (
                   ''
-                )}
+                )} */}
               </View>
             </View>
           ),
@@ -116,7 +116,7 @@ export default function MyTabs() {
                   style={
                     focused ? {height: 28, width: 28} : {height: 25, width: 25}
                   }
-                  tintColor={focused ? 'white' : 'grey'}
+                  tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
               </View>
             </View>
@@ -136,7 +136,7 @@ export default function MyTabs() {
                   style={
                     focused ? {height: 28, width: 28} : {height: 25, width: 25}
                   }
-                  tintColor={focused ? 'white' : 'grey'}
+                  tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
               </View>
             </View>
@@ -156,7 +156,7 @@ export default function MyTabs() {
                   style={
                     focused ? {height: 28, width: 28} : {height: 25, width: 25}
                   }
-                  tintColor={focused ? 'white' : 'grey'}
+                  tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
               </View>
             </View>

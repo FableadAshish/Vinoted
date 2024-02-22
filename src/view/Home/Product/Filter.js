@@ -520,6 +520,7 @@ class ChooseProduct extends Component {
                       <Image
                         source={Images.SearchIcon}
                         style={{height: 22, width: 22}}
+                        tintColor={primaryColor}
                       />
                     </View>
                   </TouchableWithoutFeedback>
@@ -674,6 +675,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 20,
+    borderWidth: 0.6,
+    borderColor: primaryColor,
   },
   icon: {
     fontSize: 20,

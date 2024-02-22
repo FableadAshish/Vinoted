@@ -185,7 +185,7 @@ class MyTestingNotes extends Component {
     // console.log('USERDATAON Sparepart', userdata);
     this.setState({userData: userdata.data});
     this.fetch();
-    
+
     // }
   }
 
@@ -337,38 +337,30 @@ class MyTestingNotes extends Component {
           navigation={this.props.navigation}
           iconColor={white}
           iconProps={Images.BackNavigationIcon}
-          onPress={() => this.props.navigation.goBack()}
+          onPress={() => this.props.navigation.navigate('Home')}
           image={require('../../../assets/Logo.png')}
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={() => this.onRefresh()}
-            />
-          }>
+          contentContainerStyle={{flexGrow: 1}}>
           <TouchableOpacity
-            // onPress={() => this.props.navigation.navigate('Filter')}
-            onPress={() => this.props.navigation.push('Filter')}
+            // onPress={() => this.props.navigation.navigate("Search")}
+            onPress={() => this.props.navigation.navigate('Filter')}
             style={styles.searchcontainer}>
-            {/* <Text style={{ width: "80%", color: primaryColor, fontFamily: sofiaFont }}>Search Here...</Text> */}
             <TextInput
               style={styles.input}
               editable={false}
-              // onChangeText={text => this.onTyping(text)}
               onChangeText={text => this.SearchFilterFunction(text)}
               value={this.state.searchText}
               underlineColorAndroid="transparent"
-              placeholder="Filter Tasting Notes"
+              placeholder="Search by Name "
               placeholderTextColor={'gray'}
             />
             <TouchableWithoutFeedback>
               <View style={styles.iconContainer}>
                 <Image
                   source={Images.SearchIcon}
-                  style={{height: 25, width: 25}}
+                  style={{height: 22, width: 22}}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -395,7 +387,6 @@ class MyTestingNotes extends Component {
                 horizontal={false}
                 scrollEventThrottle={16}
                 onEndReachedThreshold={0.5}
-                showsVerticalScrollIndicator={false}
                 onEndReached={this.LoadMoreRandomData}
                 ListEmptyComponent={() => this._renderEmptyComponent()}
                 ListFooterComponent={() => this._renderFooterComponent()}
@@ -403,265 +394,331 @@ class MyTestingNotes extends Component {
                 refreshControl={
                   <RefreshControl
                     refreshing={this.state.refreshing}
-                    onRefresh={this.onRefresh}
+                    onRefresh={() => this.onRefresh()}
                   />
                 }
                 renderItem={({item}) => (
-                  console.log('This is Item', item),
-                  (
-                    <TouchableWithoutFeedback
-                    // onPress={() =>
-                    //   this.props.navigation.navigate('ChooseProduct', {
-                    //     Testing: item,
-                    //     //event: item.event,
-                    //     isFromAdditional: true,
-                    //   })
-                    // }>
-                    >
+                  <TouchableWithoutFeedback>
+                    <View
+                      style={[
+                        styles.view,
+                        {
+                          backgroundColor: white,
+                          alignItems: 'center',
+                          overflow: 'hidden',
+                        },
+                      ]}>
                       <View
-                        style={[
-                          styles.view,
-                          {
-                            backgroundColor: white,
-                            alignItems: 'center',
-                            overflow: 'hidden',
-                          },
-                        ]}>
-                        <View
+                        style={{
+                          width: 80,
+                          height: 40,
+                          position: 'absolute',
+                          top: 0,
+                          right: 0,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => this.saveItem(item)}
+                          activeOpacity={1}
                           style={{
-                            width: 80,
                             height: 40,
-                            position: 'absolute',
-                            top: 0,
-                            right: 0,
+                            widht: 30,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderBottomLeftRadius: 25,
+                            backgroundColor: AcceptBottonColor,
+                            flexDirection: 'row',
                           }}>
-                          <TouchableOpacity
-                            activeOpacity={1}
+                          <Image
+                            source={Images.StarIcon}
+                            style={{height: 22, width: 22}}
+                          />
+                          <Text
+                            style={[
+                              styles.text,
+                              {
+                                color: white,
+                                paddingHorizontal: 5,
+                                fontWeight: '700',
+                              },
+                            ]}>
+                            {item.overall}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+
+                      <View
+                        style={{
+                          height: 120,
+                          width: width,
+                          justifyContent: 'center',
+                          flexDirection: 'row',
+                          marginTop: 25,
+                          paddingHorizontal: 10,
+                        }}>
+                        <View style={{flex: 0.3, justifyContent: 'center'}}>
+                          <View
                             style={{
-                              height: 40,
-                              widht: 30,
                               justifyContent: 'center',
-                              alignItems: 'center',
-                              borderBottomLeftRadius: 25,
-                              backgroundColor: AcceptBottonColor,
-                              flexDirection: 'row',
+                              paddingHorizontal: 5,
+                              height: 100,
+                              width: 100,
+                              borderRadius: 50,
                             }}>
                             <Image
-                              source={Images.StarIcon}
-                              style={{height: 20, width: 20}}
+                              style={{height: 50, width: 50, borderRadius: 25}}
+                              source={{uri: item.product.Imagesrc}}
                             />
+                          </View>
+                        </View>
+                        <View
+                          style={{
+                            flex: 0.7,
+                            marginHorizontal: 5,
+                            marginTop: 3,
+                            paddingRight: 12,
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            numberOfLines={1}
+                            style={[
+                              styles.text,
+                              {
+                                fontSize: 20,
+                                width: '100%',
+                                color: primaryColor,
+                                textTransform: 'capitalize',
+                                paddingVertical: 2,
+                              },
+                            ]}>
+                            {item.product.title}
+                          </Text>
+                          {/* {item.product.description == '' ? (
                             <Text
+                              numberOfLines={2}
                               style={[
                                 styles.text,
                                 {
-                                  color: white,
-                                  paddingHorizontal: 5,
-                                  fontWeight: '700',
+                                  fontSize: 12,
+                                  width: '100%',
+                                  color: 'gray',
+                                  textTransform: 'capitalize',
+                                  paddingVertical: 2,
                                 },
                               ]}>
-                              {item.overall}
+                              {item.product.description}
                             </Text>
-                          </TouchableOpacity>
-                        </View>
-
-                        <View
-                          style={{
-                            height: 120,
-                            width: width,
-                            justifyContent: 'center',
-                            flexDirection: 'row',
-                            marginTop: 25,
-                            paddingHorizontal: 10,
-                          }}>
-                          <View style={{flex: 0.3, justifyContent: 'center'}}>
+                          ) : (
                             <View
                               style={{
-                                justifyContent: 'center',
-                                paddingHorizontal: 5,
-                                height: 100,
-                                width: 100,
-                                borderRadius: 50,
+                                maxHeight: 50,
+                                overflow: 'hidden',
+                                justifyContent: 'flex-start',
                               }}>
-                              <Image
-                                style={{
-                                  height: 50,
-                                  width: 50,
-                                  borderRadius: 25,
-                                }}
-                                resizeMode="contain"
-                                source={{uri: item.product.Imagesrc}}
+                              <HTML
+                                style={[
+                                  styles.text,
+                                  {
+                                    fontSize: 12,
+                                    width: '100%',
+                                    color: 'gray',
+                                    textTransform: 'capitalize',
+                                    paddingTop: 20,
+                                  },
+                                ]}
+                                source={{html: item.product.description}}
                               />
                             </View>
-                          </View>
-                          <View
-                            style={{
-                              flex: 0.7,
-                              marginHorizontal: 5,
-                              marginTop: 3,
-                              paddingRight: 12,
-                              justifyContent: 'center',
-                            }}>
+                          )} */}
+
+                          <View style={{flexDirection: 'row'}}>
+                            <Image
+                              source={Images.BritishPoundIcon}
+                              style={{height: 22, width: 22}}
+                              tintColor={'gray'}
+                            />
                             <Text
                               numberOfLines={1}
                               style={[
                                 styles.text,
                                 {
-                                  fontSize: 20,
+                                  fontSize: 12,
                                   width: '100%',
-                                  color: primaryColor,
+                                  color: 'gray',
                                   textTransform: 'capitalize',
                                   paddingVertical: 2,
                                 },
-                              ]}
-                              numberOfLines={1}>
-                              {item.product.title}
+                              ]}>
+                              {item.product.price}
                             </Text>
-                            {item.product.description == '' ? (
-                              <Text
-                                numberOfLines={2}
-                                style={[
-                                  styles.text,
-                                  {
-                                    fontSize: 12,
-                                    width: '100%',
-                                    color: 'gray',
-                                    textTransform: 'capitalize',
-                                    paddingVertical: 2,
-                                  },
-                                ]}>
-                                {item.product.description}
-                              </Text>
-                            ) : (
-                              <View
-                                style={{
-                                  maxHeight: 50,
-                                  overflow: 'hidden',
-                                  justifyContent: 'flex-start',
-                                }}>
-                                <HTML
-                                  style={[
-                                    styles.text,
-                                    {
-                                      fontSize: 12,
-                                      width: '100%',
-                                      color: 'gray',
-                                      textTransform: 'capitalize',
-                                      paddingTop: 20,
-                                    },
-                                  ]}
-                                  source={{html: item.product.description}}
-                                />
-                              </View>
-                            )}
-                            <View style={{flexDirection: 'row'}}>
-                              <Image
-                                source={Images.BritishPoundIcon}
-                                style={{height: 15, width: 15, marginTop: 3}}
-                              />
-                              <Text
-                                numberOfLines={1}
-                                style={[
-                                  styles.text,
-                                  {
-                                    fontSize: 12,
-                                    width: '100%',
-                                    color: 'gray',
-                                    textTransform: 'capitalize',
-                                    paddingVertical: 2,
-                                  },
-                                ]}>
-                                {item.product.price}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            width: '95%',
-                            flex: 1,
-                            alignSelf: 'center',
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'column',
-                              flex: 0.5,
-                              paddingHorizontal: 10,
-                            }}>
-                            <View style={{marginVertical: 5}}>
-                              <Text style={{color: 'gray'}}>Date</Text>
-                              <Text style={{fontSize: 15, color: primaryColor}}>
-                                {/* {moment(item.product.created_at).format(
-                                'DD/MM/YYYY',
-                              )} */}
-                                {moment(item.created_at).format('DD/MM/YYYY')}
-                              </Text>
-                            </View>
-                            <View style={{marginVertical: 5}}>
-                              <Text style={{color: 'gray'}}>Location</Text>
-                              <Text style={{fontSize: 15, color: primaryColor}}>
-                                {item.product.city
-                                  ? item.product.city
-                                  : item.product.region}
-                              </Text>
-                            </View>
                           </View>
 
-                          <View
-                            style={{
-                              flexDirection: 'column',
-                              flex: 0.5,
-                              paddingHorizontal: 10,
-                            }}>
-                            <View style={{marginVertical: 5}}>
-                              <Text style={{color: 'gray'}}>Time</Text>
-                              <Text style={{fontSize: 15, color: primaryColor}}>
-                                {/* {moment(item.product.created_at).format('HH:mm')} */}
-                                {moment(item.created_at).format('HH:mm')}
-                              </Text>
-                            </View>
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.props.navigation.navigate(
-                                  'ChooseProduct',
-                                  {
-                                    Testing: item,
-                                    //event: item.event,
-                                    isFromAdditional: true,
-                                  },
-                                )
-                              }
-                              activeOpacity={1}
-                              style={{
-                                marginTop: 3,
-                                height: 40,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 15,
-                                backgroundColor: primaryColor,
-                                width: '80%',
-                                flexDirection: 'row',
-                              }}>
-                              {/* <Icon name="star" type="FontAwesome" style={{ fontSize: 20, color: white }} /> */}
-                              <Text
-                                style={[
-                                  styles.text,
-                                  {
-                                    fontSize: 14,
-                                    color: white,
-                                    paddingHorizontal: 5,
-                                    fontWeight: '700',
-                                  },
-                                ]}>
-                                Read More
-                              </Text>
-                            </TouchableOpacity>
+                          <View style={{flexDirection: 'row'}}>
+                            <Text style={{color: primaryColor, fontSize: 14}}>
+                              Producer
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={[
+                                styles.text,
+                                {
+                                  fontSize: 14,
+                                  width: '100%',
+                                  color: primaryColor,
+                                  textTransform: 'uppercase',
+                                  // paddingVertical: 2,
+                                },
+                              ]}>
+                              - {item.product.producer}
+                            </Text>
+                          </View>
+
+                          <View style={{flexDirection: 'row'}}>
+                            <Text style={{color: primaryColor, fontSize: 14}}>
+                              Color
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={[
+                                styles.text,
+                                {
+                                  fontSize: 14,
+                                  width: '100%',
+                                  color: primaryColor,
+                                  textTransform: 'uppercase',
+                                  // paddingVertical: 2,
+                                },
+                              ]}>
+                              - {item.product.type}
+                            </Text>
+                          </View>
+
+                          <View style={{flexDirection: 'row'}}>
+                            <Text style={{color: primaryColor, fontSize: 14}}>
+                              Region
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={[
+                                styles.text,
+                                {
+                                  fontSize: 14,
+                                  width: '100%',
+                                  color: primaryColor,
+                                  textTransform: 'uppercase',
+                                  // paddingVertical: 2,
+                                },
+                              ]}>
+                              - {item.product.region}
+                            </Text>
+                          </View>
+                          <View style={{flexDirection: 'row'}}>
+                            <Text style={{color: primaryColor, fontSize: 14}}>
+                              Country
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              style={[
+                                styles.text,
+                                {
+                                  fontSize: 14,
+                                  width: '100%',
+                                  color: primaryColor,
+                                  textTransform: 'uppercase',
+                                  // paddingVertical: 2,
+                                },
+                              ]}>
+                              - {item.product.country}
+                            </Text>
                           </View>
                         </View>
                       </View>
-                    </TouchableWithoutFeedback>
-                  )
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          width: '95%',
+                          flex: 1,
+                          alignSelf: 'center',
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'column',
+                            flex: 0.5,
+                            paddingHorizontal: 10,
+                          }}>
+                          <View style={{marginVertical: 5}}>
+                            <Text style={{color: 'gray'}}>Date</Text>
+                            <Text style={{fontSize: 15, color: primaryColor}}>
+                              {moment(item.created_at).format('DD/MM/YYYY')}
+                            </Text>
+                          </View>
+                          {/* <View style={{marginVertical: 5}}>
+                            <Text style={{color: 'gray'}}>Location</Text>
+                            <Text style={{fontSize: 15, color: primaryColor}}>
+                              {item.product.city
+                                ? item.product.city
+                                : item.product.region}
+                            </Text>
+                          </View> */}
+                        </View>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignContent: 'center',
+                          justifyContent: 'space-evenly',
+                          width: '100%',
+                        }}>
+                        <TouchableOpacity
+                          activeOpacity={1}
+                          style={{
+                            marginTop: 3,
+                            height: 40,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 15,
+                            backgroundColor: primaryColor,
+                            width: 120,
+                            flexDirection: 'row',
+                          }}
+                          onPress={() =>
+                            this.props.navigation.navigate('ChooseProduct', {
+                              Testing: item,
+                              isFromAdditional: true,
+                            })
+                          }>
+                          <Text style={{color: 'white', fontWeight: 700}}>
+                            View Wine
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => console.log('HeartIcon')}>
+                          <Image
+                            source={Images.HeartIcon}
+                            tintColor={primaryColor}
+                            style={{height: 25, width: 25, marginTop: 5}}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={1}
+                          style={{
+                            marginTop: 3,
+                            height: 40,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 15,
+                            backgroundColor: primaryColor,
+                            width: 120,
+                            flexDirection: 'row',
+                          }}
+                          onPress={() => this.saveItem(item)}>
+                          <Text style={{color: 'white', fontWeight: 700}}>
+                            Tasting Card
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </TouchableWithoutFeedback>
                 )}
               />
             )}
@@ -704,13 +761,9 @@ class MyTestingNotes extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="cross"
-                    type="Entypo"
-                    style={{fontSize: 18, color: primaryColor}}
-                    onPress={() => {
-                      this.setModalVisible(false);
-                    }}
+                  <Image
+                    source={Images.CancelIcon}
+                    style={{height: 30, width: 30}}
                   />
                 </TouchableOpacity>
                 <View style={styles.modelheader}>
@@ -720,8 +773,6 @@ class MyTestingNotes extends Component {
                         color: primaryColor,
                         fontWeight: 'bold',
                         fontSize: 20,
-                        // paddingVertical: 5,
-                        // textAlignVertical: "top",
                         fontFamily: sofiaFont,
                       },
                     ]}>
@@ -818,10 +869,6 @@ class MyTestingNotes extends Component {
                         {item.listing_candidate}
                       </Text>
                     </View>
-                    {/* <View style={{ marginVertical: 5 }}>
-                                            <Text style={{ color: "gray" }}>Alcohol</Text>
-                                            <Text style={{ fontSize: 15, color: primaryColor }}>{item.alcohol}</Text>
-                                        </View> */}
                   </View>
                 </View>
                 <View
@@ -856,19 +903,21 @@ class MyTestingNotes extends Component {
                     flexDirection: 'row',
                     paddingHorizontal: 10,
                   }}>
-                  <Icon
-                    name={
+                  <Image
+                    source={
                       !isEmpty(item) && item.is_favourite == 1
-                        ? 'heart'
-                        : 'hearto'
+                        ? Images.FavouriteSelectedIcon
+                        : Images.HeartIcon
                     }
-                    type="AntDesign"
                     style={{
+                      height: 20,
+                      width: 20,
                       color:
                         !isEmpty(item) && item.is_favourite == 1
                           ? primaryColor
                           : 'gray',
                     }}
+                    tintColor={primaryColor}
                   />
                   <Text style={{color: primaryColor, paddingHorizontal: 10}}>
                     Favourite

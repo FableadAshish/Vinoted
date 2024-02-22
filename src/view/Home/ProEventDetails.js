@@ -259,10 +259,14 @@ class ProEventDetails extends Component {
   }
 
   SearchFilterFunction(text) {
-    const filteredArray = this.state.tempArray.filter(item =>
+    const filteredArray = this.state.EventDetail.eventproducts.filter(item =>
       item.products.title.toLowerCase().includes(text.toLowerCase()),
     );
+
     this.setState({searchedWine: filteredArray});
+    // console.log(item.products.title === text)
+    // console.log(this.s)
+    // (this.state.EventDetail.eventproducts.filter(item =>console.log(text == item.products.title)));
   }
   onRefresh() {
     this.setState({refreshing: true, page: 0, EventDetail: {}}, () =>
@@ -342,7 +346,7 @@ class ProEventDetails extends Component {
 
   render() {
     const {EventDetail} = this.state;
-    // console.log('EventDetail Now Second', this.state.tempArray[2]);
+    console.log('EventDetail Now Second again Phirse', EventDetail);
     // for (let i = 1; i <= this.state.tempArrayLength; i++) {
     //   console.log('Event Detail Again[ Rhire fgd juyhh', i, ']: ', i);
     //   // return this.setState({wineCount: i});
@@ -592,11 +596,6 @@ class ProEventDetails extends Component {
                       color: primaryColor,
                     }}
                   />
-
-                  {/* If you also want to display the plain text version */}
-                  {/* <View>
-                    <Text style={[styles.textheading]}>{EventDetail.description}</Text>
-                  </View> */}
                 </View>
               ) : (
                 <View>
@@ -664,6 +663,17 @@ class ProEventDetails extends Component {
                           {EventDetail.status}
                         </Text>
                       </View>
+                      <View style={{marginVertical: 5}}>
+                        <Text style={{color: 'gray'}}>Supplier Name</Text>
+                        <Text
+                          style={{
+                            fontFamily: sofiaFont,
+                            fontSize: 15,
+                            color: primaryColor,
+                          }}>
+                          {EventDetail.supplier.name}
+                        </Text>
+                      </View>
                     </View>
 
                     <View
@@ -673,7 +683,7 @@ class ProEventDetails extends Component {
                         paddingHorizontal: 10,
                       }}>
                       <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Time</Text>
+                        <Text style={{color: 'gray'}}>Start Time</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,
@@ -683,6 +693,18 @@ class ProEventDetails extends Component {
                           {moment(EventDetail.date).format('HH:mm')}
                         </Text>
                       </View>
+                      <View style={{marginVertical: 5}}>
+                        <Text style={{color: 'gray'}}>End Time</Text>
+                        <Text
+                          style={{
+                            fontFamily: sofiaFont,
+                            fontSize: 15,
+                            color: primaryColor,
+                          }}>
+                          {moment(EventDetail.event_end_time).format('HH:mm')}
+                        </Text>
+                      </View>
+                      
                       <View style={{marginVertical: 5}}>
                         <Text style={{color: 'gray'}}>Location</Text>
                         <Text
@@ -757,7 +779,6 @@ class ProEventDetails extends Component {
                       keyExtractor={(item, i) => i.toString()}
                       scrollEventThrottle={16}
                       onEndReachedThreshold={0.5}
-                      showsVerticalScrollIndicator={false}
                       ListEmptyComponent={() => this._renderEmptyProComponent()}
                       contentContainerStyle={{flexGrow: 1}}
                       // This will render If Notification is accepted
@@ -807,6 +828,80 @@ class ProEventDetails extends Component {
 
                     {/* } */}
                   </View>
+                  {!isEmpty(this.state.tempArray) && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        padding: 10,
+                        marginHorizontal: 5,
+                        bottom: 0,
+                        borderRadius: 2,
+                      }}>
+                      <FlatList
+                        showsVerticalScrollIndicator={false}
+                        horizontal={true}
+                        data={this.state.tempArray}
+                        keyExtractor={(item, i) => i.toString()}
+                        scrollEventThrottle={16}
+                        onEndReachedThreshold={0.5}
+                        showsVerticalScrollIndicator={false}
+                        ListEmptyComponent={() =>
+                          this._renderEmptyProComponent()
+                        }
+                        contentContainerStyle={{flexGrow: 1}}
+                        renderItem={({item}) => (
+                          <View
+                            style={{
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}>
+                            {!isEmpty(item.products) && (
+                              <View
+                                style={{
+                                  width: '100%',
+                                  flexDirection: 'column',
+                                  marginHorizontal: 10,
+                                  marginBottom: 0,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <View
+                                  style={{
+                                    borderWidth: 1,
+                                    borderRadius: 5,
+                                    borderColor: this.renderColor(
+                                      item.products.type,
+                                    ),
+                                    borderBottomWidth: 0,
+                                    shadowColor: 'black',
+                                    shadowOffset: {width: 0, height: 2},
+                                    shadowOpacity: 0.9,
+                                    shadowRadius: 13,
+                                    elevation: 3,
+                                    backgroundColor: this.renderColor(
+                                      item.products.type,
+                                    ),
+                                    height: 15,
+                                    width: 15,
+                                    borderRadius: 50,
+                                    marginBottom: 8,
+                                  }}
+                                />
+                                <Text
+                                  style={{color: primaryColor, fontSize: 12}}>
+                                  {' '}
+                                  {this.renderText(item.products.type)}
+                                </Text>
+                              </View>
+                              // <View>
+                              //   <Text>Hello</Text>
+                              // </View>
+                            )}
+                          </View>
+                        )}
+                      />
+                    </View>
+                  )}
                 </View>
               ) : (
                 // {/* {!isEmpty(EventDetail) && EventDetail.event_my_requests.status == "Pending" && */}
@@ -887,7 +982,6 @@ class ProEventDetails extends Component {
                         keyExtractor={(item, i) => i.toString()}
                         scrollEventThrottle={16}
                         onEndReachedThreshold={0.5}
-                        showsVerticalScrollIndicator={false}
                         ListEmptyComponent={() =>
                           this._renderEmptyProComponent()
                         }
@@ -895,44 +989,42 @@ class ProEventDetails extends Component {
                         renderItem={({item}) => (
                           // This will render If Notification is not accepted
                           // console.log('item=======>wer', item.products),
-                          (
-                            <View>
-                              {
-                                <EventRequestWithType
-                                  onPress={() =>
-                                    this.props.navigation.navigate(
-                                      'ProductDetail',
-                                      {ProductDetail: item, event: EventDetail},
-                                    )
-                                  }
-                                  onPressMore={() =>
-                                    EventDetail.is_started == 1 &&
-                                    this.props.navigation.navigate(
-                                      'ChooseProduct',
-                                      {Testing: item, event: EventDetail},
-                                    )
-                                  }
-                                  item={item}
-                                  region={item.products.region}
-                                  year={item.products.year}
-                                  // more={
-                                  //   EventDetail.is_started == 1 && 'Tasting'
-                                  // }
-                                  imagelist={
-                                    item.products && item.products.Imagesrc
-                                  }
-                                  type={item.products.type}
-                                  color={
-                                    item.products ? item.products.type : null
-                                  }
-                                  subtitle={
-                                    item.products && ` ${item.products.price}`
-                                  }
-                                  title={item.products && item.products.title}
-                                />
-                              }
-                            </View>
-                          )
+                          <View>
+                            {
+                              <EventRequestWithType
+                                onPress={() =>
+                                  this.props.navigation.navigate(
+                                    'ProductDetail',
+                                    {ProductDetail: item, event: EventDetail},
+                                  )
+                                }
+                                onPressMore={() =>
+                                  EventDetail.is_started == 1 &&
+                                  this.props.navigation.navigate(
+                                    'ChooseProduct',
+                                    {Testing: item, event: EventDetail},
+                                  )
+                                }
+                                item={item}
+                                region={item.products.region}
+                                year={item.products.year}
+                                // more={
+                                //   EventDetail.is_started == 1 && 'Tasting'
+                                // }
+                                imagelist={
+                                  item.products && item.products.Imagesrc
+                                }
+                                type={item.products.type}
+                                color={
+                                  item.products ? item.products.type : null
+                                }
+                                subtitle={
+                                  item.products && ` ${item.products.price}`
+                                }
+                                title={item.products && item.products.title}
+                              />
+                            }
+                          </View>
                         )}
                       />
                     </View>
