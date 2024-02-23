@@ -136,7 +136,7 @@ class ViewProduct extends Component {
                 ]}>
                 <View style={{flexDirection: 'column', flex: 0.7}}>
                   <View style={{marginVertical: 5}}>
-                    <Text style={[styles.textheading, {fontWeight: '700'}]}>
+                    <Text style={[styles.textheading, {fontWeight: '500'}]}>
                       {Testing.products.title}
                     </Text>
                     {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
@@ -148,7 +148,7 @@ class ViewProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         color: primaryColor,
                       }}>
                       {Testing.products.year}
@@ -161,7 +161,7 @@ class ViewProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         color: primaryColor,
                       }}>
                       {Testing.products.alcohol}
@@ -173,7 +173,7 @@ class ViewProduct extends Component {
                     <Text
                       style={{
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         fontFamily: sofiaFont,
                         color: primaryColor,
                       }}>
@@ -182,7 +182,7 @@ class ViewProduct extends Component {
                   </View>
                   {/* <View style={{ marginVertical: 5 }}>
                                     <Text style={{ color: "gray" }}>Bottles in collections</Text>
-                                    <Text style={{ fontSize: 20, fontWeight: "700", color: primaryColor }}>0</Text>
+                                    <Text style={{ fontSize: 20, fontWeight: "500", color: primaryColor }}>0</Text>
                                 </View> */}
                 </View>
 

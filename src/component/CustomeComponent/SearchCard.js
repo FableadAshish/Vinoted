@@ -208,7 +208,7 @@ const SearchCard = ({
                 style={{
                   color: white,
                   paddingHorizontal: 0,
-                  fontWeight: '700',
+                  fontWeight: '500',
                   fontSize: 10,
                   fontFamily: sofiaFont,
                 }}>

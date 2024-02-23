@@ -924,7 +924,7 @@ class ProEventDetails extends Component {
                           {
                             color: 'gray',
                             paddingHorizontal: 5,
-                            fontWeight: '700',
+                            fontWeight: '500',
                           },
                         ]}>
                         Reject
@@ -949,7 +949,7 @@ class ProEventDetails extends Component {
                           {
                             color: white,
                             paddingHorizontal: 5,
-                            fontWeight: '700',
+                            fontWeight: '500',
                           },
                         ]}>
                         Accept

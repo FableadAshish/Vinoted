@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     color: 'white',
-    fontWeight: '700',
+    fontWeight: '500',
     fontFamily: sofiaFont,
   },
 

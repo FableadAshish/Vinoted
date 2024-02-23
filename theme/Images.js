@@ -21,4 +21,5 @@ export const Images = {
   CheckedSquareIcon: require('../src/assets/Images/PageIcons/CheckedSquare.png'),
   CalendarIcon: require('../src/assets/Images/PageIcons/Calendar.png'),
   CancelIcon: require('../src/assets/Images/PageIcons/Cancel.png'),
+  slectImage: require('../src/assets/Images/PageIcons/Selct.png')
 };

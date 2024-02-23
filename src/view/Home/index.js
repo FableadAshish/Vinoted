@@ -370,7 +370,6 @@ class Home extends Component {
           iconProps={Images.MenuBarIcon}
           onPress={() => this.props.navigation.toggleDrawer()}
           image={require('../../assets/Logo.png')}
-          
         />
         <ScrollView
           refreshControl={
@@ -393,9 +392,10 @@ class Home extends Component {
                 <Text
                   style={{
                     fontFamily: sofiaFont,
-                    fontSize: 25,
+                    fontSize: 22,
                     color: secondryTextColor,
-                    marginLeft: 10
+                    marginLeft: 10,
+                    fontWeight: 500,
                   }}>
                   Welcome {user.user.name}!
                 </Text>
@@ -694,7 +694,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 20,
-    marginTop: 10
+    marginTop: 10,
   },
   icon: {
     fontSize: 20,

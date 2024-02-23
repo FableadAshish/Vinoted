@@ -232,7 +232,7 @@ class RatingProductDetail extends Component {
                 ]}>
                 <View style={{flexDirection: 'column', flex: 0.7}}>
                   <View style={{marginVertical: 5}}>
-                    <Text style={[styles.textheading, {fontWeight: '700'}]}>
+                    <Text style={[styles.textheading, {fontWeight: '500'}]}>
                       {ProductDetail.title}
                     </Text>
                     {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
@@ -244,7 +244,7 @@ class RatingProductDetail extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         color: primaryColor,
                       }}>
                       {ProductDetail.year}
@@ -258,7 +258,7 @@ class RatingProductDetail extends Component {
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '700',
+                          fontWeight: '500',
                           color: primaryColor,
                         }}>
                         {moment(form.created_at).format('DD MMM,YYYY')}

@@ -15,16 +15,16 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs() {
   const [unRead, setUnread] = useState('');
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     http
-  //       .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-  //       .then(res => setUnread(res))
-  //       .catch(err => console.log(err));
-  //   }, 2000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      http
+        .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
+        .then(res => setUnread(res))
+        .catch(err => console.log(err));
+    }, 2000);
 
-  //   return () => clearInterval(intervalId);
-  // }, [unRead]);
+    return () => clearInterval(intervalId);
+  }, [unRead]);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -72,7 +72,7 @@ export default function MyTabs() {
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
-                {/* {unRead !== 0 ? (
+                {unRead !== 0 ? (
                   <View
                     style={{
                       height: 18,
@@ -89,7 +89,7 @@ export default function MyTabs() {
                       style={{
                         marginBottom: 5,
                         fontSize: 12,
-                        fontWeight: '800',
+                        fontWeight: '600',
                         color: 'black',
                       }}>
                       {unRead}
@@ -97,7 +97,7 @@ export default function MyTabs() {
                   </View>
                 ) : (
                   ''
-                )} */}
+                )}
               </View>
             </View>
           ),

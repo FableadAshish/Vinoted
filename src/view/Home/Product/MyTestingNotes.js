@@ -184,6 +184,7 @@ class MyTestingNotes extends Component {
     const userdata = await _getUser();
     // console.log('USERDATAON Sparepart', userdata);
     this.setState({userData: userdata.data});
+    
     this.fetch();
 
     // }
@@ -323,7 +324,7 @@ class MyTestingNotes extends Component {
   }
 
   render() {
-    const {item} = this.state;
+    const {item, form} = this.state;
     // const {SearchData} = this.props.route.params;
     console.log('pdataNotedd', item);
     // console.log('Search Filter Function', SearchData);
@@ -438,7 +439,7 @@ class MyTestingNotes extends Component {
                               {
                                 color: white,
                                 paddingHorizontal: 5,
-                                fontWeight: '700',
+                                fontWeight: '500',
                               },
                             ]}>
                             {item.overall}
@@ -687,18 +688,54 @@ class MyTestingNotes extends Component {
                               isFromAdditional: true,
                             })
                           }>
-                          <Text style={{color: 'white', fontWeight: 700}}>
+                          <Text style={{color: 'white', fontWeight: 500}}>
                             View Wine
                           </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                           onPress={() => console.log('HeartIcon')}>
                           <Image
                             source={Images.HeartIcon}
                             tintColor={primaryColor}
                             style={{height: 25, width: 25, marginTop: 5}}
                           />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        {/* <TouchableOpacity
+                          activeOpacity={1}
+                          style={{
+                            paddingVertical: 10,
+                            // width: '100%',
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                          }}
+                          onPress={() =>
+                            !isEmpty(form.event)
+                              ? null
+                              : this.setState({
+                                  form: {
+                                    ...this.state.form,
+                                    is_favourite: !this.state.form.is_favourite,
+                                  },
+                                })
+                          }>
+                          <Image
+                            source={
+                              !isEmpty(form) && form.is_favourite == 1
+                                ? Images.FavouriteSelectedIcon
+                                : Images.HeartIcon
+                            }
+                            style={{
+                              height: 20,
+                              width: 20,
+                              color:
+                                !isEmpty(form) && form.is_favourite == 1
+                                  ? primaryColor
+                                  : 'gray',
+                            }}
+                            tintColor={primaryColor}
+                          />
+                        </TouchableOpacity> */}
                         <TouchableOpacity
                           activeOpacity={1}
                           style={{
@@ -712,7 +749,7 @@ class MyTestingNotes extends Component {
                             flexDirection: 'row',
                           }}
                           onPress={() => this.saveItem(item)}>
-                          <Text style={{color: 'white', fontWeight: 700}}>
+                          <Text style={{color: 'white', fontWeight: 500}}>
                             Tasting Card
                           </Text>
                         </TouchableOpacity>

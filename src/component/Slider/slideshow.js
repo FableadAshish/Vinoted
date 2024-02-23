@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   textTitle: {
-    fontWeight: 'bold',
+    fontWeight: '500',
     fontSize: 15,
     color: 'white',
     fontFamily: sofiaFont,

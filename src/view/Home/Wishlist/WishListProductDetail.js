@@ -179,7 +179,7 @@ class WishListProductDetail extends Component {
                   ]}>
                   <View style={{flexDirection: 'column', flex: 0.7}}>
                     <View style={{marginVertical: 5}}>
-                      <Text style={[styles.textheading, {fontWeight: '700'}]}>
+                      <Text style={[styles.textheading, {fontWeight: '500'}]}>
                         {ProductDetail.product.title}
                       </Text>
                       {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
@@ -191,7 +191,7 @@ class WishListProductDetail extends Component {
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '700',
+                          fontWeight: '500',
                           color: primaryColor,
                         }}>
                         {ProductDetail.product.year}
@@ -204,7 +204,7 @@ class WishListProductDetail extends Component {
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '700',
+                          fontWeight: '500',
                           color: primaryColor,
                         }}>
                         {ProductDetail.product.alcohol}%
@@ -221,7 +221,7 @@ class WishListProductDetail extends Component {
                               style={{
                                 fontFamily: sofiaFont,
                                 fontSize: 20,
-                                fontWeight: '700',
+                                fontWeight: '500',
                                 color: primaryColor,
                               }}>
                               {moment(ProductDetail.created_at).format(
@@ -235,7 +235,7 @@ class WishListProductDetail extends Component {
                               style={{
                                 fontFamily: sofiaFont,
                                 fontSize: 20,
-                                fontWeight: '700',
+                                fontWeight: '500',
                                 color: primaryColor,
                               }}>
                               <Image source={Images.BritishPoundIcon} />

@@ -499,7 +499,7 @@ class SearchableTastingNots extends Component {
                               {
                                 color: white,
                                 paddingHorizontal: 5,
-                                fontWeight: '700',
+                                fontWeight: '500',
                               },
                             ]}>
                             {item.overall}
@@ -680,7 +680,7 @@ class SearchableTastingNots extends Component {
                                   fontSize: 14,
                                   color: white,
                                   paddingHorizontal: 5,
-                                  fontWeight: '700',
+                                  fontWeight: '500',
                                 },
                               ]}>
                               Read More

@@ -181,7 +181,7 @@ const CardList = ({
                   textAlign: 'right',
                   color: ShowCount ? 'green' : 'gray',
                   paddingHorizontal: 2,
-                  fontWeight: '700',
+                  fontWeight: '500',
                 },
               ]}>
               {date}

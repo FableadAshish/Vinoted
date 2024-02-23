@@ -462,7 +462,7 @@ class ChooseProduct extends Component {
   }
   render() {
     const {errors, form, Testing, items} = this.state;
-console.log("Testing now", Testing.product)
+    console.log('Testing now', Testing.product);
     return (
       <View
         style={{
@@ -497,17 +497,19 @@ console.log("Testing now", Testing.product)
                   </View>
 
                   <View style={{marginVertical: 5}}>
-                    <Text style={{color: 'gray', fontFamily: sofiaFont}}>
+                    {/* <Text style={{color: 'gray', fontFamily: sofiaFont}}>
                       Producer
-                    </Text>
+                    </Text> */}
                     <Text
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         color: primaryColor,
                       }}>
-                      {Testing.product.producer}
+                      {Testing.product
+                        ? Testing.product.produer
+                        : Testing.products.produer}
                     </Text>
                   </View>
 
@@ -519,7 +521,7 @@ console.log("Testing now", Testing.product)
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -536,7 +538,7 @@ console.log("Testing now", Testing.product)
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '700',
+                        fontWeight: '500',
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -557,7 +559,7 @@ console.log("Testing now", Testing.product)
                         <Text
                           style={{
                             fontSize: 20,
-                            fontWeight: '700',
+                            fontWeight: '500',
                             fontFamily: sofiaFont,
                             color: primaryColor,
                           }}>
@@ -1304,9 +1306,10 @@ console.log("Testing now", Testing.product)
                   editable={isEmpty(form.event) ? true : false}
                   multiline={true}
                   value={this.state.textInputdescriptionValue}
-                  Textcolor={primaryColor}
+                  // Textcolor={'red'}
                   onRef={ref => (this.description = ref)}
-                  onChange={value => {
+                  // placeholderTextColor='green'
+                  onChangeText={value => {
                     this.handleChange(value, 'description');
                     this.handleTextInputChange(value, 'description');
                   }}
@@ -1314,8 +1317,8 @@ console.log("Testing now", Testing.product)
                     borderBottomWidth: 0.5,
                     borderColor: 'gray',
                     padding: 10,
-                    height: 30,
-                    // backgroundColor:'red'
+                    // height: 30,
+                    color: primaryColor,
                   }}
                 />
 
@@ -1444,7 +1447,7 @@ const styles = StyleSheet.create({
     fontFamily: sofiaFont,
   },
   textheading: {
-    color: primaryColor,
+    // color: primaryColor,
     fontSize: 25,
     fontFamily: sofiaFont,
   },

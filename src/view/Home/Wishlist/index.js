@@ -132,8 +132,6 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    // this._unsubscribe = this.props.navigation.addListener('focus', () => {
-    //     console.log('hello');
     this.Store();
     // });
   }
@@ -183,10 +181,7 @@ class Index extends Component {
     return (
       !this.state.loading &&
       isEmpty(this.state.Wishlist) && (
-        <FLEC
-          text="Currently No Wines Have Been Favourited"
-          // image={require('../../../assets/logo.png')}
-        />
+        <FLEC text="Currently No Wines Have Been Favourited" />
       )
     );
   }
@@ -206,10 +201,6 @@ class Index extends Component {
       () => this.Store(),
     );
   };
-
-  removeItem() {
-    return (console.log('itemn'));
-  }
 
   render() {
     console.log('pdata........', this.state.Wishlist);
@@ -292,7 +283,6 @@ class Index extends Component {
                         date={moment(item.created_at).format('DD/MM/YYYY')}
                         ViewMore={'View'}
                         title={!isNull(item.product) && item.product.title}
-                        removeData={()=>this.removeItem()}
                       />
                     );
                   }
