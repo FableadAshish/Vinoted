@@ -31,6 +31,7 @@ const SearchCard = ({
   areaname,
   imagelist,
   onPress,
+  removeData
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -162,20 +163,31 @@ const SearchCard = ({
           </Text>
         </View>
 
-        {/* <View style={{ flex: 0.3, }}>
-                {ViewMore &&  <TouchableOpacity activeOpacity={1} onPress={onPressView}
-                        style={{
-                            height: 30,
-                            justifyContent: 'center', alignItems: 'center',
-                            borderRadius: 15,
-                            backgroundColor: primaryColor, width: "90%", marginVertical: 10, marginHorizontal: 5
-                        }}>
-                        <Text style={[styles.text, { color: white, paddingHorizontal: 2, fontWeight: "700" }]}>
-                            {ViewMore}
-                            </Text>
-                    </TouchableOpacity>}
-
-                </View> */}
+        <View style={{flex: 0.3}}>
+          {removeData && (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={removeData}
+              style={{
+                height: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 15,
+                backgroundColor: primaryColor,
+                width: 80,
+                marginVertical: 20,
+                marginHorizontal: 80,
+              }}>
+              <Text
+                style={[
+                  styles.text,
+                  {color: white, paddingHorizontal: 2, fontWeight: '700'},
+                ]}>
+                Remove
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
         <TouchableOpacity
           activeOpacity={1}
           style={{flex: 0.3, justifyContent: 'center', paddingHorizontal: 10}}>
@@ -189,8 +201,8 @@ const SearchCard = ({
                 alignSelf: 'flex-end',
                 borderRadius: 15,
                 backgroundColor: primaryColor,
-                width: '90%',
-                marginVertical: 2,
+                width: 80,
+                marginTop: 40,
               }}>
               <Text
                 style={{

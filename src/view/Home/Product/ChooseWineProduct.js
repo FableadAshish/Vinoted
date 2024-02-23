@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {
   View,
   StyleSheet,
@@ -9,11 +10,14 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  TextInput,
 } from 'react-native';
 import Header from '../../../component/Header/Header';
 import {Toast} from 'native-base';
 import Button from '../../../component/Common/Button';
 import ModalSelector from 'react-native-modal-selector';
+import TextInputs from '../../../component/Common/EditTextField';
+
 import {
   white,
   secondryColor,
@@ -23,21 +27,18 @@ import {
   lineColor,
 } from '../../../style/variables';
 import {isEmpty, unset, set, isNull} from 'lodash';
-import TextInput from '../../../component/Common/EditTextField';
+// import TextInput from '../../../component/Common/EditTextField';
 import {connect} from 'react-redux';
 import http from '../../../http';
 // import Slider from 'react-native-smooth-slider';
 import Slider from '@react-native-community/slider';
 import moment from 'moment';
-import {Picker} from '@react-native-picker/picker';
-
-// import Slider from '@react-native-community/slider';
 const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
-// import MultiSelect from 'react-native-multiple-select';
+import MultiSelect from 'react-native-multiple-select';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Images} from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -210,8 +211,22 @@ class ChooseProduct extends Component {
       eventTesting: {},
       selectedItems: [],
       index: 0,
-      textInputValue: '',
+      textInputIntensityValue: '',
+      textInputAcidityValue: '',
+      textInputTanninnValue: '',
+      textInputBodyValue: '',
+      textInputSweetnessValue: '',
+      textInputComplexityValue: '',
+      textInputBalanceValue: '',
+      textInputMaturityValue: '',
+      textInputFinishValue: '',
+      textInputlistingCandidateValue: '',
+      textInputdescriptionValue: '',
+      open: false,
+      value: null,
+      items: items,
     };
+    this.setValue = this.setValue.bind(this);
   }
 
   componentDidMount() {
@@ -221,12 +236,9 @@ class ChooseProduct extends Component {
       });
       const Testing = this.props.route.params.Testing;
       const eventTesting = this.props.route.params.event;
-      // console.log('Props*****', this.props.route.params);
       if (eventTesting) {
         this.setState({eventTesting});
       }
-
-      // console.log('Testinge', Testing);
       this.setState({Testing}, () => this.Store());
     }
     this.setState(prevState => ({index: prevState.index + 1}));
@@ -241,7 +253,6 @@ class ChooseProduct extends Component {
         product_id: Testing.product_id,
       })
       .then(res => {
-        // console.log('response MYRatings..###', res);
         if (res.data) {
           this.setState({
             form: {...this.state.form, ...res.data},
@@ -249,13 +260,6 @@ class ChooseProduct extends Component {
           });
         }
         this.setState({loading: false, refreshing: false});
-        // this.setState({ loading: false, refreshing: false }, () =>
-        //     Toast.show({
-        //         text: `${res.message}`,
-        //         buttonText: 'Ok',
-        //         duration: 2000,
-        //     }))
-        // setTimeout(() => this.props.navigation.goBack(), 2000)
       })
       .catch(err => {
         console.log('ERROR on Rating', err);
@@ -387,15 +391,6 @@ class ChooseProduct extends Component {
       </View>
     );
   };
-
-  // handleChange(name, value) {
-  //   console.log('name', name, value);
-
-  //   let errors = this.state.errors;
-  //   unset(errors, name);
-  //   let form = {...this.state.form, [name]: value};
-  //   this.setState({form});
-  // }
   handleChange(value, name) {
     console.log('This is value', value);
     console.log('This is name', name);
@@ -407,18 +402,72 @@ class ChooseProduct extends Component {
   onSelectedItemsChange = selectedItems => {
     this.setState({selectedItems});
   };
+  handleTextInputChange = (text, name) => {
+    if (name == 'intensity') {
+      this.setState({textInputIntensityValue: text});
+    }
+    if (name == 'acidity') {
+      this.setState({textInputAcidityValue: text});
+    }
+    if (name == 'tannin') {
+      this.setState({textInputTanninnValue: text});
+    }
+    if (name == 'body') {
+      this.setState({textInputBodyValue: text});
+    }
+    if (name == 'sweetness') {
+      this.setState({textInputSweetnessValue: text});
+    }
+    if (name == 'complexity') {
+      this.setState({textInputComplexityValue: text});
+    }
+    if (name == 'balance') {
+      this.setState({textInputBalanceValue: text});
+    }
+    if (name == 'maturity') {
+      this.setState({textInputMaturityValue: text});
+    }
+    if (name == 'finish') {
+      this.setState({textInputFinishValue: text});
+    }
+    if (name == 'listing_candidate') {
+      this.setState({textInputlistingCandidateValue: text});
+    }
+    if (name == 'description') {
+      this.setState({textInputdescriptionValue: text});
+    }
+  };
+  setOpen(open) {
+    this.setState({
+      open,
+    });
+  }
 
+  IconRenderer = ({items}) => {
+    const Icon = () => (
+      <Image source={items.icon} style={{width: 20, height: 20}} />
+    );
+    return Icon;
+  };
+  setValue(callback) {
+    this.setState(state => ({
+      value: callback(state.value),
+    }));
+  }
+
+  setItems(callback) {
+    this.setState(state => ({
+      items: callback(state.items),
+    }));
+  }
   render() {
-    const {errors, form, Testing, index, eventTesting, selectedItems} =
-      this.state;
-    // console.log('selectedItems..', eventTesting);
-
+    const {errors, form, Testing, items} = this.state;
+console.log("Testing now", Testing.product)
     return (
       <View
         style={{
           flex: 1,
           backgroundColor: white,
-          backgroundColor: 'white',
         }}>
         <Header
           navigation={this.props.navigation}
@@ -445,6 +494,21 @@ class ChooseProduct extends Component {
                         : Testing.products.title}
                     </Text>
                     {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
+                  </View>
+
+                  <View style={{marginVertical: 5}}>
+                    <Text style={{color: 'gray', fontFamily: sofiaFont}}>
+                      Producer
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 20,
+                        fontWeight: '700',
+                        color: primaryColor,
+                      }}>
+                      {Testing.product.producer}
+                    </Text>
                   </View>
 
                   <View style={{marginVertical: 5}}>
@@ -532,27 +596,50 @@ class ChooseProduct extends Component {
                     Ratings
                   </Text>
                 </View>
-                <View style={styles.pickerView}>
+                <View style={[styles.pickerView, {marginTop: 20}]}>
                   <Text style={styles.pickerText}>Intensity</Text>
                   <View style={styles.pickerstyle}>
-                    {isEmpty(form.event) && (
+                    {isEmpty(form.event) ? (
                       <ModalSelector
                         data={[
                           {key: this.state.index++, label: 'Low'},
                           {key: this.state.index++, label: 'Medium'},
                           {key: this.state.index++, label: 'High'},
                         ]}
+                        optionStyle={{
+                          borderBottomWidth: 0,
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                        }}
+                        initValueTextStyle={{color: 'red'}}
+                        optionTextStyle={{color: 'black'}}
                         initValue="Select"
                         onChange={option => {
-                          // option.label, "intensity", option.key
                           this.handleChange(
                             option.label,
                             'intensity',
                             option.key,
                           );
-                        }}
-                        selectedKey={this.state.form.intensity}
-                      />
+
+                          this.handleTextInputChange(option.label, 'intensity');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            borderColor: '#ccc',
+                            padding: 10,
+                            height: 50,
+                            color: primaryColor,
+                          }}
+                          editable={false}
+                          placeholder="Select"
+                          value={this.state.textInputIntensityValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <Text style={styles.SimpleText}>
+                        {this.state.form.acidity}
+                      </Text>
                     )}
                   </View>
                   {!isEmpty(errors) && errors.intensity && !form.intensity && (
@@ -578,17 +665,35 @@ class ChooseProduct extends Component {
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'acidity',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.acidity}
-                        />
+                            this.handleTextInputChange(option.label, 'acidity');
+                          }}>
+                          <TextInput
+                            style={{
+                              // borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputAcidityValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.acidity}
@@ -611,36 +716,41 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Tannin</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.tannin}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'tannin',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Low" value="Low" />
-                        //   <Picker.Item label="Medium" value="Medium" />
-                        //   <Picker.Item label="High" value="High" />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'tannin',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.tannin}
-                        />
+                            this.handleTextInputChange(option.label, 'tannin');
+                          }}>
+                          <TextInput
+                            style={{
+                              // borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputTanninnValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.tannin}
@@ -663,29 +773,37 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Body</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.body}
-                        //   onValueChange={this.handleChange.bind(this, 'body')}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Light" value="Light" />
-                        //   <Picker.Item label="Medium" value="Medium" />
-                        //   <Picker.Item label="Full" value="Full" />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'Light'},
                             {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'full'},
+                            {key: this.state.index++, label: 'Full'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(option.label, 'body', option.key);
-                          }}
-                          selectedKey={this.state.form.body}
-                        />
+                            this.handleTextInputChange(option.label, 'body');
+                          }}>
+                          <TextInput
+                            style={{
+                              // borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputBodyValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.body}
@@ -708,20 +826,6 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Sweetness</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.sweetness}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'sweetness',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Dry" value="Dry" />
-                        //   <Picker.Item label="Off-Dry" value="Off-Dry" />
-                        //   <Picker.Item label="Sweet" value="Sweet" />
-                        //   <Picker.Item label="Luscious" value="Luscious" />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'Dry'},
@@ -729,17 +833,45 @@ class ChooseProduct extends Component {
                             {key: this.state.index++, label: 'Sweet'},
                             {key: this.state.index++, label: 'Luscious'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'sweetness',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.sweetness}
-                        />
+                            this.handleTextInputChange(
+                              option.label,
+                              'sweetness',
+                            );
+                          }}>
+                          <TextInput
+                            style={{
+                              // borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            optionStyle={{
+                              borderBottomWidth: 0,
+                              alignItems: 'flex-start',
+                              justifyContent: 'flex-start',
+                            }}
+                            initValueTextStyle={{color: 'red'}}
+                            optionTextStyle={{color: 'black'}}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputSweetnessValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.sweetness}
@@ -764,37 +896,44 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Complexity</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.complexity}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'complexity',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Low" value="Low" />
-                        //   <Picker.Item label="Medium" value="Medium" />
-                        //   <Picker.Item label="High" value="High" />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
-                            // {key: this.state.index++, label: 'Luscious'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'complexity',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.complexity}
-                        />
+                            this.handleTextInputChange(
+                              option.label,
+                              'complexity',
+                            );
+                          }}>
+                          <TextInput
+                            style={{
+                              borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputComplexityValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.complexity}
@@ -819,37 +958,41 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Balance</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.balance}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'balance',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Low" value="Low" />
-                        //   <Picker.Item label="Medium" value="Medium" />
-                        //   <Picker.Item label="High" value="High" />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
-                            // {key: this.state.index++, label: 'Luscious'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'balance',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.balance}
-                        />
+                            this.handleTextInputChange(option.label, 'balance');
+                          }}>
+                          <TextInput
+                            style={{
+                              borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputBalanceValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.balance}
@@ -872,47 +1015,48 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Maturity</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.maturity}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'maturity',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Tired" value="Tired" />
-                        //   <Picker.Item label="Too Young" value="Too Young" />
-                        //   <Picker.Item
-                        //     label="Ready to Drink"
-                        //     value="Ready to Drink"
-                        //   />
-                        //   <Picker.Item
-                        //     label="Ready to drink - can age"
-                        //     value="Ready to drink - can age"
-                        //   />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'Tired'},
                             {key: this.state.index++, label: 'Too Young'},
-                            {key: this.state.index++, label: 'Ready to Drink'},
+                            {key: this.state.index++, label: 'Ready to drink'},
                             {
                               key: this.state.index++,
                               label: 'Ready to drink - can age',
                             },
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'maturity',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.maturity}
-                        />
+                            this.handleTextInputChange(
+                              option.label,
+                              'maturity',
+                            );
+                          }}>
+                          <TextInput
+                            style={{
+                              borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputMaturityValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.maturity}
@@ -935,37 +1079,41 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Finish</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.finish}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'finish',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item label="Short" value="short" />
-                        //   <Picker.Item label="Medium" value="medium" />
-                        //   <Picker.Item label="Long" value="long" />
-                        // </Picker>
                         <ModalSelector
                           data={[
-                            {key: this.state.index++, label: 'short'},
-                            {key: this.state.index++, label: 'medium'},
-                            {key: this.state.index++, label: 'long'},
-                            // {key: this.state.index++, label: 'Ready to drink - can age'},
+                            {key: this.state.index++, label: 'Short'},
+                            {key: this.state.index++, label: 'Medium'},
+                            {key: this.state.index++, label: 'Long'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'finish',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.finish}
-                        />
+                            this.handleTextInputChange(option.label, 'finish');
+                          }}>
+                          <TextInput
+                            style={{
+                              borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              color: primaryColor,
+                              height: 50,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputFinishValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.finish}
@@ -988,42 +1136,43 @@ class ChooseProduct extends Component {
                     <Text style={styles.pickerText}>Listing Candidate</Text>
                     <View style={styles.pickerstyle}>
                       {isEmpty(form.event) ? (
-                        // <Picker
-                        //   style={styles.pickerItem}
-                        //   itemStyle={styles.pickerItem}
-                        //   selectedValue={this.state.form.listing_candidate}
-                        //   onValueChange={this.handleChange.bind(
-                        //     this,
-                        //     'listing_candidate',
-                        //   )}>
-                        //   <Picker.Item label="Select" value={null} />
-                        //   <Picker.Item
-                        //     label="By the glass"
-                        //     value="By the glass"
-                        //   />
-                        //   <Picker.Item
-                        //     label="By the bottle"
-                        //     value="By the bottle"
-                        //   />
-                        // </Picker>
                         <ModalSelector
                           data={[
                             {key: this.state.index++, label: 'By the glass'},
                             {key: this.state.index++, label: 'By the bottle'},
-                            {key: this.state.index++, label: 'long'},
-                            // {key: this.state.index++, label: 'Ready to drink - can age'},
                           ]}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           initValue="Select"
                           onChange={option => {
-                            // alert(`${option.label} (${option.key}) nom nom nom`);
                             this.handleChange(
                               option.label,
                               'listing_candidate',
                               option.key,
                             );
-                          }}
-                          selectedKey={this.state.form.listing_candidate}
-                        />
+                            this.handleTextInputChange(
+                              option.label,
+                              'listing_candidate',
+                            );
+                          }}>
+                          <TextInput
+                            style={{
+                              borderBottomWidth: 1,
+                              borderColor: '#ccc',
+                              padding: 10,
+                              height: 50,
+                              color: primaryColor,
+                            }}
+                            editable={false}
+                            placeholder="Select"
+                            value={this.state.textInputlistingCandidateValue}
+                          />
+                        </ModalSelector>
                       ) : (
                         <Text style={styles.SimpleText}>
                           {this.state.form.listing_candidate}
@@ -1092,10 +1241,58 @@ class ChooseProduct extends Component {
                   )}
                 </View>
               </View>
+              <View style={{flex: 1, marginBottom: 10}}>
+                {isEmpty(form.event) ? (
+                  <SectionedMultiSelect
+                    items={items}
+                    IconRenderer={this.IconRenderer}
+                    styles={{button: {backgroundColor: primaryColor}}}
+                    uniqueKey="name"
+                    subKey="children"
+                    selectText="Select Flavours"
+                    showDropDowns={true}
+                    searchPlaceholderText="Choose Flavour..."
+                    readOnlyHeadings={true}
+                    onSelectedItemsChange={this.onSelectedItemsChange}
+                    selectedItems={this.state.selectedItems}
+                  />
+                ) : (
+                  <>
+                    {!isNull(form.flavours) && (
+                      <View>
+                        <Text
+                          style={{
+                            color: 'gray',
+                            fontFamily: sofiaFont,
+                            marginVertical: 10,
+                          }}>
+                          Flavours
+                        </Text>
+                        <Text style={styles.SimpleText}>
+                          {!isNull(form.flavours)
+                            ? form.flavours.map(item => item).join(', ')
+                            : ''}
+                        </Text>
+                      </View>
+                    )}
+                  </>
+                )}
+              </View>
 
               <View style={[styles.view, {marginHorizontal: 5}]}>
                 <View>
-                  <Text style={[styles.textheading, {fontSize: 18}]}>
+                  <Text
+                    style={[
+                      styles.textheading,
+                      {
+                        // borderBottomWidth:1,
+                        fontSize: 18,
+                        borderBottomColor: 'red',
+                        padding: 10,
+                        height: 50,
+                        color: primaryColor,
+                      },
+                    ]}>
                     Additional Notes
                   </Text>
                 </View>
@@ -1106,58 +1303,22 @@ class ChooseProduct extends Component {
                   errors={errors}
                   editable={isEmpty(form.event) ? true : false}
                   multiline={true}
-                  value={this.description}
+                  value={this.state.textInputdescriptionValue}
                   Textcolor={primaryColor}
                   onRef={ref => (this.description = ref)}
-                  onValueChange={value =>
-                    this.handleChange(value, 'description')
-                  }
+                  onChange={value => {
+                    this.handleChange(value, 'description');
+                    this.handleTextInputChange(value, 'description');
+                  }}
+                  style={{
+                    borderBottomWidth: 0.5,
+                    borderColor: 'gray',
+                    padding: 10,
+                    height: 30,
+                    // backgroundColor:'red'
+                  }}
                 />
-                <View style={{flex: 1, marginBottom: 10}}>
-                  {isEmpty(form.event) ? (
-                    <View>
-                      <SectionedMultiSelect
-                        items={items}
-                        IconRenderer={MaterialIcons}
-                        uniqueKey="name"
-                        subKey="children"
-                        selectText="Select Flavours"
-                        showDropDowns={true}
-                        searchPlaceholderText="Choose Flavour..."
-                        readOnlyHeadings={true}
-                        onSelectedItemsChange={this.onSelectedItemsChange}
-                        selectedItems={this.state.selectedItems}
-                        iconName="keyboard_arrow_down"
-                        iconSize={24}
-                        iconColor="blue"
-                      />
-                      <View>
-                        {this.multiSelect &&
-                          this.multiSelect.getSelectedItemsExt(selectedItems)}
-                      </View>
-                    </View>
-                  ) : (
-                    <>
-                      {!isNull(form.flavours) && (
-                        <View>
-                          <Text
-                            style={{
-                              color: 'gray',
-                              fontFamily: sofiaFont,
-                              marginVertical: 10,
-                            }}>
-                            Flavours
-                          </Text>
-                          <Text style={styles.SimpleText}>
-                            {!isNull(form.flavours)
-                              ? form.flavours.map(item => item).join(', ')
-                              : ''}
-                          </Text>
-                        </View>
-                      )}
-                    </>
-                  )}
-                </View>
+
                 <TouchableOpacity
                   activeOpacity={1}
                   style={{
