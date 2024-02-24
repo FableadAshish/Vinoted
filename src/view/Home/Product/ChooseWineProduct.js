@@ -30,8 +30,8 @@ import {isEmpty, unset, set, isNull} from 'lodash';
 // import TextInput from '../../../component/Common/EditTextField';
 import {connect} from 'react-redux';
 import http from '../../../http';
-// import Slider from 'react-native-smooth-slider';
-import Slider from '@react-native-community/slider';
+import Slider from 'react-native-smooth-slider';
+// import Slider from '@react-native-community/slider';
 import moment from 'moment';
 const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
@@ -44,6 +44,7 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {items} from '../../../assets/Data/data';
 import {value} from 'react-native-extended-stylesheet';
+import {ChooseWineModal} from '../../../component/ChoseMineModal/ChooseWineModal';
 
 let data = ['1', '2', '3'];
 
@@ -497,9 +498,9 @@ class ChooseProduct extends Component {
                   </View>
 
                   <View style={{marginVertical: 5}}>
-                    {/* <Text style={{color: 'gray', fontFamily: sofiaFont}}>
+                    <Text style={{color: 'gray', fontFamily: sofiaFont}}>
                       Producer
-                    </Text> */}
+                    </Text>
                     <Text
                       style={{
                         fontFamily: sofiaFont,
@@ -508,7 +509,7 @@ class ChooseProduct extends Component {
                         color: primaryColor,
                       }}>
                       {Testing.product
-                        ? Testing.product.produer
+                        ? Testing.product.producer
                         : Testing.products.produer}
                     </Text>
                   </View>
@@ -655,6 +656,11 @@ class ChooseProduct extends Component {
                     </Text>
                   )}
                 </View>
+
+                {/* <ChooseWineModal
+                isEmpty={isEmpty(form.event)}
+
+                /> */}
 
                 <View style={styles.pickerView}>
                   <View style={styles.pickerView}>
@@ -1267,6 +1273,7 @@ class ChooseProduct extends Component {
                             color: 'gray',
                             fontFamily: sofiaFont,
                             marginVertical: 10,
+                            marginHorizontal: 15,
                           }}>
                           Flavours
                         </Text>
@@ -1282,45 +1289,51 @@ class ChooseProduct extends Component {
               </View>
 
               <View style={[styles.view, {marginHorizontal: 5}]}>
-                <View>
-                  <Text
-                    style={[
-                      styles.textheading,
-                      {
-                        // borderBottomWidth:1,
-                        fontSize: 18,
-                        borderBottomColor: 'red',
+                {isEmpty(form.event) ? (
+                  <>
+                    <View>
+                      <Text
+                        style={[
+                          styles.textheading,
+                          {
+                            // borderBottomWidth:1,
+                            fontSize: 18,
+                            borderBottomColor: 'red',
+                            padding: 10,
+                            height: 50,
+                            color: primaryColor,
+                          },
+                        ]}>
+                        Additional Notes
+                      </Text>
+                    </View>
+                    <TextInput
+                      label="Description"
+                      name="description"
+                      errors={errors}
+                      editable={isEmpty(form.event) ? true : false}
+                      multiline={true}
+                      value={this.state.textInputdescriptionValue}
+                      // Textcolor={'red'}
+                      onRef={ref => (this.description = ref)}
+                      // placeholderTextColor='green'
+                      onChangeText={value => {
+                        this.handleChange(value, 'description');
+                        this.handleTextInputChange(value, 'description');
+                      }}
+                      style={{
+                        borderBottomWidth: 0.5,
+                        borderColor: 'gray',
                         padding: 10,
-                        height: 50,
+                        // height: 30,
                         color: primaryColor,
-                      },
-                    ]}>
-                    Additional Notes
+                      }}
+                    />
+                  </>
+                ) : (<Text style={styles.SimpleText}>
+                    {this.state.form.description}
                   </Text>
-                </View>
-
-                <TextInput
-                  label="Description"
-                  name="description"
-                  errors={errors}
-                  editable={isEmpty(form.event) ? true : false}
-                  multiline={true}
-                  value={this.state.textInputdescriptionValue}
-                  // Textcolor={'red'}
-                  onRef={ref => (this.description = ref)}
-                  // placeholderTextColor='green'
-                  onChangeText={value => {
-                    this.handleChange(value, 'description');
-                    this.handleTextInputChange(value, 'description');
-                  }}
-                  style={{
-                    borderBottomWidth: 0.5,
-                    borderColor: 'gray',
-                    padding: 10,
-                    // height: 30,
-                    color: primaryColor,
-                  }}
-                />
+                )}
 
                 <TouchableOpacity
                   activeOpacity={1}
@@ -1447,7 +1460,7 @@ const styles = StyleSheet.create({
     fontFamily: sofiaFont,
   },
   textheading: {
-    // color: primaryColor,
+    color: primaryColor,
     fontSize: 25,
     fontFamily: sofiaFont,
   },
@@ -1480,7 +1493,7 @@ const styles = StyleSheet.create({
     fontFamily: sofiaFont,
     fontSize: 16,
     textTransform: 'capitalize',
-    marginLeft: 10,
+    marginHorizontal: 15,
   },
 });
 

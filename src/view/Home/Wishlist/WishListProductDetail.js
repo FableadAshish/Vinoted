@@ -86,7 +86,7 @@ class WishListProductDetail extends Component {
 
   render() {
     const {ProductDetail, isLike} = this.state;
-    console.log('Render Item on Product..Wid', ProductDetail);
+    console.log('Render Item on Product..Wid new', ProductDetail);
     return (
       <View
         style={{
@@ -182,7 +182,19 @@ class WishListProductDetail extends Component {
                       <Text style={[styles.textheading, {fontWeight: '500'}]}>
                         {ProductDetail.product.title}
                       </Text>
-                      {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
+                    </View>
+
+                    <View style={{marginVertical: 5}}>
+                      <Text style={{color: 'gray'}}>Producer</Text>
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 20,
+                          fontWeight: '500',
+                          color: primaryColor,
+                        }}>
+                        {ProductDetail.product.producer}
+                      </Text>
                     </View>
 
                     <View style={{marginVertical: 5}}>
@@ -311,21 +323,36 @@ class WishListProductDetail extends Component {
                           {ProductDetail.product.country}
                         </Text>
                       </View>
-                      {/* <View style={{ marginVertical: 5 }}>
-                                                <Text style={{ color: "gray" }}>Company</Text>
-                                                <Text style={{ fontFamily: sofiaFont, fontSize: 15, color: primaryColor }}>{ProductDetail.product.company_name}</Text>
-
-                                            </View> */}
+                      <View style={{marginVertical: 5}}>
+                        <Text style={{color: 'gray'}}>Company</Text>
+                        <Text
+                          style={{
+                            fontFamily: sofiaFont,
+                            fontSize: 15,
+                            color: primaryColor,
+                          }}>
+                          {ProductDetail.product.supplier_name}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-
-                <View style={[styles.view, {marginHorizontal: 5}]}>
-                  <HTML
-                    style={{fontSize: 15, color: primaryColor}}
-                    html={ProductDetail.product.description}
-                    imagesMaxWidth={Dimensions.get('window').width - 20}
-                  />
+                  <View style={[
+                      styles.view,
+                      {marginHorizontal: 5, backgroundColor: white},
+                    ]}>
+                    <HTML
+                      // style={{
+                      //   fontFamily: sofiaFont,
+                      //   // fontSize: 20,
+                      //   fontWeight: '500',
+                      //   color: 'black',
+                      // }}>
+                      // {ProductDetail.product.description}
+                      style={{fontSize: 15, color: primaryColor}}
+                      source={{html: ProductDetail.product.description}}
+                      imagesMaxWidth={Dimensions.get('window').width - 20}
+                    />
+                  </View>
                 </View>
               </View>
             )}

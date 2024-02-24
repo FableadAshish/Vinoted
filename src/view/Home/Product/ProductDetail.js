@@ -270,7 +270,6 @@ class ProductDetail extends Component {
                     <Text style={[styles.textheading, {fontWeight: '500'}]}>
                       {ProductDetail.title}
                     </Text>
-                    {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
                   </View>
 
                   <View style={{marginVertical: 5}}>
@@ -432,7 +431,7 @@ class ProductDetail extends Component {
                     </View>
                   </View>
                 </View>
-                {ProductDetail.description == 'NULL' ? (
+                {ProductDetail.description == 'null' ? (
                   <View
                     style={[
                       styles.view,
@@ -453,6 +452,7 @@ class ProductDetail extends Component {
                       source={{html: ProductDetail.description}}
                       imagesMaxWidth={Dimensions.get('window').width - 20}
                     />
+                    {/* <Text>{ProductDetail.description}</Text> */}
                   </View>
                 )}
               </View>

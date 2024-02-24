@@ -1,5 +1,5 @@
 // 1104
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   View,
@@ -25,19 +25,19 @@ import {
 } from '../../../style/variables';
 import http from '../../../http';
 import LinearGradient from 'react-native-linear-gradient';
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 // import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 // import TextInput from '../../../component/Common/EditTextField';
-import { isEmpty, unset, set } from 'lodash';
-import { connect } from 'react-redux';
+import {isEmpty, unset, set} from 'lodash';
+import {connect} from 'react-redux';
 import Button from '../../../component/Common/Button';
-import { Icon, Toast } from 'native-base';
+import {Icon, Toast} from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
-import { Images } from '../../../../theme/Images';
+import {Images} from '../../../../theme/Images';
 import Loader from '../../../component/Indicator/Loader';
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 var BUTTONS = ['From Camera', 'From Gallery', 'Cancel'];
 var DESTRUCTIVE_INDEX = 1;
 var CANCEL_INDEX = 2;
@@ -68,8 +68,8 @@ class Profile extends Component {
   }
 
   Store = async () => {
-    const { form } = this.state;
-    this.setState({ loading: true });
+    const {form} = this.state;
+    this.setState({loading: true});
     http
       .get('sommelier/profile')
       .then(res => {
@@ -102,12 +102,12 @@ class Profile extends Component {
         if (err && err.status.data.code == 422) {
           errors = err.status.data.errors;
         }
-        this.setState({ loading: false, errors });
+        this.setState({loading: false, errors});
       });
   };
 
   utilities_all() {
-    this.setState({ isLoading: true });
+    this.setState({isLoading: true});
     http
       .get('utilities/all')
       .then(res => {
@@ -153,7 +153,7 @@ class Profile extends Component {
         if (err && err.status == 422) {
           errors = err.errors;
         }
-        this.setState({ isLoading: false, errors });
+        this.setState({isLoading: false, errors});
         console.log('get countries error : ', err);
       });
   }
@@ -161,8 +161,8 @@ class Profile extends Component {
   handleChange(name, value) {
     let errors = this.state.errors;
     unset(errors, name);
-    let form = { ...this.state.form, [name]: value };
-    this.setState({ form });
+    let form = {...this.state.form, [name]: value};
+    this.setState({form});
   }
 
   _handleImageCropper = fileType => {
@@ -232,7 +232,7 @@ class Profile extends Component {
 
   handleChangeImage(name, value) {
     let errors = this.state.errors;
-    this.setState({ form: { ...this.state.form, [name]: value } }, () =>
+    this.setState({form: {...this.state.form, [name]: value}}, () =>
       console.log('IMAGESSSS', this.state.form),
     );
   }
@@ -270,10 +270,10 @@ class Profile extends Component {
   onSave = async () => {
     let errors = this.validate();
     if (!isEmpty(errors)) {
-      return this.setState({ errors });
+      return this.setState({errors});
     }
 
-    const { form } = this.state;
+    const {form} = this.state;
     const fd = new FormData();
     console.log('This is FD Form Again', form);
     if (!isEmpty(this.state.form.photo)) {
@@ -342,7 +342,7 @@ class Profile extends Component {
       fd.append('country_code', 'IN');
     }
     // console.log('response DDD', fd);
-    this.setState({ loading: true });
+    this.setState({loading: true});
     http
       .post('sommelier/profile', form)
       .then(res => {
@@ -350,7 +350,7 @@ class Profile extends Component {
         this.setState(
           {
             form: res.data.user,
-            form: { ...this.state.form },
+            form: {...this.state.form},
             loading: false,
             refreshing: false,
             editable: false,
@@ -368,7 +368,7 @@ class Profile extends Component {
         if (err && err.status.data.code == 422) {
           errors = err.status.data.errors;
         }
-        this.setState({ loading: false, refreshing: false, errors });
+        this.setState({loading: false, refreshing: false, errors});
       });
   };
 
@@ -382,7 +382,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { profile, editable, errors, form } = this.state;
+    const {profile, editable, errors, form} = this.state;
     // console.log('Profile Form Agan', form);
     return (
       <View
@@ -548,7 +548,9 @@ class Profile extends Component {
               loading={true}
               // ...
             /> */}
-            <View>{/* <Loader /> */}</View>
+            <View>
+              <Loader />
+            </View>
           </ScrollView>
         ) : (
           <ScrollView
@@ -560,22 +562,22 @@ class Profile extends Component {
               />
             }>
             <View
-              style={{ marginHorizontal: 5, width: '98%', alignSelf: 'center' }}>
-              <View style={{ alignItems: 'center' }}>
+              style={{marginHorizontal: 5, width: '98%', alignSelf: 'center'}}>
+              <View style={{alignItems: 'center'}}>
                 <TouchableWithoutFeedback
                   //  onPress={this.chooseFile.bind(this)}
                   // onPress={() => this._handleImageCropper('photo')}>
                   onPress={() => this.fromGallery('photo')}>
-                  <View style={[styles.view, { alignItems: 'center' }]}>
+                  <View style={[styles.view, {alignItems: 'center'}]}>
                     {!isEmpty(form.photo) ? (
                       <Image
-                        source={{ uri: form.photo }}
-                        style={{ width: 130, height: 130, borderRadius: 65 }}
+                        source={{uri: form.photo}}
+                        style={{width: 130, height: 130, borderRadius: 65}}
                       />
                     ) : (
                       <Image
                         source={require('../../../assets/sommelier.jpeg')}
-                        style={{ width: 130, height: 130, borderRadius: 65 }}
+                        style={{width: 130, height: 130, borderRadius: 65}}
                       />
                     )}
 
@@ -596,16 +598,16 @@ class Profile extends Component {
                   )}
               </View>
 
-              <View style={[styles.view, { alignItems: 'center' }]}>
+              <View style={[styles.view, {alignItems: 'center'}]}>
                 <Text style={styles.textheading}>
                   {form.first_name} {form.last_name}
                 </Text>
                 {/* <Text style={styles.text}>A hands-on tasting experience in a winery’s Barrel Room is the perfect way to get up-close and personal with the winemaker.  Tasting wine from a barrel also gives you some understanding, and appreciation, for the transformation it will go through before making it to the bottle!” ~ Bruce and Pam Boring, Founders, The California Wine Club</Text> */}
               </View>
 
-              <View style={{ flex: 1, width: '90%', alignSelf: 'center' }}>
-                <View style={{ marginVertical: 10, justifyContent: 'center' }}>
-                  <Text style={[styles.textTile, { color: 'gray' }]}>Email</Text>
+              <View style={{flex: 1, width: '90%', alignSelf: 'center'}}>
+                <View style={{marginVertical: 10, justifyContent: 'center'}}>
+                  <Text style={[styles.textTile, {color: 'gray'}]}>Email</Text>
                   <View>
                     <Text
                       style={{
@@ -630,7 +632,7 @@ class Profile extends Component {
                       justifyContent: 'center',
                       width: '100%',
                     }}>
-                    <Text style={[styles.textTile, { color: 'gray' }]}>
+                    <Text style={[styles.textTile, {color: 'gray'}]}>
                       First name
                     </Text>
                     <View>
@@ -660,8 +662,8 @@ class Profile extends Component {
                   </View>
                 )}
                 {editable && (
-                  <View style={{ marginVertical: 10, justifyContent: 'center' }}>
-                    <Text style={[styles.textTile, { color: 'gray' }]}>
+                  <View style={{marginVertical: 10, justifyContent: 'center'}}>
+                    <Text style={[styles.textTile, {color: 'gray'}]}>
                       Last name
                     </Text>
                     <View>
@@ -688,14 +690,14 @@ class Profile extends Component {
                   </View>
                 )}
 
-                <View style={{ marginVertical: 10, justifyContent: 'center' }}>
-                  <Text style={[styles.textTile, { color: 'gray' }]}>
+                <View style={{marginVertical: 10, justifyContent: 'center'}}>
+                  <Text style={[styles.textTile, {color: 'gray'}]}>
                     Job Title
                   </Text>
                   {editable ? (
                     <View
                       style={[
-                        { borderBottomWidth: 1, borderBottomColor: white },
+                        {borderBottomWidth: 1, borderBottomColor: white},
                       ]}>
                       <TextInput
                         label="Job title"
@@ -709,7 +711,7 @@ class Profile extends Component {
                         }}
                         onRef={ref => (this.job_title = ref)}
                         onChangeText={this.handleChange.bind(this, 'job_title')}
-                      // onSubmitEditing={() => this.password.focus()}
+                        // onSubmitEditing={() => this.password.focus()}
                       />
                     </View>
                   ) : (
@@ -742,14 +744,14 @@ class Profile extends Component {
                       </Text>
                     )}
                 </View>
-                <View style={{ marginVertical: 10, justifyContent: 'center' }}>
-                  <Text style={[styles.textTile, { color: 'gray' }]}>
+                <View style={{marginVertical: 10, justifyContent: 'center'}}>
+                  <Text style={[styles.textTile, {color: 'gray'}]}>
                     Company
                   </Text>
                   {editable ? (
                     <View
                       style={[
-                        { borderBottomWidth: 1, borderBottomColor: white },
+                        {borderBottomWidth: 1, borderBottomColor: white},
                       ]}>
                       <TextInput
                         label="Company"
@@ -763,7 +765,7 @@ class Profile extends Component {
                         }}
                         onRef={ref => (this.company = ref)}
                         onChangeText={this.handleChange.bind(this, 'company')}
-                      // onSubmitEditing={() => this.password.focus()}
+                        // onSubmitEditing={() => this.password.focus()}
                       />
                     </View>
                   ) : (
@@ -798,8 +800,8 @@ class Profile extends Component {
 
               {editable ? (
                 this.state.loading ? (
-                  <TouchableWithoutFeedback style={{ width: '100%' }}>
-                    <View style={[styles.button, { marginTop: 70 }]}>
+                  <TouchableWithoutFeedback style={{width: '100%'}}>
+                    <View style={[styles.button, {marginTop: 70}]}>
                       <ActivityIndicator
                         animating={this.state.loading}
                         size="large"
@@ -833,7 +835,7 @@ class Profile extends Component {
                   }}>
                   <TouchableOpacity
                     onPress={() =>
-                      this.setState({ editable: !this.state.editable })
+                      this.setState({editable: !this.state.editable})
                     }
                     style={{
                       height: 50,

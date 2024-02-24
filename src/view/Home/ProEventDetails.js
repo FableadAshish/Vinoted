@@ -1022,6 +1022,7 @@ class ProEventDetails extends Component {
                                   item.products && ` ${item.products.price}`
                                 }
                                 title={item.products && item.products.title}
+                                // description:
                               />
                             }
                           </View>

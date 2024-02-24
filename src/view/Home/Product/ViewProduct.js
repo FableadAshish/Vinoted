@@ -139,7 +139,6 @@ class ViewProduct extends Component {
                     <Text style={[styles.textheading, {fontWeight: '500'}]}>
                       {Testing.products.title}
                     </Text>
-                    {/* <Text style={{ fontSize: 15, color: primaryColor }}>Flavours ,Sugar, Sulfur,Dioxide,Potessium Grap Juice Concerntrate</Text> */}
                   </View>
 
                   <View style={{marginVertical: 5}}>

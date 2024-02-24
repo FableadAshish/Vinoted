@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {
   primaryColor,
@@ -13,17 +14,14 @@ import {
   primaryTextColor,
   sofiaFont,
 } from '../../style/variables';
+import {Images} from '../../../theme/Images';
 const {width} = Dimensions.get('window');
 
 const SearchCard = ({
   subtitle,
   time,
-  ratingtype,
-  item,
-  remove,
   title,
   ViewMore,
-  ratingValue,
   status,
   date,
   Type,
@@ -31,7 +29,8 @@ const SearchCard = ({
   areaname,
   imagelist,
   onPress,
-  removeData
+  removeData,
+  removeText,
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -163,60 +162,69 @@ const SearchCard = ({
           </Text>
         </View>
 
-        <View style={{flex: 0.3}}>
+        <View>
           {removeData && (
             <TouchableOpacity
-              activeOpacity={1}
               onPress={removeData}
               style={{
-                height: 30,
+                flex: 0.3,
                 justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 15,
-                backgroundColor: primaryColor,
-                width: 80,
-                marginVertical: 20,
-                marginHorizontal: 80,
+                paddingHorizontal: 10,
+                flexDirection: 'column',
               }}>
-              <Text
-                style={[
-                  styles.text,
-                  {color: white, paddingHorizontal: 2, fontWeight: '700'},
-                ]}>
-                Remove
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={{flex: 0.3, justifyContent: 'center', paddingHorizontal: 10}}>
-          {ViewMore && (
-            <TouchableOpacity
-              onPress={onPressView}
-              style={{
-                height: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'flex-end',
-                borderRadius: 15,
-                backgroundColor: primaryColor,
-                width: 80,
-                marginTop: 40,
-              }}>
-              <Text
+              <View
                 style={{
-                  color: white,
-                  paddingHorizontal: 0,
-                  fontWeight: '500',
-                  fontSize: 10,
-                  fontFamily: sofiaFont,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'flex-end',
+                  borderRadius: 15,
+                  backgroundColor: primaryColor,
+                  width: 90,
+                  marginTop: 40,
                 }}>
-                {ViewMore}
-              </Text>
+                <Text style={{color: 'white', fontWeight: 400, fontSize: 12}}>
+                  {removeText}
+                </Text>
+              </View>
             </TouchableOpacity>
           )}
-        </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              flex: 0.3,
+              justifyContent: 'center',
+              paddingHorizontal: 10,
+              marginTop: 15,
+            }}>
+            {ViewMore && (
+              <TouchableOpacity
+                onPress={onPressView}
+                style={{
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'flex-end',
+                  borderRadius: 15,
+                  backgroundColor: primaryColor,
+                  width: 90,
+                  marginTop: 40,
+                }}>
+                <Text
+                  style={{
+                    color: white,
+                    paddingHorizontal: 0,
+                    fontWeight: 400,
+                    fontSize: 12,
+                    fontFamily: sofiaFont,
+                  }}>
+                  {ViewMore}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );

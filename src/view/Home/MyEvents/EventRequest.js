@@ -292,7 +292,7 @@ class EventRequest extends Component {
 
           <View style={{marginHorizontal: 10, marginVertical: 10}}>
             {/* <Text style={styles.textheading}>{type == "past" ? "Past Events" : type == "pendingevent" ? "Pending Event" :"Requested Event"}</Text> */}
-            <Text style={styles.textheading}>{'Requested Events'}</Text>
+            <Text style={styles.textheading}>{'Tasting Invitations'}</Text>
           </View>
 
           <View style={styles.view}>
@@ -316,14 +316,7 @@ class EventRequest extends Component {
               //         { height: 100, width: width - 20, alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
               //         { height: 100, width: width - 20, alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
               //         { height: 100, width: width - 20, alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-              //         { height: 100, width: width - 20, alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-              //         { height: 100, width: width - 20, alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-              //     ]}
-              //     animationDirection="horizontalRight"
-              //     backgroundColor="grey"
-              //     loading={true}
-              // // ...
-              // />
+
               <FlatList
                 showsVerticalScrollIndicator={false}
                 data={this.state.Events}

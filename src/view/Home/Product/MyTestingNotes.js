@@ -354,7 +354,7 @@ class MyTestingNotes extends Component {
               onChangeText={text => this.SearchFilterFunction(text)}
               value={this.state.searchText}
               underlineColorAndroid="transparent"
-              placeholder="Search by Name "
+              placeholder="Filter Tasting Notes "
               placeholderTextColor={'gray'}
             />
             <TouchableWithoutFeedback>

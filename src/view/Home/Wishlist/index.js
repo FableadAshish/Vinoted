@@ -14,6 +14,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import SearchCard from '../../../component/CustomeComponent/SearchCard';
 import Header from '../../../component/Header/Header';
@@ -38,6 +39,7 @@ const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import {Images} from '../../../../theme/Images';
+import AsyncStorage from '@react-native-community/async-storage';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 let data = ['1', '2', '3'];
@@ -128,6 +130,8 @@ class Index extends Component {
       refreshing: false,
       page: 0,
       total: '',
+      searchedData: [],
+      savedData: [],
     };
   }
 
@@ -135,6 +139,44 @@ class Index extends Component {
     this.Store();
     // });
   }
+  _storedData = async filteredWishlist => {
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(filteredWishlist));
+      this._retrieveData();
+    } catch (error) {
+      console.lo(error);
+    }
+  };
+
+  _retrieveData = async () => {
+    try {
+      const userData = JSON.parse(await AsyncStorage.getItem('user'));
+
+      if (userData) {
+        console.log('userData length', userData.length);
+        this.setState({
+          savedData: userData,
+        });
+      } else {
+        console.log('No data was found!');
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  removeCard = async item => {
+    try {
+      const filteredWishlist = this.state.Wishlist.filter(
+        wishlistItem => wishlistItem.product_id !== item.product_id,
+      );
+      this._storedData(filteredWishlist);
+      await this._retrieveData();
+      this.setState({Wishlist: this.state.savedData});
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   Store = async () => {
     this.setState({loading: true});
@@ -142,15 +184,14 @@ class Index extends Component {
       .get(`sommelier/myfavouriterating?page=${this.state.page}`)
       .then(res => {
         console.log('response Wishlist..', res);
-        // this.setState({Wishlist:res.data,loading: false,refreshing: false})
         this.setState({
           Wishlist:
             this.state.page === 0
               ? res.data.data
               : [...this.state.Wishlist, ...res.data.data],
           loading: false,
-          // total: res.data.enquires.total,
           refreshing: false,
+          total: res.data.total,
         });
       })
       .catch(err => {
@@ -166,26 +207,34 @@ class Index extends Component {
   };
 
   LoadMoreRandomData = () => {
-    console.log('length', this.state.Wishlist.length);
+    console.log('got Length', this.state.Wishlist.length);
     if (this.state.Wishlist.length < this.state.total) {
       this.setState(
         {
           page: this.state.page + 1,
+          savedData: this.state.savedData,
         },
-        () => this.Store(),
+        this.Store(),
       );
     }
   };
 
   _renderEmptyComponent() {
+    // this._retrieveData();
     return (
       !this.state.loading &&
-      isEmpty(this.state.Wishlist) && (
+      isEmpty(this.state.savedData) && (
         <FLEC text="Currently No Wines Have Been Favourited" />
       )
     );
   }
 
+  SearchFilterFunction(text) {
+    const searchedData = this.state.Wishlist.filter(item =>
+      item.product.title.toLowerCase().includes(text.toLowerCase()),
+    );
+    return this.setState({searchedData: searchedData});
+  }
   _renderFooterComponent() {
     return this.state.loading && !isEmpty(this.state.Wishlist) ? (
       <BottomIndicator />
@@ -193,23 +242,25 @@ class Index extends Component {
   }
 
   onRefresh = () => {
-    this.setState(
-      {
-        refreshing: true,
-        Wishlist: [],
-      },
-      () => this.Store(),
-    );
+    // this.setState(
+    //   {
+    //     Wishlist: [],
+    //   },
+    //   // () => this.Store(),
+    //   // () => this.retrieveData(),
+    // );
+    // this.state.refreshing = true;
+    // this.state.savedData
+    // this.Store()
+    // this.state.savedData;
   };
 
   render() {
-    console.log('pdata........', this.state.Wishlist);
     return (
       <View
         style={{
           flex: 1,
           backgroundColor: white,
-          backgroundColor: 'white',
         }}>
         <Header
           navigation={this.props.navigation}
@@ -222,6 +273,27 @@ class Index extends Component {
         <View style={{marginHorizontal: 5, flex: 1}}>
           <View style={{marginHorizontal: 10, marginVertical: 10}}>
             <Text style={styles.textheading}>My Favourite Wines</Text>
+          </View>
+          <View style={styles.searchcontainer}>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => this.SearchFilterFunction(text)}
+              value={this.state.searchText}
+              underlineColorAndroid="transparent"
+              placeholder="Search Wine Here"
+              placeholderTextColor={white}
+            />
+            <TouchableWithoutFeedback>
+              <View style={styles.iconContainer}>
+                <TouchableOpacity>
+                  <Image
+                    source={Images.SearchIcon}
+                    tintColor={white}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
 
           <View style={[styles.view]}>
@@ -237,7 +309,13 @@ class Index extends Component {
               </View>
             ) : (
               <FlatList
-                data={this.state.Wishlist}
+                data={
+                  this.state.savedData.length > 0
+                    ? this.state.savedData
+                    : this.state.searchedData.length > 0
+                    ? this.state.searchedData
+                    : this.state.Wishlist
+                }
                 keyExtractor={(item, i) => i.toString()}
                 horizontal={false}
                 scrollEventThrottle={16}
@@ -269,7 +347,6 @@ class Index extends Component {
                             isFromAdditional: true,
                           })
                         }
-                        // onPress={() => this.props.navigation.navigate("WishlistDetail", { wishlistItem: item })}
                         subtitle={
                           !isNull(item.product) &&
                           moment(item.product.created_at).format('DD/MM/YYYY')
@@ -283,6 +360,10 @@ class Index extends Component {
                         date={moment(item.created_at).format('DD/MM/YYYY')}
                         ViewMore={'View'}
                         title={!isNull(item.product) && item.product.title}
+                        removeData={() =>
+                          this.removeCard(item, this.state.Wishlist)
+                        }
+                        removeText={'Remove'}
                       />
                     );
                   }
@@ -316,7 +397,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 1,
     borderRadius: 5,
-    paddingVertical: 5,
+    paddingVertical: 25,
     paddingHorizontal: 5,
   },
   AddmodelView: {
@@ -342,6 +423,22 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: width - 40,
     justifyContent: 'center',
+  },
+  searchcontainer: {
+    flexDirection: 'row',
+    backgroundColor: primaryColor,
+    width: '95%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  input: {
+    width: '80%',
+    color: white,
+    fontFamily: sofiaFont,
   },
 });
 

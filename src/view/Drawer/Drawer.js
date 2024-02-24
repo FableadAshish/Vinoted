@@ -30,7 +30,7 @@ class SideBar extends React.Component {
       theme: null,
       isFromCms: false,
       referModal: false,
-    }
+    };
   }
 
   handleChange(name, value) {
@@ -98,7 +98,9 @@ class SideBar extends React.Component {
                 source={require('../../assets/Logo.png')}
               />
             </View>
-            <TouchableOpacity style={styles.listItem}>
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={() => this.navigateTo('Home')}>
               <Text style={[styles.text, {fontFamily: sofiaFont}]}>Home</Text>
             </TouchableOpacity>
 

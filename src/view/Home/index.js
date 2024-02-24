@@ -392,7 +392,7 @@ class Home extends Component {
                 <Text
                   style={{
                     fontFamily: sofiaFont,
-                    fontSize: 22,
+                    fontSize: 25,
                     color: secondryTextColor,
                     marginLeft: 10,
                     fontWeight: 500,
