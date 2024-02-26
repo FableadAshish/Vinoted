@@ -244,7 +244,7 @@ const EventRequest = ({
                 alignSelf: 'flex-end',
                 borderRadius: 15,
                 backgroundColor: MoreButton,
-                width: '90%',
+                width: '100%',
                 marginVertical: 10,
               }}>
               <Text

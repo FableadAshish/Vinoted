@@ -322,7 +322,7 @@ class ProductDetail extends Component {
                       }}>
                       <Image
                         source={Images.BritishPoundIcon}
-                        style={{height: 20,}}
+                        style={{height: 20}}
                         tintColor={primaryColor}
                       />
                       {ProductDetail.price}
@@ -431,7 +431,7 @@ class ProductDetail extends Component {
                     </View>
                   </View>
                 </View>
-                {ProductDetail.description == 'null' ? (
+                {ProductDetail.description == 'NULL' ? (
                   <View
                     style={[
                       styles.view,
@@ -442,17 +442,19 @@ class ProductDetail extends Component {
                     </Text>
                   </View>
                 ) : (
-                  <View
-                    style={[
-                      styles.view,
-                      {marginHorizontal: 5, backgroundColor: white},
-                    ]}>
+                  <View style={[styles.view, {marginHorizontal: 5}]}>
                     <HTML
-                      style={{fontSize: 15, color: primaryColor}}
                       source={{html: ProductDetail.description}}
-                      imagesMaxWidth={Dimensions.get('window').width - 20}
+                      contentWidth={Dimensions.get('window').width - 20}
+                      baseFontStyle={{
+                        fontFamily: 'sofiaFont',
+                        fontSize: 15,
+                        color: 'red',
+                      }}
+                      tagsStyles={{
+                        p: {color: 'black'},
+                      }}
                     />
-                    {/* <Text>{ProductDetail.description}</Text> */}
                   </View>
                 )}
               </View>
@@ -544,6 +546,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 5,
+  },
+  paragraph: {
+    color: 'black',
   },
 });
 

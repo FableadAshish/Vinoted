@@ -47,7 +47,7 @@ export default function MyTabs() {
                 <Image
                   source={Images.HomeTabIcon}
                   style={
-                    focused ? {height: 28, width: 28} : {height: 25, width: 25}
+                    focused ? {height: 30, width: 30} : {height: 27, width: 27}
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
@@ -56,7 +56,6 @@ export default function MyTabs() {
           ),
         }}
       />
-      {/* https://www.admin.vinoted-admin.com/api/unreadMsg */}
       <Tab.Screen
         name="Messaging"
         component={Messaging}
@@ -68,7 +67,7 @@ export default function MyTabs() {
                 <Image
                   source={Images.MessageIcon}
                   style={
-                    focused ? {height: 28, width: 28,} : {height: 25, width: 25}
+                    focused ? {height: 30, width: 30,} : {height: 27, width: 27}
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
@@ -114,7 +113,7 @@ export default function MyTabs() {
                 <Image
                   source={Images.HeartIcon}
                   style={
-                    focused ? {height: 28, width: 28} : {height: 25, width: 25}
+                    focused ? {height: 30, width: 30} : {height: 27, width: 27}
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
@@ -134,7 +133,7 @@ export default function MyTabs() {
                 <Image
                   source={Images.ListIcon}
                   style={
-                    focused ? {height: 28, width: 28} : {height: 25, width: 25}
+                    focused ? {height: 30, width: 30} : {height: 27, width: 27}
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />
@@ -154,7 +153,7 @@ export default function MyTabs() {
                 <Image
                   source={Images.UserIcon}
                   style={
-                    focused ? {height: 28, width: 28} : {height: 25, width: 25}
+                    focused ? {height: 30, width: 30} : {height: 27, width: 27}
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />

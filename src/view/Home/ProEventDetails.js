@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Header from '../../component/Header/Header';
 import {Toast} from 'native-base';
+import {WebView} from 'react-native-webview';
 import {
   white,
   primaryColor,
@@ -584,19 +585,30 @@ class ProEventDetails extends Component {
                 </View>
               )}
               {!isEmpty(EventDetail) ? (
-                <View style={styles.view}>
-                  <Text style={[styles.textheading]}>{EventDetail.name}</Text>
-                  <HTML
-                    style={[styles.textheading]}
-                    source={{html: EventDetail.description}}
-                    contentWidth={Dimensions.get('window').width - 20}
-                    baseFontStyle={{
-                      fontFamily: sofiaFont,
-                      fontSize: 15,
-                      color: primaryColor,
-                    }}
-                  />
-                </View>
+                <>
+                  <View style={styles.view}>
+                    <Text style={[styles.textheading]}>{EventDetail.name}</Text>
+                  </View>
+                  <View style={{color: 'red'}}>
+                    <HTML
+                      source={{html: EventDetail.description}}
+                      contentWidth={Dimensions.get('window').width - 20}
+                      baseFontStyle={{
+                        fontFamily: sofiaFont,
+                        fontSize: 15,
+                        color: 'white', // Set the base font color to white
+                      }}
+                      tagsStyles={{
+                        // Specify styles for specific HTML tags
+                        p: {
+                          color: 'black',
+                          marginLeft: 10, // Set color of paragraphs to white
+                        },
+                        // Add more tag styles as needed
+                      }}
+                    />
+                  </View>
+                </>
               ) : (
                 <View>
                   <ShimmerPlaceHolder
@@ -704,7 +716,7 @@ class ProEventDetails extends Component {
                           {moment(EventDetail.event_end_time).format('HH:mm')}
                         </Text>
                       </View>
-                      
+
                       <View style={{marginVertical: 5}}>
                         <Text style={{color: 'gray'}}>Location</Text>
                         <Text

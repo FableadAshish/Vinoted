@@ -170,6 +170,7 @@ class MyTestingNotes extends Component {
       page: 0,
       total: '',
       arrayholder: [],
+      addFav: [],
     };
   }
 
@@ -184,7 +185,7 @@ class MyTestingNotes extends Component {
     const userdata = await _getUser();
     // console.log('USERDATAON Sparepart', userdata);
     this.setState({userData: userdata.data});
-    
+
     this.fetch();
 
     // }
@@ -197,7 +198,7 @@ class MyTestingNotes extends Component {
       .then(res => {
         // this.setState({ loading: true, });
         // http.get(`sommelier/eventproductrating?page=${this.state.page}`).then(res => {
-        console.log('responce of ProductRatinge noted', res);
+        console.log('responce of ProductRatinge noted Now', res);
         this.setState({
           arrayholder: res.data,
           ProductRating:
@@ -287,6 +288,50 @@ class MyTestingNotes extends Component {
       });
   }
 
+  // addAndRemove(id) {
+  //   console.log('product Id', id);
+  //   http
+  //     .post('sommelier/addRemoveFavouriteProduct', {
+  //       product_id: id,
+  //       favourite: 1,
+  //     })
+  //     .then(res => {
+  //       console.log('This is Fav res', res);
+  //       if (res) {
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log('This is Fav err', err);
+  //     });
+  //   console.log('Hello', id);
+  // }
+
+  addAndRemove(id, is_favourite) {
+    console.log('product Id for favourites', id);
+    http
+      .post('sommelier/addRemoveFavouriteProduct', {
+        product_id: id,
+        favourite: is_favourite === 1 ? 0 : 1,
+      })
+      .then(res => {
+        console.log('This is Fav res', res);
+        if (res) {
+          let updatedProductRating = [...this.state.ProductRating];
+          const index = updatedProductRating.findIndex(
+            item => item.product_id === id,
+          );
+          if (index !== -1) {
+            updatedProductRating[index].is_favourite =
+              is_favourite === 1 ? 0 : 1;
+            this.setState({ProductRating: updatedProductRating});
+          }
+        }
+      })
+      .catch(err => {
+        console.log('This is Fav err', err);
+      });
+  }
+
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -326,7 +371,7 @@ class MyTestingNotes extends Component {
   render() {
     const {item, form} = this.state;
     // const {SearchData} = this.props.route.params;
-    console.log('pdataNotedd', item);
+    console.log('pdataNotedd Now', item);
     // console.log('Search Filter Function', SearchData);
     return (
       <View
@@ -466,8 +511,9 @@ class MyTestingNotes extends Component {
                               borderRadius: 50,
                             }}>
                             <Image
-                              style={{height: 50, width: 50, borderRadius: 25}}
+                              style={{height: 50, width: 50}}
                               source={{uri: item.product.Imagesrc}}
+                              resizeMode='center'
                             />
                           </View>
                         </View>
@@ -692,50 +738,37 @@ class MyTestingNotes extends Component {
                             View Wine
                           </Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity
-                          onPress={() => console.log('HeartIcon')}>
-                          <Image
-                            source={Images.HeartIcon}
-                            tintColor={primaryColor}
-                            style={{height: 25, width: 25, marginTop: 5}}
-                          />
-                        </TouchableOpacity> */}
-                        {/* <TouchableOpacity
+
+                        <TouchableOpacity
                           activeOpacity={1}
                           style={{
                             paddingVertical: 10,
-                            // width: '100%',
+                            // width: '90%',
                             alignSelf: 'center',
                             alignItems: 'center',
                             flexDirection: 'row',
                           }}
                           onPress={() =>
-                            !isEmpty(form.event)
-                              ? null
-                              : this.setState({
-                                  form: {
-                                    ...this.state.form,
-                                    is_favourite: !this.state.form.is_favourite,
-                                  },
-                                })
+                            this.addAndRemove(
+                              item.product_id,
+                              item.is_favourite,
+                            )
                           }>
                           <Image
                             source={
-                              !isEmpty(form) && form.is_favourite == 1
+                              item.is_favourite === 1
                                 ? Images.FavouriteSelectedIcon
                                 : Images.HeartIcon
                             }
                             style={{
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               color:
-                                !isEmpty(form) && form.is_favourite == 1
-                                  ? primaryColor
-                                  : 'gray',
+                                item.is_favourite === 1 ? primaryColor : 'gray',
                             }}
                             tintColor={primaryColor}
                           />
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <TouchableOpacity
                           activeOpacity={1}
                           style={{
@@ -813,7 +846,7 @@ class MyTestingNotes extends Component {
                         fontFamily: sofiaFont,
                       },
                     ]}>
-                    Tasting notes for {item.product.title}
+                    Tasting notes {item.product.title}
                   </Text>
                 </View>
                 <View

@@ -299,19 +299,8 @@ class PendingEvents extends Component {
                     subtitle={moment(item.date).format('DD/MM/YYYY')}
                     time={moment(item.date).format('HH:mm')}
                     imagelist={item.Imagesrc}
-                    areaname={item.supplier.default_address.city}
-                    status={item.status}
                     title={item.name}
                   />
-                  // <SearchCard
-                  //     // onPressView={() => this.props.navigation.push("ProductDetail")}
-                  //     onPress={() => this.props.navigation.push("ProEventDetails", { Eventitem: item })}
-                  //     subtitle={moment(item.date).format("DD/MM/YYYY")}
-                  //     imagelist={item.Imagesrc}
-                  //     areaname={item.supplier.default_address.city}
-                  //     status={item.status}
-                  //     title={item.name}
-                  // />
                 )}
               />
             )}

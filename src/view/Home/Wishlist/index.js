@@ -39,7 +39,6 @@ const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import {Images} from '../../../../theme/Images';
-import AsyncStorage from '@react-native-community/async-storage';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 let data = ['1', '2', '3'];
@@ -131,52 +130,16 @@ class Index extends Component {
       page: 0,
       total: '',
       searchedData: [],
-      savedData: [],
+      removeData: [],
     };
   }
 
   componentDidMount() {
+    // this._unsubscribe = this.props.navigation.addListener('focus', () => {
+    //     console.log('hello');
     this.Store();
     // });
   }
-  _storedData = async filteredWishlist => {
-    try {
-      await AsyncStorage.setItem('user', JSON.stringify(filteredWishlist));
-      this._retrieveData();
-    } catch (error) {
-      console.lo(error);
-    }
-  };
-
-  _retrieveData = async () => {
-    try {
-      const userData = JSON.parse(await AsyncStorage.getItem('user'));
-
-      if (userData) {
-        console.log('userData length', userData.length);
-        this.setState({
-          savedData: userData,
-        });
-      } else {
-        console.log('No data was found!');
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
-
-  removeCard = async item => {
-    try {
-      const filteredWishlist = this.state.Wishlist.filter(
-        wishlistItem => wishlistItem.product_id !== item.product_id,
-      );
-      this._storedData(filteredWishlist);
-      await this._retrieveData();
-      this.setState({Wishlist: this.state.savedData});
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   Store = async () => {
     this.setState({loading: true});
@@ -184,14 +147,15 @@ class Index extends Component {
       .get(`sommelier/myfavouriterating?page=${this.state.page}`)
       .then(res => {
         console.log('response Wishlist..', res);
+        // this.setState({Wishlist:res.data,loading: false,refreshing: false})
         this.setState({
           Wishlist:
             this.state.page === 0
               ? res.data.data
               : [...this.state.Wishlist, ...res.data.data],
           loading: false,
+          // total: res.data.enquires.total,
           refreshing: false,
-          total: res.data.total,
         });
       })
       .catch(err => {
@@ -207,24 +171,25 @@ class Index extends Component {
   };
 
   LoadMoreRandomData = () => {
-    console.log('got Length', this.state.Wishlist.length);
+    console.log('length', this.state.Wishlist.length);
     if (this.state.Wishlist.length < this.state.total) {
       this.setState(
         {
           page: this.state.page + 1,
-          savedData: this.state.savedData,
         },
-        this.Store(),
+        () => this.Store(),
       );
     }
   };
 
   _renderEmptyComponent() {
-    // this._retrieveData();
     return (
       !this.state.loading &&
-      isEmpty(this.state.savedData) && (
-        <FLEC text="Currently No Wines Have Been Favourited" />
+      isEmpty(this.state.Wishlist) && (
+        <FLEC
+          text="Currently No Wines Have Been Favourited"
+          // image={require('../../../assets/logo.png')}
+        />
       )
     );
   }
@@ -235,6 +200,7 @@ class Index extends Component {
     );
     return this.setState({searchedData: searchedData});
   }
+
   _renderFooterComponent() {
     return this.state.loading && !isEmpty(this.state.Wishlist) ? (
       <BottomIndicator />
@@ -242,20 +208,39 @@ class Index extends Component {
   }
 
   onRefresh = () => {
-    // this.setState(
-    //   {
-    //     Wishlist: [],
-    //   },
-    //   // () => this.Store(),
-    //   // () => this.retrieveData(),
-    // );
-    // this.state.refreshing = true;
-    // this.state.savedData
-    // this.Store()
-    // this.state.savedData;
+    this.setState(
+      {
+        refreshing: true,
+        Wishlist: [],
+      },
+      () => this.Store(),
+    );
   };
 
+  //   sommelier/addRemoveFavouriteProduct
+
+  // request type: post
+  // request parameter : product_id,favourite
+
+  removeItem(_id) {
+    http
+      .post('sommelier/addRemoveFavouriteProduct', {
+        product_id: _id,
+        favourite: 0,
+      })
+      .then(response => {
+        if (response) {
+          let filterFavouritesList = this.state.Wishlist.filter(
+            item => item.product.id != _id,
+          );
+          this.setState({Wishlist: filterFavouritesList});
+        }
+      })
+      .catch(error => console.warn('remove error', error));
+  }
+
   render() {
+    console.log('pdata........', this.state.Wishlist);
     return (
       <View
         style={{
@@ -269,7 +254,6 @@ class Index extends Component {
           onPress={() => this.props.navigation.goBack()}
           image={require('../../../assets/blueLogo.png')}
         />
-
         <View style={{marginHorizontal: 5, flex: 1}}>
           <View style={{marginHorizontal: 10, marginVertical: 10}}>
             <Text style={styles.textheading}>My Favourite Wines</Text>
@@ -295,7 +279,6 @@ class Index extends Component {
               </View>
             </TouchableWithoutFeedback>
           </View>
-
           <View style={[styles.view]}>
             {this.state.loading && isEmpty(this.state.Wishlist) ? (
               <View>
@@ -309,14 +292,15 @@ class Index extends Component {
               </View>
             ) : (
               <FlatList
+                // showsVerticalScrollIndicator={false}
                 data={
-                  this.state.savedData.length > 0
-                    ? this.state.savedData
-                    : this.state.searchedData.length > 0
+                  this.state.searchedData.length > 0
                     ? this.state.searchedData
+                    : this.state.removeData > 0
+                    ? this.state.removeData
                     : this.state.Wishlist
                 }
-                keyExtractor={(item, i) => i.toString()}
+                keyExtractor={(_item, i) => i.toString()}
                 horizontal={false}
                 scrollEventThrottle={16}
                 onEndReachedThreshold={0.5}
@@ -333,6 +317,7 @@ class Index extends Component {
                 renderItem={({item, index}) => {
                   if (!isNull(item.product)) {
                     return (
+                      // <View style={{ height: 20, width: 100, backgroundColor: "red" }}>
                       <SearchCard
                         onPress={() =>
                           this.props.navigation.navigate(
@@ -347,6 +332,7 @@ class Index extends Component {
                             isFromAdditional: true,
                           })
                         }
+                        // onPress={() => this.props.navigation.navigate("WishlistDetail", { wishlistItem: item })}
                         subtitle={
                           !isNull(item.product) &&
                           moment(item.product.created_at).format('DD/MM/YYYY')
@@ -359,12 +345,11 @@ class Index extends Component {
                         Type={!isNull(item.product) && item.product.type}
                         date={moment(item.created_at).format('DD/MM/YYYY')}
                         ViewMore={'View'}
-                        title={!isNull(item.product) && item.product.title}
-                        removeData={() =>
-                          this.removeCard(item, this.state.Wishlist)
-                        }
+                        removeData={() => this.removeItem(item.product.id)}
                         removeText={'Remove'}
+                        title={!isNull(item.product) && item.product.title}
                       />
+                      // </View>
                     );
                   }
                 }}
@@ -372,6 +357,7 @@ class Index extends Component {
             )}
           </View>
         </View>
+        {/* </ScrollView> */}
       </View>
     );
   }
@@ -397,7 +383,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 1,
     borderRadius: 5,
-    paddingVertical: 25,
+    paddingVertical: 5,
     paddingHorizontal: 5,
   },
   AddmodelView: {
@@ -446,6 +432,7 @@ const mapProps = state => ({
   utilities_all: state.root.utilities_all,
   user: state.root.user,
   theme: state.root.theme,
+  // console.log('state.toot.utilities', state.root.utilities_all),
 });
 
 export default connect(mapProps, null)(Index);

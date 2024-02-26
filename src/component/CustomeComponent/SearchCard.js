@@ -41,7 +41,7 @@ const SearchCard = ({
           alignSelf: 'center',
           marginHorizontal: 5,
           marginVertical: 5,
-          justifyContent: 'center',
+          justifyContent: 'space-evenly',
           backgroundColor: '#F8F8F8',
           elevation: 1,
           flexDirection: 'row',
@@ -58,7 +58,7 @@ const SearchCard = ({
         </View>
         <View
           style={{
-            flex: 0.4,
+            flex: 0.6,
             marginHorizontal: 5,
             marginTop: 3,
             paddingRight: 12,
@@ -91,7 +91,7 @@ const SearchCard = ({
                   paddingVertical: 2,
                 },
               ]}>
-              Type - {Type}
+              {Type}
             </Text>
           )}
 
@@ -146,7 +146,7 @@ const SearchCard = ({
             ]}>
             {areaname}
           </Text>
-          <Text
+          {/* <Text
             numberOfLines={1}
             style={[
               styles.text,
@@ -159,7 +159,7 @@ const SearchCard = ({
               },
             ]}>
             {status}
-          </Text>
+          </Text> */}
         </View>
 
         <View>

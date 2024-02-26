@@ -324,7 +324,6 @@ class EventRequest extends Component {
                 horizontal={false}
                 scrollEventThrottle={16}
                 onEndReachedThreshold={0.5}
-                showsVerticalScrollIndicator={false}
                 onEndReached={this.LoadMoreRandomData}
                 ListEmptyComponent={() => this._renderEmptyComponent()}
                 ListFooterComponent={() => this._renderFooterComponent()}

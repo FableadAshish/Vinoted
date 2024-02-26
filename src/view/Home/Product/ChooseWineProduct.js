@@ -510,12 +510,12 @@ class ChooseProduct extends Component {
                       }}>
                       {Testing.product
                         ? Testing.product.producer
-                        : Testing.products.produer}
+                        : Testing.products.producer}
                     </Text>
                   </View>
 
                   <View style={{marginVertical: 5}}>
-                    <Text style={{color: 'gray', fontFamily: sofiaFont}}>
+                    <Text style={{color: 'gray',ontFamily: sofiaFont}}>
                       Year
                     </Text>
                     <Text

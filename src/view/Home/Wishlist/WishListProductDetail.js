@@ -336,22 +336,39 @@ class WishListProductDetail extends Component {
                       </View>
                     </View>
                   </View>
-                  <View style={[
+                  <View
+                    style={[
                       styles.view,
                       {marginHorizontal: 5, backgroundColor: white},
                     ]}>
-                    <HTML
-                      // style={{
-                      //   fontFamily: sofiaFont,
-                      //   // fontSize: 20,
-                      //   fontWeight: '500',
-                      //   color: 'black',
-                      // }}>
-                      // {ProductDetail.product.description}
-                      style={{fontSize: 15, color: primaryColor}}
-                      source={{html: ProductDetail.product.description}}
-                      imagesMaxWidth={Dimensions.get('window').width - 20}
-                    />
+                    {ProductDetail.product.description === 'NULL' ? (
+                      <View>
+                        <Text style={{color: 'black'}}>
+                          Description not Available
+                        </Text>
+                      </View>
+                    ) : (
+                      <HTML
+                        // style={{
+                        //   fontFamily: sofiaFont,
+                        //   // fontSize: 20,
+                        //   fontWeight: '500',
+                        //   color: 'black',
+                        // }}>
+                        // {ProductDetail.product.description}
+                        style={{fontSize: 15, color: primaryColor}}
+                        source={{html: ProductDetail.product.description}}
+                        imagesMaxWidth={Dimensions.get('window').width - 20}
+                        tagsStyles={{
+
+                          p: {
+                            color: 'black',
+                            marginLeft: 10, // Set color of paragraphs to white
+                          },
+                          // Add more tag styles as needed
+                        }}
+                      />
+                    )}
                   </View>
                 </View>
               </View>
