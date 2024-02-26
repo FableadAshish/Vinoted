@@ -50,7 +50,7 @@ const SearchCard = ({
         <View style={{flex: 0.3, justifyContent: 'center'}}>
           <View style={{justifyContent: 'center', paddingHorizontal: 5}}>
             <Image
-              style={{height: '95%', width: '90%', borderRadius: 10}}
+              style={{height: 80, width: 80, borderRadius: 10}}
               resizeMode="contain"
               source={{uri: imagelist}}
             />
@@ -59,9 +59,9 @@ const SearchCard = ({
         <View
           style={{
             flex: 0.6,
-            marginHorizontal: 5,
+            marginLeft:25,
             marginTop: 3,
-            paddingRight: 12,
+            // paddingRight: 12,
             justifyContent: 'center',
           }}>
           <Text
@@ -70,7 +70,7 @@ const SearchCard = ({
               styles.text,
               {
                 fontSize: 16,
-                width: '100%',
+                width: 150,
                 color: primaryColor,
                 textTransform: 'capitalize',
                 paddingVertical: 2,
@@ -208,7 +208,7 @@ const SearchCard = ({
                   alignSelf: 'flex-end',
                   borderRadius: 15,
                   backgroundColor: primaryColor,
-                  width: 90,
+                  width: 100,
                   marginTop: 40,
                 }}>
                 <Text

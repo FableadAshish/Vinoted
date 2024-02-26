@@ -417,6 +417,7 @@ class MyTestingNotes extends Component {
               marginHorizontal: 5,
               flexGrow: 1,
               justifyContent: 'center',
+              marginTop:10
             }}>
             {this.state.loading && isEmpty(this.state.ProductRating) ? (
               <View>
@@ -513,7 +514,7 @@ class MyTestingNotes extends Component {
                             <Image
                               style={{height: 50, width: 50}}
                               source={{uri: item.product.Imagesrc}}
-                              resizeMode='center'
+                              resizeMode="center"
                             />
                           </View>
                         </View>
@@ -539,49 +540,17 @@ class MyTestingNotes extends Component {
                             ]}>
                             {item.product.title}
                           </Text>
-                          {/* {item.product.description == '' ? (
-                            <Text
-                              numberOfLines={2}
-                              style={[
-                                styles.text,
-                                {
-                                  fontSize: 12,
-                                  width: '100%',
-                                  color: 'gray',
-                                  textTransform: 'capitalize',
-                                  paddingVertical: 2,
-                                },
-                              ]}>
-                              {item.product.description}
-                            </Text>
-                          ) : (
-                            <View
-                              style={{
-                                maxHeight: 50,
-                                overflow: 'hidden',
-                                justifyContent: 'flex-start',
-                              }}>
-                              <HTML
-                                style={[
-                                  styles.text,
-                                  {
-                                    fontSize: 12,
-                                    width: '100%',
-                                    color: 'gray',
-                                    textTransform: 'capitalize',
-                                    paddingTop: 20,
-                                  },
-                                ]}
-                                source={{html: item.product.description}}
-                              />
-                            </View>
-                          )} */}
 
                           <View style={{flexDirection: 'row'}}>
                             <Image
                               source={Images.BritishPoundIcon}
-                              style={{height: 22, width: 22}}
-                              tintColor={'gray'}
+                              style={{
+                                height: 15,
+                                width: 15,
+                                marginTop: 3,
+                                marginLeft: -5,
+                              }}
+                              tintColor={'lightgrey'}
                             />
                             <Text
                               numberOfLines={1}
@@ -590,7 +559,7 @@ class MyTestingNotes extends Component {
                                 {
                                   fontSize: 12,
                                   width: '100%',
-                                  color: 'gray',
+                                  color: 'lightgrey',
                                   textTransform: 'capitalize',
                                   paddingVertical: 2,
                                 },
@@ -690,7 +659,6 @@ class MyTestingNotes extends Component {
                           style={{
                             flexDirection: 'column',
                             flex: 0.5,
-                            paddingHorizontal: 10,
                           }}>
                           <View style={{marginVertical: 5}}>
                             <Text style={{color: 'gray'}}>Date</Text>
@@ -698,14 +666,6 @@ class MyTestingNotes extends Component {
                               {moment(item.created_at).format('DD/MM/YYYY')}
                             </Text>
                           </View>
-                          {/* <View style={{marginVertical: 5}}>
-                            <Text style={{color: 'gray'}}>Location</Text>
-                            <Text style={{fontSize: 15, color: primaryColor}}>
-                              {item.product.city
-                                ? item.product.city
-                                : item.product.region}
-                            </Text>
-                          </View> */}
                         </View>
                       </View>
 
@@ -713,14 +673,15 @@ class MyTestingNotes extends Component {
                         style={{
                           flexDirection: 'row',
                           alignContent: 'center',
-                          justifyContent: 'space-evenly',
+                          justifyContent: 'space-between',
                           width: '100%',
+                          paddingHorizontal: 10,
                         }}>
                         <TouchableOpacity
                           activeOpacity={1}
                           style={{
                             marginTop: 3,
-                            height: 40,
+                            height: 43,
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 15,
@@ -728,10 +689,11 @@ class MyTestingNotes extends Component {
                             width: 120,
                             flexDirection: 'row',
                           }}
+                          
                           onPress={() =>
-                            this.props.navigation.navigate('ChooseProduct', {
-                              Testing: item,
-                              isFromAdditional: true,
+                            this.props.navigation.navigate('ProductDetail', {
+                              ProductDetail: item,
+                              // isFromAdditional: true,
                             })
                           }>
                           <Text style={{color: 'white', fontWeight: 500}}>
@@ -773,12 +735,12 @@ class MyTestingNotes extends Component {
                           activeOpacity={1}
                           style={{
                             marginTop: 3,
-                            height: 40,
+                            height: 43,
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 15,
                             backgroundColor: primaryColor,
-                            width: 120,
+                            width: 140,
                             flexDirection: 'row',
                           }}
                           onPress={() => this.saveItem(item)}>
@@ -846,7 +808,7 @@ class MyTestingNotes extends Component {
                         fontFamily: sofiaFont,
                       },
                     ]}>
-                    Tasting notes {item.product.title}
+                    Tasting notes for {item.product.title}
                   </Text>
                 </View>
                 <View
@@ -1021,8 +983,6 @@ const styles = StyleSheet.create({
   text: {
     color: white,
     fontSize: 14,
-    // paddingVertical: 5,
-    // textAlignVertical: "top",
     fontFamily: sofiaFont,
   },
   view: {
@@ -1030,7 +990,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 5,
     paddingBottom: 10,
-    // paddingHorizontal: 5,
+    marginTop: 8,
   },
   modelView: {
     height: '80%',
@@ -1062,7 +1022,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 20,
-    marginBottom: 10,
+    marginTop: 20,
   },
   icon: {
     fontSize: 20,

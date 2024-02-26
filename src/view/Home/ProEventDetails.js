@@ -347,7 +347,7 @@ class ProEventDetails extends Component {
 
   render() {
     const {EventDetail} = this.state;
-    console.log('EventDetail Now Second again Phirse', EventDetail);
+    console.log('EventDetail Now Second again Phirse rfg', EventDetail);
     // for (let i = 1; i <= this.state.tempArrayLength; i++) {
     //   console.log('Event Detail Again[ Rhire fgd juyhh', i, ']: ', i);
     //   // return this.setState({wineCount: i});
@@ -856,7 +856,6 @@ class ProEventDetails extends Component {
                         keyExtractor={(item, i) => i.toString()}
                         scrollEventThrottle={16}
                         onEndReachedThreshold={0.5}
-                        showsVerticalScrollIndicator={false}
                         ListEmptyComponent={() =>
                           this._renderEmptyProComponent()
                         }

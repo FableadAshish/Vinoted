@@ -351,7 +351,7 @@ class EventRequest extends Component {
                     time={moment(item.date).format('HH:mm')}
                     subtitle={moment(item.date).format('DD/MM/YYYY')}
                     imagelist={item.Imagesrc}
-                    areaname={item.supplier.default_address.city}
+                    // areaname={item.supplier.default_address.city}
                     status={item.status}
                     title={item.name}
                     item={item}

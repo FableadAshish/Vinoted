@@ -370,6 +370,7 @@ class Home extends Component {
           iconProps={Images.MenuBarIcon}
           onPress={() => this.props.navigation.toggleDrawer()}
           image={require('../../assets/Logo.png')}
+          styleMenuBar={styles.menuBar}
         />
         <ScrollView
           refreshControl={
@@ -704,6 +705,10 @@ const styles = StyleSheet.create({
   input: {
     width: '80%',
     color: primaryColor,
+  },
+  menuBar: {
+    height: 22,
+    width: 22,
   },
 });
 

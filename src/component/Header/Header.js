@@ -26,6 +26,7 @@ const header = ({
   iconColor,
   searchType,
   userimage,
+  styleMenuBar,
 }) => {
   return (
     <View
@@ -42,7 +43,7 @@ const header = ({
           <TouchableOpacity onPress={onPress} style={{width:50}}>
             <Image
               source={iconProps}
-              style={{color: 'red', padding: 8, height: 20, width: 20}}
+              style={[{color: 'red', padding: 8, height: 20, width: 20}, styleMenuBar]}
               tintColor={iconColor}
             />
           </TouchableOpacity>

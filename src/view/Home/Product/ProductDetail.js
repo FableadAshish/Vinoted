@@ -186,10 +186,12 @@ class ProductDetail extends Component {
       visible: false,
       refreshing: false,
       isLike: false,
+      ProductRatings: {},
     };
   }
   componentDidMount() {
     const ProductDetail = this.props.route.params.ProductDetail;
+    const ProductRatings = this.props.route.params.Testing;
     // if (ProductRatings) {
     //     this.setState({ form: ProductRatings, event }, () => this.Store())
     // }
@@ -224,10 +226,11 @@ class ProductDetail extends Component {
   AddWishlist = async () => {};
 
   render() {
-    const ProductRatings = this.props.route.params.ProductRatings;
+    // const ProductRatings = this.props.route.params.Testing;
     const {ProductDetail, isLike, event, form} = this.state;
     // const event = this.props.route.params.event;
     console.log('Render Product Detail..', ProductDetail);
+    // console.log("'Render Product Detail.. jweiou", ProductRatings);
     return (
       <View
         style={{
@@ -245,10 +248,7 @@ class ProductDetail extends Component {
         {isEmpty(ProductDetail) && this.state.loading ? (
           <Shimmer />
         ) : !this.state.loading && isEmpty(this.state.ProductDetail) ? (
-          <FLEC
-            text="No data available"
-            // image={require('../../../assets/logo.png')}
-          />
+          <FLEC text="No data available" />
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
@@ -312,47 +312,90 @@ class ProductDetail extends Component {
                   </View>
                   <View style={{marginVertical: 5}}>
                     <Text style={{color: 'gray'}}>Price</Text>
-                    <Text
+                    <View
                       style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 20,
-                        fontWeight: '500',
-                        color: primaryColor,
-                        marginLeft: -5,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
                       }}>
                       <Image
                         source={Images.BritishPoundIcon}
-                        style={{height: 20}}
+                        style={{height: 25, width: 25, marginLeft: -8}}
                         tintColor={primaryColor}
                       />
-                      {ProductDetail.price}
-                    </Text>
-                  </View>
-
-                  {!isEmpty(event) && event.is_started == 1 && (
-                    <View style={{marginVertical: 5}}>
-                      <Text style={{color: 'gray'}}>Tasted on</Text>
                       <Text
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
                           fontWeight: '500',
                           color: primaryColor,
+                          marginLeft: -5,
                         }}>
-                        {moment(form.created_at).format('DD MMM,YYYY')}
+                        {ProductDetail.price}
                       </Text>
                     </View>
-                  )}
+                  </View>
                 </View>
+                {isEmpty(ProductDetail) && this.state.loading ? (
+                  <ShimmerPlaceHolder
+                    style={{
+                      height: 50,
+                      width: '90%',
+                      position: 'absolute',
+                      bottom: 0,
+                      borderTopRightRadius: 30,
+                      borderBottomRightRadius: 30,
+                    }}
+                  />
+                ) : !this.state.loading && isEmpty(this.state.ProductDetail) ? (
+                  <FLEC
+                    text="No data available"
+                    // image={require('../../../assets/logo.png')}
+                  />
+                ) : (
+                  !isEmpty(ProductDetail) &&
+                  ProductDetail.is_tasted == 1 && (
+                    <TouchableOpacity
+                      onPress={() =>
+                        !isEmpty(event) &&
+                        event.is_tasted == 1 &&
+                        this.props.navigation.navigate('ChooseProduct', {
+                          Testing: form,
+                          event: event,
+                        })
+                      }
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'flex-end',
+                        paddingHorizontal: 10,
+                        height: 50,
+                        width: '90%',
+                        backgroundColor: secondryColor,
+                        borderTopRightRadius: 30,
+                        borderBottomRightRadius: 30,
+                        marginVertical: 10,
+                        position: 'absolute',
+                        bottom: 0,
+                      }}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
+                        <Text style={[styles.textheading, {color: white}]}>
+                          {event.is_tasted === 0 ? 'Tasted' : 'Tasting'}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  )
+                )}
 
-                <View style={{flexDirection: 'column', flex: 0.3}}>
+                {/* <View style={{flexDirection: 'column', flex: 0.3}}>
                   <Image
                     style={{height: '100%', width: '100%', marginTop: 20}}
                     resizeMode="contain"
                     source={{uri: ProductDetail.Imagesrc}}
                     // source={require('../../../assets/darkBotle.png')}
                   />
-                </View>
+                </View> */}
               </View>
               <View style={{flexGrow: 1, backgroundColor: white}}>
                 <View style={[styles.view, {marginHorizontal: 5}]}>
@@ -460,57 +503,6 @@ class ProductDetail extends Component {
               </View>
             </View>
           </ScrollView>
-        )}
-        {isEmpty(ProductDetail) && this.state.loading ? (
-          <ShimmerPlaceHolder
-            style={{
-              height: 50,
-              width: '90%',
-              position: 'absolute',
-              bottom: 0,
-              borderTopRightRadius: 30,
-              borderBottomRightRadius: 30,
-            }}
-          />
-        ) : !this.state.loading && isEmpty(this.state.ProductDetail) ? (
-          <FLEC
-            text="No data available"
-            // image={require('../../../assets/logo.png')}
-          />
-        ) : (
-          !isEmpty(event) &&
-          event.is_started == 1 && (
-            <TouchableOpacity
-              onPress={() =>
-                !isEmpty(event) &&
-                event.is_started == 1 &&
-                this.props.navigation.navigate('ChooseProduct', {
-                  Testing: form,
-                  event: event,
-                })
-              }
-              style={{
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                paddingHorizontal: 10,
-                height: 50,
-                width: '90%',
-                backgroundColor: secondryColor,
-                borderTopRightRadius: 30,
-                borderBottomRightRadius: 30,
-                marginVertical: 10,
-                position: 'absolute',
-                bottom: 0,
-              }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
-                <Text style={[styles.textheading, {color: white}]}>
-                  {' '}
-                  Tasting
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )
         )}
       </View>
     );

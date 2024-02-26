@@ -140,13 +140,13 @@ class SideBar extends React.Component {
               <Text style={[styles.text]}>Live Chat</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               button
               noBorder
               onPress={() => this.navigateTo('Notification')}
               style={styles.listItem}>
               <Text style={[styles.text]}>Notifications</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               button

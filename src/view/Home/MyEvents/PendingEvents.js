@@ -248,7 +248,7 @@ class PendingEvents extends Component {
                             />
                         </View> */}
 
-          <View style={{marginHorizontal: 10, marginVertical: 10}}>
+          <View style={{marginHorizontal: 10, marginVertical: 25}}>
             <Text style={styles.textheading}>{'Upcoming Tastings'}</Text>
             {/* <Text style={styles.textheading}>{type == "past" ? "Past Events" : type == "pendingevent" ? "Upcoming Event" : "Event Request"}</Text> */}
           </View>

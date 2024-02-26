@@ -343,7 +343,7 @@ class Index extends Component {
             ) : (
               <View style={{marginBottom: 50}}>
                 <Text style={[styles.textheading, {marginBottom: 10}]}>
-                  Tasting Calender
+                  Tasting Calendar
                 </Text>
                 <FlatList
                   showsVerticalScrollIndicator={false}
