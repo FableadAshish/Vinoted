@@ -417,7 +417,7 @@ class MyTestingNotes extends Component {
               marginHorizontal: 5,
               flexGrow: 1,
               justifyContent: 'center',
-              marginTop:10
+              marginTop: 10,
             }}>
             {this.state.loading && isEmpty(this.state.ProductRating) ? (
               <View>
@@ -445,7 +445,14 @@ class MyTestingNotes extends Component {
                   />
                 }
                 renderItem={({item}) => (
-                  <TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      this.props.navigation.navigate('ChooseProduct', {
+                        Testing: item,
+                        //event: item.event,
+                        isFromAdditional: true,
+                      })
+                    }>
                     <View
                       style={[
                         styles.view,
@@ -577,7 +584,7 @@ class MyTestingNotes extends Component {
                               style={[
                                 styles.text,
                                 {
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
                                   textTransform: 'uppercase',
@@ -597,7 +604,7 @@ class MyTestingNotes extends Component {
                               style={[
                                 styles.text,
                                 {
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
                                   textTransform: 'uppercase',
@@ -617,7 +624,7 @@ class MyTestingNotes extends Component {
                               style={[
                                 styles.text,
                                 {
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
                                   textTransform: 'uppercase',
@@ -636,7 +643,7 @@ class MyTestingNotes extends Component {
                               style={[
                                 styles.text,
                                 {
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
                                   textTransform: 'uppercase',
@@ -689,7 +696,6 @@ class MyTestingNotes extends Component {
                             width: 120,
                             flexDirection: 'row',
                           }}
-                          
                           onPress={() =>
                             this.props.navigation.navigate('ProductDetail', {
                               ProductDetail: item,

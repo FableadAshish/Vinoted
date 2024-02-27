@@ -139,7 +139,7 @@ const SearchCard = ({
               {
                 fontSize: 12,
                 width: '100%',
-                color: primaryTextColor,
+                color: "green",
                 textTransform: 'capitalize',
                 paddingVertical: 2,
               },
@@ -208,8 +208,8 @@ const SearchCard = ({
                   alignSelf: 'flex-end',
                   borderRadius: 15,
                   backgroundColor: primaryColor,
-                  width: 100,
-                  marginTop: 40,
+                  width: 90,
+                  marginTop: 30,
                 }}>
                 <Text
                   style={{

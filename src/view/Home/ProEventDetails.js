@@ -148,7 +148,7 @@ class ProEventDetails extends Component {
     const newArray = [];
     this.state.tempArray.forEach(obj => {
       // console.log('Object of Product', obj);
-      newArray.some(o => console.log('Product OO TYPe', o));
+      // newArray.some(o => console.log('Product OO TYPe', o));
       if (
         !newArray.some(
           o => !isEmpty(o.products) && o.products.type === obj.products.type,
@@ -347,7 +347,7 @@ class ProEventDetails extends Component {
 
   render() {
     const {EventDetail} = this.state;
-    console.log('EventDetail Now Second again Phirse rfg', EventDetail);
+    console.log('EventDetail bew again Phirse rfg', EventDetail);
     // for (let i = 1; i <= this.state.tempArrayLength; i++) {
     //   console.log('Event Detail Again[ Rhire fgd juyhh', i, ']: ', i);
     //   // return this.setState({wineCount: i});
@@ -794,7 +794,6 @@ class ProEventDetails extends Component {
                       ListEmptyComponent={() => this._renderEmptyProComponent()}
                       contentContainerStyle={{flexGrow: 1}}
                       // This will render If Notification is accepted
-
                       renderItem={({item}) => {
                         return (
                           <View>
@@ -819,6 +818,8 @@ class ProEventDetails extends Component {
                                 id={item.products.category_id}
                                 more={item.products.is_tasted == 1}
                                 noMore={item.products.is_tasted == 0}
+                                moreText={'Tasted'}
+                                noMoreText={'Tasting'}
                                 imagelist={
                                   item.products && item.products.Imagesrc
                                 }
@@ -1033,7 +1034,6 @@ class ProEventDetails extends Component {
                                   item.products && ` ${item.products.price}`
                                 }
                                 title={item.products && item.products.title}
-                                // description:
                               />
                             }
                           </View>

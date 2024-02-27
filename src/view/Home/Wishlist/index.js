@@ -341,7 +341,7 @@ class Index extends Component {
                           !isNull(item.product) && item.product.Imagesrc
                         }
                         // status={item.product.type}
-                        areaname={item.event == null ? '' : item.event.city}
+                        areaname={item.product.supplier_name}
                         Type={!isNull(item.product) && item.product.type}
                         date={moment(item.created_at).format('DD/MM/YYYY')}
                         ViewMore={'View'}
@@ -426,6 +426,10 @@ const styles = StyleSheet.create({
     color: white,
     fontFamily: sofiaFont,
   },
+  icon:{
+    height:22,
+    width:22
+  }
 });
 
 const mapProps = state => ({

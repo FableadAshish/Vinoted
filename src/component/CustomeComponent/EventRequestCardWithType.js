@@ -39,6 +39,8 @@ const EventRequestWithType = ({
   id,
   countId,
   noMore,
+  moreText,
+  noMoreText,
 }) => {
   const getColor = color => {
     if (color === 'White') {
@@ -60,7 +62,7 @@ const EventRequestWithType = ({
     }
   };
 
-  console.log("No More efwdswqd", noMore)
+  // console.log("No More efwdswqd", noMore)
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -102,6 +104,7 @@ const EventRequestWithType = ({
                 width: 15,
                 borderRadius: 50,
                 marginBottom: 8,
+                marginLeft: 35
               }}
             />
           </View>
@@ -155,7 +158,8 @@ const EventRequestWithType = ({
               <View style={{flexDirection: 'row', marginLeft: 35}}>
                 <Image
                   source={Images.BritishPoundIcon}
-                  style={{height: 15, width: 15}}
+                  style={{height: 14, width: 14, marginTop: 2}}
+                  tintColor={'grey'}
                 />
                 <Text
                   numberOfLines={1}
@@ -163,10 +167,11 @@ const EventRequestWithType = ({
                     styles.text,
                     {
                       fontSize: 12,
-                      width: '100%',
+                      // width: '100%',
                       color: 'gray',
                       textTransform: 'capitalize',
                       paddingVertical: 0,
+                      marginLeft: -5,
                     },
                   ]}>
                   {subtitle}
@@ -241,7 +246,7 @@ const EventRequestWithType = ({
             justifyContent: 'flex-end',
             paddingHorizontal: 10,
           }}>
-          {noMore == true ? (
+          {noMore == true && (
             <TouchableOpacity
               onPress={onPressMore}
               style={{
@@ -260,10 +265,11 @@ const EventRequestWithType = ({
                   styles.text,
                   {color: white, paddingHorizontal: 2, fontWeight: '700'},
                 ]}>
-                <Text>Tasting</Text>
+                <Text>{noMoreText}</Text>
               </Text>
             </TouchableOpacity>
-          ) :(
+          )}
+          {noMore == false && (
             <TouchableOpacity
               onPress={onPressMore}
               style={{
@@ -281,7 +287,7 @@ const EventRequestWithType = ({
                   styles.text,
                   {color: textColor, paddingHorizontal: 2, fontWeight: '700'},
                 ]}>
-                <Text>Tasted</Text>
+                <Text>{moreText}</Text>
               </Text>
             </TouchableOpacity>
           )}

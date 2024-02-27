@@ -190,7 +190,7 @@ class WishListProductDetail extends Component {
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '500',
+                          fontWeight: 800,
                           color: primaryColor,
                         }}>
                         {ProductDetail.product.producer}
@@ -203,7 +203,7 @@ class WishListProductDetail extends Component {
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '500',
+                          fontWeight: 800,
                           color: primaryColor,
                         }}>
                         {ProductDetail.product.year}
@@ -216,7 +216,7 @@ class WishListProductDetail extends Component {
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '500',
+                          fontWeight: 800,
                           color: primaryColor,
                         }}>
                         {ProductDetail.product.alcohol}%
@@ -228,39 +228,89 @@ class WishListProductDetail extends Component {
                       ProductDetail.event.is_started == 1 && (
                         <>
                           <View style={{marginVertical: 5}}>
-                            <Text style={{color: 'gray'}}>Tasted on</Text>
-                            <Text
-                              style={{
-                                fontFamily: sofiaFont,
-                                fontSize: 20,
-                                fontWeight: '500',
-                                color: primaryColor,
-                              }}>
-                              {moment(ProductDetail.created_at).format(
-                                'DD MMM,YYYY',
-                              )}
-                            </Text>
-                          </View>
-                          <View style={{marginVertical: 5}}>
                             <Text style={{color: 'gray'}}>Price</Text>
-                            <Text
-                              style={{
-                                fontFamily: sofiaFont,
-                                fontSize: 20,
-                                fontWeight: '500',
-                                color: primaryColor,
-                              }}>
-                              <Image source={Images.BritishPoundIcon} />
-                              {ProductDetail.product.price}
-                            </Text>
+                            <View style={{flexDirection: 'row'}}>
+                              <Image
+                                source={Images.BritishPoundIcon}
+                                style={{marginLeft: -5, marginTop: 2}}
+                              />
+                              <Text
+                                style={{
+                                  fontFamily: sofiaFont,
+                                  fontSize: 20,
+                                  fontWeight: 800,
+                                  color: primaryColor,
+                                  marginLeft: -7,
+                                }}>
+                                {ProductDetail.product.price}
+                              </Text>
+                            </View>
                           </View>
                         </>
                       )}
+
+                    {isEmpty(ProductDetail) && this.state.loading ? (
+                      <ShimmerPlaceHolder
+                        style={{
+                          height: 50,
+                          width: '90%',
+                          position: 'absolute',
+                          bottom: 0,
+                          borderTopRightRadius: 30,
+                          borderBottomRightRadius: 30,
+                        }}
+                      />
+                    ) : !this.state.loading &&
+                      isEmpty(this.state.ProductDetail) ? (
+                      <FLEC
+                        text="No data available"
+                        // image={require('../../../assets/logo.png')}
+                      />
+                    ) : (
+                      !isEmpty(ProductDetail) &&
+                      !isNull(ProductDetail.event) &&
+                      ProductDetail.event.is_started == 1 && (
+                        <TouchableOpacity
+                          onPress={() =>
+                            !isEmpty(ProductDetail) &&
+                            ProductDetail.event.is_started == 1 &&
+                            this.props.navigation.navigate('ChooseProduct', {
+                              Testing: ProductDetail,
+                              event: ProductDetail.event,
+                            })
+                          }
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'flex-end',
+                            paddingHorizontal: 10,
+                            height: 50,
+                            width: '140%',
+                            backgroundColor: secondryColor,
+                            borderTopRightRadius: 30,
+                            borderBottomRightRadius: 30,
+                            marginVertical: 10,
+                            // position: 'absolute',
+                            // bottom: 0,
+                          }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}>
+                            {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
+                            <Text style={[styles.textheading, {color: white}]}>
+                              {' '}
+                              Tasting
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      )
+                    )}
                   </View>
 
                   <View style={{flexDirection: 'column', flex: 0.3}}>
                     <Image
-                      style={{height: '100%', width: '100%', marginTop: 20}}
+                      style={{height: '100%', width: '100%', marginTop: -20}}
                       resizeMode="contain"
                       source={{uri: ProductDetail.product.Imagesrc}}
                       // source={require('../../../assets/darkBotle.png')}
@@ -349,23 +399,14 @@ class WishListProductDetail extends Component {
                       </View>
                     ) : (
                       <HTML
-                        // style={{
-                        //   fontFamily: sofiaFont,
-                        //   // fontSize: 20,
-                        //   fontWeight: '500',
-                        //   color: 'black',
-                        // }}>
-                        // {ProductDetail.product.description}
                         style={{fontSize: 15, color: primaryColor}}
                         source={{html: ProductDetail.product.description}}
                         imagesMaxWidth={Dimensions.get('window').width - 20}
                         tagsStyles={{
-
                           p: {
                             color: 'black',
-                            marginLeft: 10, // Set color of paragraphs to white
+                            marginLeft: -5,
                           },
-                          // Add more tag styles as needed
                         }}
                       />
                     )}
@@ -374,59 +415,6 @@ class WishListProductDetail extends Component {
               </View>
             )}
           </ScrollView>
-        )}
-
-        {isEmpty(ProductDetail) && this.state.loading ? (
-          <ShimmerPlaceHolder
-            style={{
-              height: 50,
-              width: '90%',
-              position: 'absolute',
-              bottom: 0,
-              borderTopRightRadius: 30,
-              borderBottomRightRadius: 30,
-            }}
-          />
-        ) : !this.state.loading && isEmpty(this.state.ProductDetail) ? (
-          <FLEC
-            text="No data available"
-            // image={require('../../../assets/logo.png')}
-          />
-        ) : (
-          !isEmpty(ProductDetail) &&
-          !isNull(ProductDetail.event) &&
-          ProductDetail.event.is_started == 1 && (
-            <TouchableOpacity
-              onPress={() =>
-                !isEmpty(ProductDetail) &&
-                ProductDetail.event.is_started == 1 &&
-                this.props.navigation.navigate('ChooseProduct', {
-                  Testing: ProductDetail,
-                  event: ProductDetail.event,
-                })
-              }
-              style={{
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                paddingHorizontal: 10,
-                height: 50,
-                width: '90%',
-                backgroundColor: secondryColor,
-                borderTopRightRadius: 30,
-                borderBottomRightRadius: 30,
-                marginVertical: 10,
-                position: 'absolute',
-                bottom: 0,
-              }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
-                <Text style={[styles.textheading, {color: white}]}>
-                  {' '}
-                  Tasting
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )
         )}
       </View>
     );

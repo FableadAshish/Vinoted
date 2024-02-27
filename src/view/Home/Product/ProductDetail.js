@@ -267,7 +267,7 @@ class ProductDetail extends Component {
                 }}>
                 <View style={{flexDirection: 'column', flex: 0.7}}>
                   <View style={{marginVertical: 5}}>
-                    <Text style={[styles.textheading, {fontWeight: '500'}]}>
+                    <Text style={[styles.textheading, {fontWeight: 700}]}>
                       {ProductDetail.title}
                     </Text>
                   </View>
@@ -278,7 +278,7 @@ class ProductDetail extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '500',
+                        fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {ProductDetail.producer}
@@ -291,7 +291,7 @@ class ProductDetail extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '500',
+                        fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {ProductDetail.year}
@@ -304,7 +304,7 @@ class ProductDetail extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '500',
+                        fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {ProductDetail.alcohol}%
@@ -320,14 +320,19 @@ class ProductDetail extends Component {
                       }}>
                       <Image
                         source={Images.BritishPoundIcon}
-                        style={{height: 25, width: 25, marginLeft: -8}}
+                        style={{
+                          height: 27,
+                          width: 27,
+                          marginLeft: -8,
+                          marginTop: 4,
+                        }}
                         tintColor={primaryColor}
                       />
                       <Text
                         style={{
                           fontFamily: sofiaFont,
                           fontSize: 20,
-                          fontWeight: '500',
+                          fontWeight: 700,
                           color: primaryColor,
                           marginLeft: -5,
                         }}>
@@ -358,7 +363,7 @@ class ProductDetail extends Component {
                     <TouchableOpacity
                       onPress={() =>
                         !isEmpty(event) &&
-                        event.is_tasted == 1 &&
+                        ProductDetail.is_tasted == 1 &&
                         this.props.navigation.navigate('ChooseProduct', {
                           Testing: form,
                           event: event,
@@ -373,7 +378,7 @@ class ProductDetail extends Component {
                         backgroundColor: secondryColor,
                         borderTopRightRadius: 30,
                         borderBottomRightRadius: 30,
-                        marginVertical: 10,
+                        marginBottom: -50,
                         position: 'absolute',
                         bottom: 0,
                       }}>
@@ -381,7 +386,7 @@ class ProductDetail extends Component {
                         style={{flexDirection: 'row', alignItems: 'center'}}>
                         {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
                         <Text style={[styles.textheading, {color: white}]}>
-                          {event.is_tasted === 0 ? 'Tasted' : 'Tasting'}
+                          {ProductDetail.is_tasted === 0 ? 'Tasting' : 'Tasted'}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -397,7 +402,7 @@ class ProductDetail extends Component {
                   />
                 </View> */}
               </View>
-              <View style={{flexGrow: 1, backgroundColor: white}}>
+              <View style={{marginTop: 40}}>
                 <View style={[styles.view, {marginHorizontal: 5}]}>
                   <View
                     style={{

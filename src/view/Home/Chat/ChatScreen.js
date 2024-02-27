@@ -243,8 +243,8 @@ class Chat extends React.Component {
   renderSend = props => {
     return (
       <Send {...props}>
-        {/* <View style={{ height:"100%",backgroundColor: primaryColor }}> */}
-        {/* <Icon
+        <View style={{height: '95%', width:50, backgroundColor: primaryColor, alignItems: 'center', justifyContent: 'center', marginTop:2}}>
+          {/* <Icon
           //onPress={() => this.handleSend(this.state.normalText)}
           name="send"
           type="Ionicons"
@@ -257,19 +257,21 @@ class Chat extends React.Component {
             marginBottom: -0.5,
           }}
         /> */}
-        <Image
-          source={Images.SendMessage}
-          style={{
-            backgroundColor: primaryColor,
-            padding: 11,
-            marginTop: -2,
-            marginBottom: -0.5,
-            height: 55,
-          }}
-          tintColor={'white'}
-        />
-        <Image />
-        {/* </View> */}
+
+          <Image
+            source={Images.SendMessage}
+            style={{
+              backgroundColor: primaryColor,
+              padding: 11,
+              // marginTop: -2,
+              // marginBottom: -0.5,
+              height: 30,
+              width: 30,
+            }}
+            tintColor={'white'}
+
+          />
+        </View>
       </Send>
     );
   };
