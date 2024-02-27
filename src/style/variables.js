@@ -20,6 +20,6 @@ export const googlebuttonColor = '#d34836';
 export const white = '#fff';
 export const black = 'black';
 export const calendarlist = '#3f4970';
-export const sofiaFont = 'Sofia Pro Light Az';
+export const sofiaFont = 'Sofia Pro Ultra Light';
 // '#696969'"#f1f3f4""a9a9a9" "00008b"#0095ff
 // backgroundColor:'#00000069'transeparent

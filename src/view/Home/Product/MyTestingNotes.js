@@ -405,7 +405,7 @@ class MyTestingNotes extends Component {
             <TouchableWithoutFeedback>
               <View style={styles.iconContainer}>
                 <Image
-                  source={Images.SearchIcon}
+                  source={Images?.SearchIcon}
                   style={{height: 22, width: 22}}
                 />
               </View>
@@ -520,7 +520,7 @@ class MyTestingNotes extends Component {
                             }}>
                             <Image
                               style={{height: 50, width: 50}}
-                              source={{uri: item.product.Imagesrc}}
+                              source={{uri: item?.product?.Imagesrc}}
                               resizeMode="center"
                             />
                           </View>

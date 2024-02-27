@@ -16,11 +16,11 @@ export default class AppLoadingMain extends React.Component {
       _handleAuthUser()
         .then(responce => {
           // navigate('App')
-          console.log("its Response", responce)
+          // console.log("its Response", responce)
         })
         .catch(error => {
           RootNavigation.replace('Auth');
-          console.log("Hey its")
+          // console.log("Hey its")
         }); // what to push here?
     }, 1000);
   }

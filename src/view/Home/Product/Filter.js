@@ -2,52 +2,35 @@ import React, {Component} from 'react';
 import {
   Platform,
   FlatList,
-  StatusBar,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Image,
   Dimensions,
   Text,
-  Alert,
-  ImageBackground,
   ScrollView,
   RefreshControl,
   TouchableOpacity,
   ActivityIndicator,
-  PickerIOSComponent,
   TextInput,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import Header from '../../../component/Header/Header';
-import {Icon, Toast} from 'native-base';
 import Button from '../../../component/Common/Button';
-import SkeletonContent from 'react-native-skeleton-content-nonexpo';
-import SearchCard from '../../../component/CustomeComponent/SearchCard';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import ModalSelector from 'react-native-modal-selector';
 import {
   white,
-  secondryTextColor,
   secondryColor,
   primaryColor,
-  cardBackground,
-  error,
-  black,
   sofiaFont,
   lineColor,
 } from '../../../style/variables';
-import {isEmpty, unset, set, isNull} from 'lodash';
+import {isEmpty, unset} from 'lodash';
 import {connect} from 'react-redux';
 import http from '../../../http';
-import Slider from 'react-native-smooth-slider';
 import moment from 'moment';
-import {Picker} from '@react-native-picker/picker';
-// import Slider from '@react-native-community/slider';
 const {width, height} = Dimensions.get('window');
-import LinearGradient from 'react-native-linear-gradient';
-import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
-// import MultiSelect from 'react-native-multiple-select';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import {Images} from '../../../../theme/Images';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -58,7 +41,6 @@ class ChooseProduct extends Component {
     this.state = {
       form: {
         wineType: [],
-        // data: [],
       },
       data: [],
       Testing: {},
@@ -82,6 +64,8 @@ class ChooseProduct extends Component {
       namekey: '',
       value: '',
       page: 0,
+      index: 0,
+      textInputNameValue: '',
     };
   }
 
@@ -144,7 +128,6 @@ class ChooseProduct extends Component {
     http
       .get(`sommelier/suppliers?page=${this.state.page}`)
       .then(res => {
-        console.log('response UsersList..', res);
         this.setState({
           SupplierList: res.data.page,
           loading: false,
@@ -190,26 +173,7 @@ class ChooseProduct extends Component {
   onSave = () => {
     const {form} = this.state;
     console.log('Formdataon Filter Again Two Times', form);
-    // this.props.navigation.navigate("SearchableTastingNots",{Search:form})
     this.props.navigation.navigate('SearchableTastingNots', {Search: form});
-    // this.setState({form: {wineType: []}, data: []});
-    // {
-    //     Object.entries(form).map(([key, value]) => {
-    //      console.log("Key value", key, value)
-    //      this.setState({ namekey: key, value })
-    //  }
-    //  )}
-    //  const { namekey,value } = this.state;
-    // this.setState({ loading: true, });
-    // http.get(`sommelier/eventproductrating?page=${this.state.page}&${namekey}=${value}`).then(res => {
-    //     console.log("responce of ProductRatinge noted", res)
-    //     this.props.navigation.navigate("MyTestingNotes",{Search:res})
-
-    // }).catch(err => {
-    //     console.log("errr Notification", err)
-    //     this.setState({ loading: false, refreshing: false });
-    //     // this._snk.show("OIROOR")
-    // });
   };
 
   color = () => {
@@ -245,22 +209,29 @@ class ChooseProduct extends Component {
     // this.setState({date:name})
   };
 
+  handleTextInputChange = (label, name) => {
+    console.log('text input change called', label, name);
+    // if (name == 'supplierName') {
+    this.setState({textInputNameValue: label});
+    // }
+  };
+
   onChange = (e, d) => {
     const {form} = this.state;
-    console.log('date timeonchangee', d);
-    if (e.type != 'dismissed') {
-      if (Platform.OS !== 'ios') {
-        // if(date){
-        this.setState({
-          form: {...this.state.form, date: moment(d).format('YYYY-MM-DD')},
-          ShowDate: false,
-          date: '',
-        });
-        // }
-      }
-    } else {
-      this.setState({ShowDate: false});
-    }
+    const currentDate = this.state.currentDate;
+    this.setState({currentDate, ShowDate: false});
+    // if (e.type != 'dismissed') {
+      this.setState({
+        form: {...form, date: moment(d).format('YYYY-MM-DD')},
+        ShowDate: false,
+        date: '',
+      });
+    // } else {
+    //   this.setState({ShowDate: false});
+    //   this.setState({
+    //     form: {...form, date: moment(this.state.date).format('YYYY-MM-DD')},
+    //   });
+    
   };
 
   onCheck = (item, i) => {
@@ -288,7 +259,7 @@ class ChooseProduct extends Component {
 
   render() {
     const {form, data} = this.state;
-    console.log('thdatawinetype', data);
+    // console.log('thdatawinetype', data);
 
     return (
       <View
@@ -306,18 +277,6 @@ class ChooseProduct extends Component {
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{marginHorizontal: 5}}>
-            {this.state.ShowDate && (
-              <DateTimePicker
-                // minimumDate={this.state.currentDate}
-                testID="dateTimePicker"
-                value={this.state.currentDate}
-                mode={this.state.mode}
-                is24Hour={true}
-                display="default"
-                onChange={(e, d) => this.onChange(e, d)}
-              />
-            )}
-
             <View style={{paddingVertical: 10, paddingHorizontal: 5}}>
               <Text
                 style={[
@@ -386,22 +345,41 @@ class ChooseProduct extends Component {
               <View style={styles.pickerView}>
                 <Text style={styles.pickerText}>Supplier Name</Text>
                 <View style={styles.pickerstyle}>
-                  <Picker
-                    style={styles.pickerItem}
-                    itemStyle={styles.pickerItem}
-                    dropdownIconColor="white"
-                    selectedValue={this.state.form.supplierName}
-                    onValueChange={this.handleChange.bind(
-                      this,
-                      'supplierName',
-                    )}>
-                    <Picker.Item label="Select" value={null} />
-                    {this.state.SupplierList.map(item => {
-                      return (
-                        <Picker.Item label={item.name} value={item.name} />
+                  <ModalSelector
+                    data={this.state.SupplierList.map((item, index) => ({
+                      key: index,
+                      label: item.name,
+                    }))}
+                    optionStyle={{
+                      borderBottomWidth: 0,
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}
+                    initValueTextStyle={{color: 'red'}}
+                    optionTextStyle={{color: 'black'}}
+                    initValue="Select"
+                    onChange={option => {
+                      this.handleChange(
+                        option.label,
+                        'supplierName',
+                        option.key,
                       );
-                    })}
-                  </Picker>
+                      this.handleTextInputChange(option.label, 'supplierName');
+                    }}>
+                    <TextInput
+                      style={{
+                        borderBottomWidth: 1,
+                        borderColor: '#ccc',
+                        padding: 10,
+                        height: 50,
+                        placeholder: 'Select Name',
+                      }}
+                      editable={false}
+                      placeholder="Select"
+                      placeholderTextColor="grey"
+                      value={this.state.textInputNameValue}
+                    />
+                  </ModalSelector>
                 </View>
                 {/* {!isEmpty(errors) && errors["supplier_name"] && !form.supplier_name && (
                                     <Text style={{ fontFamily: sofiaFont, fontSize: 12, color: error }}>{errors["supplier_name"]}</Text>
@@ -413,6 +391,22 @@ class ChooseProduct extends Component {
                   styles.pickerView,
                   {borderBottomColor: lineColor, borderBottomWidth: 1},
                 ]}>
+                {this.state.ShowDate && (
+                  <>
+                    <DatePicker
+                      modal
+                      open={this.state.ShowDate}
+                      date={this.state.currentDate}
+                      onConfirm={date => {
+                        this.onChange(null, date);
+                      }}
+                      onCancel={() => {
+                        this.setState({ShowDate: false});
+                      }}
+                      onDateChange={this.onChange}
+                    />
+                  </>
+                )}
                 <Text style={styles.pickerText}>Tasting Date</Text>
                 <TouchableOpacity
                   //  onPress={() => this.showDatePicker("date")}

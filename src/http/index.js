@@ -17,11 +17,11 @@ client.interceptors.request.use(async config => {
   let token = await _getAcessToken()
     .then(token => token)
     .catch(err => console.log('errrtok https axios', err));
-  console.log('Token.....', token);
+  // console.log('Token.....', token);
   if (token != undefined) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  console.log('-------config--------', config);
+  // console.log('-------config--------', config);
   return config;
 });
 
@@ -31,7 +31,7 @@ client.interceptors.response.use(
   },
   function (res) {
     const {response} = res;
-    console.log('response.............', response);
+    // console.log('response.............', response);
     return Promise.reject({status: response, ...response.data});
   },
 );

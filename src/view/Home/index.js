@@ -396,7 +396,7 @@ class Home extends Component {
                     fontSize: 25,
                     color: secondryTextColor,
                     marginLeft: 10,
-                    fontWeight: 500,
+                    fontWeight: 300,
                   }}>
                   Welcome {user.user.name}!
                 </Text>
