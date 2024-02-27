@@ -308,7 +308,7 @@ const EventRequestWithType = ({
               <Text
                 style={[
                   styles.text,
-                  {color: textColor, paddingHorizontal: 2, fontWeight: '700'},
+                  {color: textColor, paddingHorizontal: 2, fontWeight: 700},
                 ]}>
                 {morefromHome}
               </Text>

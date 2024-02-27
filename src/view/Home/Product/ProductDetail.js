@@ -391,7 +391,7 @@ class ProductDetail extends Component {
                   <TouchableOpacity
                     onPress={() =>
                       !isEmpty(event) &&
-                      ProductDetail.is_tasted == 1 &&
+                      ProductDetail.is_tasted == 0 &&
                       this.props.navigation.navigate('ChooseProduct', {
                         Testing: form,
                         event: event,
@@ -411,7 +411,6 @@ class ProductDetail extends Component {
                       bottom: 0,
                     }}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
                       <Text style={[styles.textheading, {color: white}]}>
                         {'Tasting'}
                       </Text>
@@ -419,14 +418,6 @@ class ProductDetail extends Component {
                   </TouchableOpacity>
                 )}
 
-                {/* <View style={{flexDirection: 'column', flex: 0.3}}>
-                  <Image
-                    style={{height: '100%', width: '100%', marginTop: 20}}
-                    resizeMode="contain"
-                    source={{uri: ProductDetail.Imagesrc}}
-                    // source={require('../../../assets/darkBotle.png')}
-                  />
-                </View> */}
               </View>
               <View style={{marginTop: 40}}>
                 <View style={[styles.view, {marginHorizontal: 5}]}>
@@ -488,7 +479,6 @@ class ProductDetail extends Component {
                         style={{
                           flexDirection: 'column',
                           flex: 0.5,
-                          //   paddingHorizontal: 10,
                         }}>
                         <View style={{marginVertical: 5}}>
                           <Text style={{color: 'gray'}}>Supplier Name</Text>
