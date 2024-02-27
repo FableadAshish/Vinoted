@@ -15,16 +15,16 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs() {
   const [unRead, setUnread] = useState('');
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     http
-  //       .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-  //       .then(res => setUnread(res))
-  //       .catch(err => console.log(err));
-  //   }, 2000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      http
+        .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
+        .then(res => setUnread(res))
+        .catch(err => console.log(err));
+    }, 2000);
 
-  //   return () => clearInterval(intervalId);
-  // }, [unRead]);
+    return () => clearInterval(intervalId);
+  }, [unRead]);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -67,7 +67,7 @@ export default function MyTabs() {
                 <Image
                   source={Images.MessageIcon}
                   style={
-                    focused ? {height: 30, width: 30,} : {height: 27, width: 27}
+                    focused ? {height: 30, width: 30} : {height: 27, width: 27}
                   }
                   tintColor={focused ? '#ffffff' : '#d1d1d1'}
                 />

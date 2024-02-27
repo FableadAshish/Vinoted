@@ -197,6 +197,7 @@ class ProductDetail extends Component {
     // }
     const event = this.props.route.params.event;
     console.log('ProductDetailevent', ProductDetail);
+    console.log('ProductDetailevent', ProductDetail);
     this.setState({form: ProductDetail, event}, () => this.Store());
   }
 
@@ -206,7 +207,7 @@ class ProductDetail extends Component {
     http
       .get(`sommelier/product/${form.product_id}`)
       .then(res => {
-        console.log('response ProductDetail..', res);
+        // console.log('response ProductDetail..', res);
         if (res.data.page == null) {
           this.setState({loading: false});
         } else {
@@ -229,7 +230,11 @@ class ProductDetail extends Component {
     // const ProductRatings = this.props.route.params.Testing;
     const {ProductDetail, isLike, event, form} = this.state;
     // const event = this.props.route.params.event;
-    console.log('Render Product Detail..', ProductDetail);
+    // console.log('Render Product Detail.. Again', ProductDetail);
+    console.log(
+      'Render Event Detail.. For Now',
+      event?.event_my_requests?.status,
+    );
     // console.log("'Render Product Detail.. jweiou", ProductRatings);
     return (
       <View
@@ -357,7 +362,7 @@ class ProductDetail extends Component {
                     text="No data available"
                     // image={require('../../../assets/logo.png')}
                   />
-                ) : !isEmpty(ProductDetail) && ProductDetail.is_tasted == 1 ? (
+                ) : !isEmpty(event) && event.event_my_requests.status !== 'Pending' && (
                   <TouchableOpacity
                     onPress={() =>
                       !isEmpty(event) &&
@@ -379,15 +384,17 @@ class ProductDetail extends Component {
                       marginBottom: -50,
                       position: 'absolute',
                       bottom: 0,
-                    }}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
-                      <Text style={[styles.textheading, {color: white}]}>
+                    }}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={[styles.textheading, { color: white }]}>
                         {'Tasted'}
                       </Text>
                     </View>
                   </TouchableOpacity>
-                ) : (
+                )}
+                
+                {!isEmpty(event) && event.event_my_requests.status !== 'Pending' && (
                   <TouchableOpacity
                     onPress={() =>
                       !isEmpty(event) &&
@@ -409,15 +416,15 @@ class ProductDetail extends Component {
                       marginBottom: -50,
                       position: 'absolute',
                       bottom: 0,
-                    }}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text style={[styles.textheading, {color: white}]}>
+                    }}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={[styles.textheading, { color: white }]}>
                         {'Tasting'}
                       </Text>
                     </View>
                   </TouchableOpacity>
                 )}
-
               </View>
               <View style={{marginTop: 40}}>
                 <View style={[styles.view, {marginHorizontal: 5}]}>

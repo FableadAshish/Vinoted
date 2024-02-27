@@ -1010,19 +1010,9 @@ class ProEventDetails extends Component {
                                     {ProductDetail: item, event: EventDetail},
                                   )
                                 }
-                                onPressMore={() =>
-                                  EventDetail.is_started == 1 &&
-                                  this.props.navigation.navigate(
-                                    'ChooseProduct',
-                                    {Testing: item, event: EventDetail},
-                                  )
-                                }
                                 item={item}
                                 region={item.products.region}
                                 year={item.products.year}
-                                // more={
-                                //   EventDetail.is_started == 1 && 'Tasting'
-                                // }
                                 imagelist={
                                   item.products && item.products.Imagesrc
                                 }
