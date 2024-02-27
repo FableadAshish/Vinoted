@@ -505,7 +505,7 @@ class ChooseProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '500',
+                        fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -515,14 +515,14 @@ class ChooseProduct extends Component {
                   </View>
 
                   <View style={{marginVertical: 5}}>
-                    <Text style={{color: 'gray',ontFamily: sofiaFont}}>
+                    <Text style={{color: 'gray', fontFamily: sofiaFont}}>
                       Year
                     </Text>
                     <Text
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '500',
+                        fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -539,7 +539,7 @@ class ChooseProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: '500',
+                        fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -1330,7 +1330,8 @@ class ChooseProduct extends Component {
                       }}
                     />
                   </>
-                ) : (<Text style={styles.SimpleText}>
+                ) : (
+                  <Text style={styles.SimpleText}>
                     {this.state.form.description}
                   </Text>
                 )}

@@ -357,40 +357,66 @@ class ProductDetail extends Component {
                     text="No data available"
                     // image={require('../../../assets/logo.png')}
                   />
+                ) : !isEmpty(ProductDetail) && ProductDetail.is_tasted == 1 ? (
+                  <TouchableOpacity
+                    onPress={() =>
+                      !isEmpty(event) &&
+                      ProductDetail.is_tasted == 1 &&
+                      this.props.navigation.navigate('ChooseProduct', {
+                        Testing: form,
+                        event: event,
+                      })
+                    }
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'flex-end',
+                      paddingHorizontal: 10,
+                      height: 50,
+                      width: '90%',
+                      backgroundColor: secondryColor,
+                      borderTopRightRadius: 30,
+                      borderBottomRightRadius: 30,
+                      marginBottom: -50,
+                      position: 'absolute',
+                      bottom: 0,
+                    }}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
+                      <Text style={[styles.textheading, {color: white}]}>
+                        {'Tasted'}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 ) : (
-                  !isEmpty(ProductDetail) &&
-                  ProductDetail.is_tasted == 1 && (
-                    <TouchableOpacity
-                      onPress={() =>
-                        !isEmpty(event) &&
-                        ProductDetail.is_tasted == 1 &&
-                        this.props.navigation.navigate('ChooseProduct', {
-                          Testing: form,
-                          event: event,
-                        })
-                      }
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'flex-end',
-                        paddingHorizontal: 10,
-                        height: 50,
-                        width: '90%',
-                        backgroundColor: secondryColor,
-                        borderTopRightRadius: 30,
-                        borderBottomRightRadius: 30,
-                        marginBottom: -50,
-                        position: 'absolute',
-                        bottom: 0,
-                      }}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
-                        <Text style={[styles.textheading, {color: white}]}>
-                          {ProductDetail.is_tasted === 0 ? 'Tasting' : 'Tasted'}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )
+                  <TouchableOpacity
+                    onPress={() =>
+                      !isEmpty(event) &&
+                      ProductDetail.is_tasted == 1 &&
+                      this.props.navigation.navigate('ChooseProduct', {
+                        Testing: form,
+                        event: event,
+                      })
+                    }
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'flex-end',
+                      paddingHorizontal: 10,
+                      height: 50,
+                      width: '90%',
+                      backgroundColor: secondryColor,
+                      borderTopRightRadius: 30,
+                      borderBottomRightRadius: 30,
+                      marginBottom: -50,
+                      position: 'absolute',
+                      bottom: 0,
+                    }}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      {/* <Icon name="pound" type="Foundation" style={{ color: white, fontSize: 30, paddingTop: 5, marginHorizontal: 5 }} /> */}
+                      <Text style={[styles.textheading, {color: white}]}>
+                        {'Tasting'}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 )}
 
                 {/* <View style={{flexDirection: 'column', flex: 0.3}}>
