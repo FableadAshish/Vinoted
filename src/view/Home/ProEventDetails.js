@@ -672,7 +672,7 @@ class ProEventDetails extends Component {
                             fontSize: 15,
                             color: primaryColor,
                           }}>
-                          {EventDetail.status}
+                          {EventDetail?.status}
                         </Text>
                       </View>
                       <View style={{marginVertical: 5}}>
@@ -683,7 +683,7 @@ class ProEventDetails extends Component {
                             fontSize: 15,
                             color: primaryColor,
                           }}>
-                          {EventDetail.supplier.name}
+                          {EventDetail?.supplier?.name}
                         </Text>
                       </View>
                     </View>
@@ -813,24 +813,24 @@ class ProEventDetails extends Component {
                                   )
                                 }
                                 item={item}
-                                region={item.products.region}
-                                year={item.products.year}
-                                id={item.products.category_id}
-                                more={item.products.is_tasted == 1}
-                                noMore={item.products.is_tasted == 0}
+                                region={item?.products?.region}
+                                year={item?.products?.year}
+                                id={item?.products?.category_id}
+                                more={item?.products?.is_tasted == 1}
+                                noMore={item?.products?.is_tasted == 0}
                                 moreText={'Tasted'}
                                 noMoreText={'Tasting'}
                                 imagelist={
-                                  item.products && item.products.Imagesrc
+                                  item?.products && item?.products.Imagesrc
                                 }
-                                type={item.products.type}
+                                type={item?.products?.type}
                                 color={
-                                  item.products ? item.products.type : null
+                                  item?.products ? item?.products.type : null
                                 }
                                 subtitle={
-                                  item.products && `${item.products.price}`
+                                  item?.products && `${item?.products.price}`
                                 }
-                                title={item.products && item.products.title}
+                                title={item?.products && item?.products.title}
                                 countId={this.state.wineCount}
                               />
                             )}

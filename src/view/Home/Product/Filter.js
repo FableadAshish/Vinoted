@@ -221,17 +221,16 @@ class ChooseProduct extends Component {
     const currentDate = this.state.currentDate;
     this.setState({currentDate, ShowDate: false});
     // if (e.type != 'dismissed') {
-      this.setState({
-        form: {...form, date: moment(d).format('YYYY-MM-DD')},
-        ShowDate: false,
-        date: '',
-      });
+    this.setState({
+      form: {...form, date: moment(d).format('YYYY-MM-DD')},
+      ShowDate: false,
+      date: '',
+    });
     // } else {
     //   this.setState({ShowDate: false});
     //   this.setState({
     //     form: {...form, date: moment(this.state.date).format('YYYY-MM-DD')},
     //   });
-    
   };
 
   onCheck = (item, i) => {
@@ -373,6 +372,7 @@ class ChooseProduct extends Component {
                         padding: 10,
                         height: 50,
                         placeholder: 'Select Name',
+                        color: 'white',
                       }}
                       editable={false}
                       placeholder="Select"
@@ -488,15 +488,17 @@ class ChooseProduct extends Component {
             }}>
             <View style={{flex: 1, justifyContent: 'center'}}>
               <View style={styles.modelView}>
-                <Header
-                  navigation={this.props.navigation}
-                  iconColor={primaryColor}
-                  iconProps={Images.BackNavigationIcon}
-                  onPress={() => {
-                    this.setModalVisible(false);
-                  }}
-                  image={require('../../../assets/blueLogo.png')}
-                />
+                <View style={{marginTop: 25}}>
+                  <Header
+                    navigation={this.props.navigation}
+                    iconColor={primaryColor}
+                    iconProps={Images.BackNavigationIcon}
+                    onPress={() => {
+                      this.setModalVisible(false);
+                    }}
+                    image={require('../../../assets/blueLogo.png')}
+                  />
+                </View>
 
                 <View style={styles.searchcontainer}>
                   <TextInput
@@ -506,7 +508,7 @@ class ChooseProduct extends Component {
                     value={this.state.searchText}
                     underlineColorAndroid="transparent"
                     placeholder="Type Wine Name"
-                    // placeholderTextColor={primaryColor}
+                    placeholderTextColor={primaryColor}
                   />
                   <TouchableWithoutFeedback>
                     <View style={styles.iconContainer}>
@@ -643,7 +645,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginTop: 40,
+    marginTop: 50,
   },
   modelheader: {
     height: 30,
@@ -671,6 +673,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 0.6,
     borderColor: primaryColor,
+    marginTop: 20,
   },
   icon: {
     fontSize: 20,
