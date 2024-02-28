@@ -13,7 +13,9 @@ import {
   BackHandler,
   ActivityIndicator,
   Linking,
+  Modal,
 } from 'react-native';
+import CheckBox from 'react-native-check-box';
 import {_register} from '../../api/auth';
 import {isEmpty, unset, set} from 'lodash';
 import Snackbar from '../../component/Common/Snackbar';
@@ -24,6 +26,7 @@ import {
   secondryColor,
   white,
   sofiaFont,
+  primaryColor,
 } from '../../style/variables';
 import {Toast} from 'native-base';
 Dimensions.get('window');
@@ -39,6 +42,7 @@ export default class Signup extends React.Component {
       isLoggedIn: false,
       uerInfo: {},
       value: false,
+      isChecked: '',
     };
   }
   //   componentWillMount = () => {
@@ -76,44 +80,51 @@ export default class Signup extends React.Component {
     this.setState({form});
   }
 
-  //   validate = () => {
-  //     let errors = {};
-  //     const {first_name, last_name, email, password, password_confirmation} =
-  //       this.state.form;
-  //     if (isEmpty(first_name)) {
-  //       set(errors, 'first_name', ['First name is required']);
-  //     }
-  //     if (isEmpty(last_name)) {
-  //       set(errors, 'last_name', ['Last name is required']);
-  //     }
-  //     if (isEmpty(email)) {
-  //       set(errors, 'email', ['Email is required']);
-  //     }
-  //     if (isEmpty(password)) {
-  //       set(errors, 'password', ['Password is required']);
-  //     } else if (password.length < 8) {
-  //       set(errors, 'password', ['Password must be at least 8 characters.']);
-  //     }
-  //     if (isEmpty(password_confirmation)) {
-  //       set(errors, 'password_confirmation', ['Comfirm password is required']);
-  //     } else if (password_confirmation !== password) {
-  //       set(errors, 'password_confirmation', ['Comfirm password is not match ']);
-  //     }
-  //     return errors;
-  //   };
+  validate = () => {
+    let errors = {};
+    const {
+      first_name,
+      last_name,
+      email,
+      password,
+      password_confirmation,
+      isChecked,
+    } = this.state.form;
+    if (isEmpty(first_name)) {
+      set(errors, 'first_name', ['First name is required']);
+    }
+    if (isEmpty(last_name)) {
+      set(errors, 'last_name', ['Last name is required']);
+    }
+    if (isEmpty(email)) {
+      set(errors, 'email', ['Email is required']);
+    }
+    if (isEmpty(password)) {
+      set(errors, 'password', ['Password is required']);
+    } else if (password.length < 8) {
+      set(errors, 'password', ['Password must be at least 8 characters.']);
+    }
+    if (isEmpty(password_confirmation)) {
+      set(errors, 'password_confirmation', ['Comfirm password is required']);
+    } else if (password_confirmation !== password) {
+      set(errors, 'password_confirmation', ['Comfirm password is not match ']);
+    }
+    if (isEmpty(isChecked == false)) {
+      set(errors, ['Please Agree to User Agreement and privacy policy']);
+    }
+    return errors;
+  };
   onSave = async () => {
-    const {form} = this.state;
-
+    const {form, isChecked} = this.state;
     this.setState({loading: true});
-
     try {
       // console.log('Form data in signup', form);
       form.type = 'Sommelier';
-    
+
       const res = await _register(form);
-    
+
       // console.log('Form data in signup with res', res);
-    
+
       if (res.success === true) {
         this.setState({loading: false, response: res}, () => {
           Toast.show({
@@ -124,14 +135,13 @@ export default class Signup extends React.Component {
         this.setState({form: {}});
       }
       this.props.navigation.navigate('Login');
-
     } catch (err) {
       // Handle the error appropriately
       // console.log('Error in onSave:', err);
       this.setState({loading: false});
-    
+
       let errors = {};
-    
+
       if (
         err &&
         err.status &&
@@ -152,11 +162,11 @@ export default class Signup extends React.Component {
         });
       }
     }
-    
   };
 
   render() {
-    const {form, errors} = this.state;
+    const {form, errors, isChecked} = this.state;
+    console.log(isChecked);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -227,6 +237,12 @@ export default class Signup extends React.Component {
                 onChange={this.handleChange.bind(this, 'email')}
                 onSubmitEditing={() => this.password.focus()}
               />
+              {/* <View>
+                <Text>Email</Text>
+                <Modal>
+
+                </Modal>
+              </View> */}
 
               <TextInput
                 label="Job title"
@@ -268,7 +284,19 @@ export default class Signup extends React.Component {
                 onSubmitEditing={() => this.onSave()}
               />
 
-<View style={{width: '100%'}}>
+              <View style={{flexDirection: 'row'}}>
+                <CheckBox
+                  style={{flex: 1, padding: 10, color: primaryColor}}
+                  onClick={() => {
+                    this.setState({
+                      isChecked: !this.state.isChecked,
+                    });
+                  }}
+                  isChecked={this.state.isChecked}
+                  checkBoxColor={'white'}
+
+                  // leftText={'CheckBox'}
+                />
                 <Text>
                   <Text
                     style={{

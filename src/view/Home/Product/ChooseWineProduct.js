@@ -45,6 +45,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {items} from '../../../assets/Data/data';
 import {value} from 'react-native-extended-stylesheet';
 import {ChooseWineModal} from '../../../component/ChoseMineModal/ChooseWineModal';
+import {WineRatingsModal} from '../../../component/WineRatingsModal/WineRatingsModal';
 
 let data = ['1', '2', '3'];
 
@@ -516,7 +517,7 @@ class ChooseProduct extends Component {
 
                   <View style={{marginVertical: 5}}>
                     <Text style={{color: 'gray', fontFamily: sofiaFont}}>
-                      Year
+                      Vintage
                     </Text>
                     <Text
                       style={{
@@ -610,11 +611,13 @@ class ChooseProduct extends Component {
                           {key: this.state.index++, label: 'High'},
                         ]}
                         optionStyle={{
-                          borderBottomWidth: 0,
+                          // borderBottomWidth: 0.4,
+                          borderBottomColor:'grey',
                           alignItems: 'flex-start',
                           justifyContent: 'flex-start',
+                          backgroundColor:'white'
                         }}
-                        initValueTextStyle={{color: 'red'}}
+                        // initValueTextStyle={{color: 'red'}}
                         optionTextStyle={{color: 'black'}}
                         initValue="Select"
                         onChange={option => {
@@ -962,6 +965,16 @@ class ChooseProduct extends Component {
                       )}
                   </View>
 
+                  {/* <WineRatingsModal
+                    title={'Balance'}
+                    data={[
+                      {key: this.state.index++, label: 'Low'},
+                      {key: this.state.index++, label: 'Medium'},
+                      {key: this.state.index++, label: 'High'},
+                    ]}
+                    checkEmpty={form.event}
+
+                  /> */}
                   <View style={styles.pickerView}>
                     <Text style={styles.pickerText}>Balance</Text>
                     <View style={styles.pickerstyle}>

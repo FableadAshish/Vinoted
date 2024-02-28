@@ -398,7 +398,7 @@ class Home extends Component {
                     marginLeft: 10,
                     fontWeight: 300,
                   }}>
-                  Welcome {user.user.name}!
+                  Welcome {user?.user?.name}!
                 </Text>
               </>
             ) : (
@@ -505,7 +505,7 @@ class Home extends Component {
                         ]}>
                         <Image
                           style={{height: 80, width: '100%', borderRadius: 10}}
-                          source={{uri: item.Imagesrc}}
+                          source={{uri: item?.Imagesrc}}
                         />
                         <Text
                           numberOfLines={1}
@@ -619,11 +619,11 @@ class Home extends Component {
                           // more='More'
                           // more={this.state.Events.is_started == 0 && "More"}
                           morefromHome={'More'}
-                          type={item.country_name}
-                          imagelist={item.Imagesrc}
-                          homedate={moment(item.date).format('DD/MM/YYYY')}
-                          hometime={moment(item.date).format('HH:mm')}
-                          title={item.name}
+                          type={item?.country_name}
+                          imagelist={item?.Imagesrc}
+                          homedate={moment(item?.date).format('DD/MM/YYYY')}
+                          hometime={moment(item?.date).format('HH:mm')}
+                          title={item?.name}
                         />
                       </TouchableOpacity>
                     )}

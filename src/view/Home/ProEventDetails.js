@@ -134,13 +134,15 @@ class ProEventDetails extends Component {
       tempArrayLength: 0,
       wineCount: 0,
       searchedWine: [],
+      noData: '',
     };
   }
 
   componentDidMount() {
     const EventDetail = this.props.route.params.Eventitem;
-    this.setState({form: EventDetail}, () => this.Store());
-
+    this.setState({form: EventDetail, loading: true, refreshing: true}, () =>
+      this.Store(),
+    );
     //
   }
 
@@ -260,15 +262,20 @@ class ProEventDetails extends Component {
   }
 
   SearchFilterFunction(text) {
-    const filteredArray = this.state.EventDetail.eventproducts.filter(item =>
-      item.products.title.toLowerCase().includes(text.toLowerCase()),
+    const filteredArray = this.state.EventDetail.eventproducts.filter(
+      item =>
+        (item.products.title.toLowerCase().includes(text.toLowerCase()) ||
+          item.products.region.toLowerCase().includes(text.toLowerCase())) &&
+        text !== '',
     );
 
-    this.setState({searchedWine: filteredArray});
-    // console.log(item.products.title === text)
-    // console.log(this.s)
-    // (this.state.EventDetail.eventproducts.filter(item =>console.log(text == item.products.title)));
+    if (filteredArray.length === 0 && text !== '') {
+      this.setState({noData: 'No such wine available'});
+    } else {
+      this.setState({noData: '', searchedWine: filteredArray});
+    }
   }
+
   onRefresh() {
     this.setState({refreshing: true, page: 0, EventDetail: {}}, () =>
       this.Store(),
@@ -348,12 +355,6 @@ class ProEventDetails extends Component {
   render() {
     const {EventDetail} = this.state;
     console.log('EventDetail bew again Phirse rfg', EventDetail);
-    // for (let i = 1; i <= this.state.tempArrayLength; i++) {
-    //   console.log('Event Detail Again[ Rhire fgd juyhh', i, ']: ', i);
-    //   // return this.setState({wineCount: i});
-    // }
-    // console.log('this.state.wineCount', this.state.wineCount);
-    // console.log('this.state.tempArrayLengthe', this.state.tempArrayLength);
     if (this.state.loading && isEmpty(EventDetail)) {
       return (
         <View style={{backgroundColor: white}}>
@@ -535,7 +536,7 @@ class ProEventDetails extends Component {
                 <View style={[styles.view, {backgroundColor: white}]}>
                   <Image
                     style={{height: 150, width: '100%', borderRadius: 30}}
-                    source={{uri: EventDetail.Imagesrc}}
+                    source={{uri: EventDetail?.Imagesrc}}
                     // source={{ uri: "https://vistapointe.net/images/bar-3.jpg" }}
                   />
                 </View>
@@ -596,15 +597,13 @@ class ProEventDetails extends Component {
                       baseFontStyle={{
                         fontFamily: sofiaFont,
                         fontSize: 15,
-                        color: 'white', // Set the base font color to white
+                        color: 'white',
                       }}
                       tagsStyles={{
-                        // Specify styles for specific HTML tags
                         p: {
                           color: 'black',
-                          marginLeft: 10, // Set color of paragraphs to white
+                          marginLeft: 10,
                         },
-                        // Add more tag styles as needed
                       }}
                     />
                   </View>
@@ -780,140 +779,169 @@ class ProEventDetails extends Component {
                   </View>
 
                   <View style={{flexDirection: 'row', marginVertical: 0}}>
-                    <FlatList
-                      showsVerticalScrollIndicator={false}
-                      // data={EventDetail.eventproducts}
-                      data={
-                        this.state.searchedWine.length > 0
-                          ? this.state.searchedWine
-                          : EventDetail.eventproducts
-                      }
-                      keyExtractor={(item, i) => i.toString()}
-                      scrollEventThrottle={16}
-                      onEndReachedThreshold={0.5}
-                      ListEmptyComponent={() => this._renderEmptyProComponent()}
-                      contentContainerStyle={{flexGrow: 1}}
-                      // This will render If Notification is accepted
-                      renderItem={({item}) => {
-                        return (
-                          <View>
-                            {item.products && (
-                              <EventRequestWithType
-                                onPress={() =>
-                                  this.props.navigation.navigate(
-                                    'ProductDetail',
-                                    {ProductDetail: item, event: EventDetail},
-                                  )
-                                }
-                                onPressMore={() =>
-                                  EventDetail.is_started == 1 &&
-                                  this.props.navigation.navigate(
-                                    'ChooseProduct',
-                                    {Testing: item, event: EventDetail},
-                                  )
-                                }
-                                item={item}
-                                region={item?.products?.region}
-                                year={item?.products?.year}
-                                id={item?.products?.category_id}
-                                more={item?.products?.is_tasted == 1}
-                                noMore={item?.products?.is_tasted == 0}
-                                moreText={'Tasted'}
-                                noMoreText={'Tasting'}
-                                imagelist={
-                                  item?.products && item?.products.Imagesrc
-                                }
-                                type={item?.products?.type}
-                                color={
-                                  item?.products ? item?.products.type : null
-                                }
-                                subtitle={
-                                  item?.products && `${item?.products.price}`
-                                }
-                                title={item?.products && item?.products.title}
-                                countId={this.state.wineCount}
-                              />
-                            )}
-                          </View>
-                        );
-                      }}
-                    />
-
-                    {/* } */}
-                  </View>
-                  {!isEmpty(this.state.tempArray) && (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        padding: 10,
-                        marginHorizontal: 5,
-                        bottom: 0,
-                        borderRadius: 2,
-                      }}>
-                      <FlatList
-                        showsVerticalScrollIndicator={false}
-                        horizontal={true}
-                        data={this.state.tempArray}
-                        keyExtractor={(item, i) => i.toString()}
-                        scrollEventThrottle={16}
-                        onEndReachedThreshold={0.5}
-                        ListEmptyComponent={() =>
-                          this._renderEmptyProComponent()
-                        }
-                        contentContainerStyle={{flexGrow: 1}}
-                        renderItem={({item}) => (
+                    {this.state.noData ? (
+                      <View
+                        style={{
+                          width: '100%',
+                          height: '50',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: 25,
+                        }}>
+                        <Text style={{color: primaryColor}}>
+                          {this.state.noData}
+                        </Text>
+                      </View>
+                    ) : (
+                      <View style={{width: '100%'}}>
+                        <FlatList
+                          showsVerticalScrollIndicator={false}
+                          // data={EventDetail.eventproducts}
+                          data={
+                            this.state.searchedWine.length > 0
+                              ? this.state.searchedWine
+                              : EventDetail.eventproducts
+                          }
+                          keyExtractor={(item, i) => i.toString()}
+                          scrollEventThrottle={16}
+                          onEndReachedThreshold={0.5}
+                          ListEmptyComponent={() =>
+                            this._renderEmptyProComponent()
+                          }
+                          contentContainerStyle={{flexGrow: 1}}
+                          // This will render If Notification is accepted
+                          renderItem={({item}) => {
+                            return (
+                              <View>
+                                {item.products && (
+                                  <EventRequestWithType
+                                    onPress={() =>
+                                      this.props.navigation.navigate(
+                                        'ProductDetail',
+                                        {
+                                          ProductDetail: item,
+                                          event: EventDetail,
+                                        },
+                                      )
+                                    }
+                                    onPressMore={() =>
+                                      EventDetail.is_started == 1 &&
+                                      this.props.navigation.navigate(
+                                        'ChooseProduct',
+                                        {Testing: item, event: EventDetail},
+                                      )
+                                    }
+                                    item={item}
+                                    region={item?.products?.region}
+                                    year={item?.products?.year}
+                                    id={item?.products?.category_id}
+                                    more={item?.products?.is_tasted == 1}
+                                    noMore={item?.products?.is_tasted == 0}
+                                    moreText={'Tasted'}
+                                    noMoreText={'Tasting'}
+                                    imagelist={
+                                      item?.products && item?.products?.Imagesrc
+                                    }
+                                    type={item?.products?.type}
+                                    color={
+                                      item?.products
+                                        ? item?.products.type
+                                        : null
+                                    }
+                                    subtitle={
+                                      item?.products &&
+                                      `${item?.products?.price}`
+                                    }
+                                    title={
+                                      item?.products && item?.products?.title
+                                    }
+                                    countId={this.state.wineCount}
+                                  />
+                                )}
+                              </View>
+                            );
+                          }}
+                        />
+                        {!isEmpty(this.state.tempArray) && (
                           <View
                             style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
+                              flexDirection: 'row',
+                              padding: 10,
+                              marginHorizontal: 5,
+                              bottom: 0,
+                              borderRadius: 2,
                             }}>
-                            {!isEmpty(item.products) && (
-                              <View
-                                style={{
-                                  width: '100%',
-                                  flexDirection: 'column',
-                                  marginHorizontal: 10,
-                                  marginBottom: 0,
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                }}>
+                            <FlatList
+                              showsVerticalScrollIndicator={false}
+                              horizontal={true}
+                              data={this.state.tempArray}
+                              keyExtractor={(item, i) => i.toString()}
+                              scrollEventThrottle={16}
+                              onEndReachedThreshold={0.5}
+                              ListEmptyComponent={() =>
+                                this._renderEmptyProComponent()
+                              }
+                              contentContainerStyle={{flexGrow: 1}}
+                              renderItem={({item}) => (
                                 <View
                                   style={{
-                                    borderWidth: 1,
-                                    borderRadius: 5,
-                                    borderColor: this.renderColor(
-                                      item.products.type,
-                                    ),
-                                    borderBottomWidth: 0,
-                                    shadowColor: 'black',
-                                    shadowOffset: {width: 0, height: 2},
-                                    shadowOpacity: 0.9,
-                                    shadowRadius: 13,
-                                    elevation: 3,
-                                    backgroundColor: this.renderColor(
-                                      item.products.type,
-                                    ),
-                                    height: 15,
-                                    width: 15,
-                                    borderRadius: 50,
-                                    marginBottom: 8,
-                                  }}
-                                />
-                                <Text
-                                  style={{color: primaryColor, fontSize: 12}}>
-                                  {' '}
-                                  {this.renderText(item.products.type)}
-                                </Text>
-                              </View>
-                              // <View>
-                              //   <Text>Hello</Text>
-                              // </View>
-                            )}
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                  }}>
+                                  {!isEmpty(item.products) && (
+                                    <View
+                                      style={{
+                                        width: '100%',
+                                        flexDirection: 'column',
+                                        marginHorizontal: 10,
+                                        marginBottom: 0,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                      }}>
+                                      <View
+                                        style={{
+                                          borderWidth: 1,
+                                          borderRadius: 5,
+                                          borderColor: this.renderColor(
+                                            item.products.type,
+                                          ),
+                                          borderBottomWidth: 0,
+                                          shadowColor: 'black',
+                                          shadowOffset: {width: 0, height: 2},
+                                          shadowOpacity: 0.9,
+                                          shadowRadius: 13,
+                                          elevation: 3,
+                                          backgroundColor: this.renderColor(
+                                            item.products.type,
+                                          ),
+                                          height: 15,
+                                          width: 15,
+                                          borderRadius: 50,
+                                          marginBottom: 8,
+                                        }}
+                                      />
+                                      <Text
+                                        style={{
+                                          color: primaryColor,
+                                          fontSize: 12,
+                                        }}>
+                                        {' '}
+                                        {this.renderText(item.products.type)}
+                                      </Text>
+                                    </View>
+                                    // <View>
+                                    //   <Text>Hello</Text>
+                                    // </View>
+                                  )}
+                                </View>
+                              )}
+                            />
                           </View>
                         )}
-                      />
-                    </View>
-                  )}
+                      </View>
+                    )}
+                    {/* } */}
+                  </View>
                 </View>
               ) : (
                 // {/* {!isEmpty(EventDetail) && EventDetail.event_my_requests.status == "Pending" && */}
@@ -1014,7 +1042,7 @@ class ProEventDetails extends Component {
                                 region={item.products.region}
                                 year={item.products.year}
                                 imagelist={
-                                  item.products && item.products.Imagesrc
+                                  item?.products && item?.products?.Imagesrc
                                 }
                                 type={item.products.type}
                                 color={
@@ -1046,7 +1074,6 @@ class ProEventDetails extends Component {
                           keyExtractor={(item, i) => i.toString()}
                           scrollEventThrottle={16}
                           onEndReachedThreshold={0.5}
-                          showsVerticalScrollIndicator={false}
                           ListEmptyComponent={() =>
                             this._renderEmptyProComponent()
                           }

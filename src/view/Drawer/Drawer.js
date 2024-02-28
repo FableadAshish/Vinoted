@@ -161,7 +161,7 @@ class SideBar extends React.Component {
               onPress={() =>
                 Linking.openURL('https://www.vinoted.com/user-agreement')
               }>
-              <Text style={[styles.text]}>User Aggrement</Text>
+              <Text style={[styles.text]}>User Agreement</Text>
             </TouchableOpacity>
 
             <TouchableOpacity

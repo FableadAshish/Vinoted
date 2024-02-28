@@ -21,7 +21,7 @@ export default function MyTabs() {
         .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
         .then(res => setUnread(res))
         .catch(err => console.log(err));
-    }, 2000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, [unRead]);

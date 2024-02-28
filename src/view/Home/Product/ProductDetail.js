@@ -230,11 +230,11 @@ class ProductDetail extends Component {
     // const ProductRatings = this.props.route.params.Testing;
     const {ProductDetail, isLike, event, form} = this.state;
     // const event = this.props.route.params.event;
-    // console.log('Render Product Detail.. Again', ProductDetail);
-    console.log(
-      'Render Event Detail.. For Now',
-      event?.event_my_requests?.status,
-    );
+    console.log('Render Product Detail.. Again', ProductDetail);
+    // console.log(
+    //   'Render Event Detail.. For Now',
+    //   event?.event_my_requests?.status,
+    // );
     // console.log("'Render Product Detail.. jweiou", ProductRatings);
     return (
       <View
@@ -291,7 +291,7 @@ class ProductDetail extends Component {
                   </View>
 
                   <View style={{marginVertical: 5}}>
-                    <Text style={{color: 'gray'}}>Year</Text>
+                    <Text style={{color: 'gray'}}>Vintage</Text>
                     <Text
                       style={{
                         fontFamily: sofiaFont,
@@ -442,7 +442,7 @@ class ProductDetail extends Component {
                         paddingHorizontal: 10,
                       }}>
                       <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Type</Text>
+                        <Text style={{color: 'gray'}}>Category</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,
@@ -479,7 +479,7 @@ class ProductDetail extends Component {
                             fontSize: 15,
                             color: primaryColor,
                           }}>
-                          {ProductDetail.country}
+                          {ProductDetail.country.name}
                         </Text>
                       </View>
                       <View
