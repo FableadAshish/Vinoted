@@ -28,25 +28,18 @@ import {
   lineColor,
 } from '../../../style/variables';
 import {isEmpty, unset, set, isNull} from 'lodash';
-// import TextInput from '../../../component/Common/EditTextField';
 import {connect} from 'react-redux';
 import http from '../../../http';
 import Slider from 'react-native-smooth-slider';
-// import Slider from '@react-native-community/slider';
 import moment from 'moment';
 const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
-import MultiSelect from 'react-native-multiple-select';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Images} from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {items} from '../../../assets/Data/data';
-import {value} from 'react-native-extended-stylesheet';
-import {ChooseWineModal} from '../../../component/ChoseMineModal/ChooseWineModal';
-import {WineRatingsModal} from '../../../component/WineRatingsModal/WineRatingsModal';
 
 let data = ['1', '2', '3'];
 
@@ -625,7 +618,7 @@ class ChooseProduct extends Component {
                           marginTop: -5,
                         }}
                         optionTextStyle={{color: 'black'}}
-                        initValue="Select"
+                        // initValue="Select"
                         cancelText="Cancel"
                         onChange={option => {
                           this.handleChange(
@@ -641,10 +634,13 @@ class ChooseProduct extends Component {
                             // borderColor: '#ccc',
                             padding: 10,
                             height: 50,
-                            color: primaryColor,
+                            color: 'black',
+                            fontWeight: '500',
+                            fontSize: 15,
                           }}
                           editable={false}
-                          placeholder="Select"
+                          placeholder="Select Intensity"
+                          placeholderTextColor={'black'}
                           value={this.state.textInputIntensityValue}
                         />
                       </ModalSelector>
@@ -712,13 +708,15 @@ class ChooseProduct extends Component {
                           <TextInput
                             style={{
                               // borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Acidity"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputAcidityValue}
                           />
                         </ModalSelector>
@@ -777,13 +775,15 @@ class ChooseProduct extends Component {
                           <TextInput
                             style={{
                               // borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Tannin"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputTanninnValue}
                           />
                         </ModalSelector>
@@ -838,13 +838,15 @@ class ChooseProduct extends Component {
                           <TextInput
                             style={{
                               // borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Body"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputBodyValue}
                           />
                         </ModalSelector>
@@ -907,10 +909,11 @@ class ChooseProduct extends Component {
                           <TextInput
                             style={{
                               // borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             optionStyle={{
                               borderBottomWidth: 0,
@@ -920,7 +923,8 @@ class ChooseProduct extends Component {
                             initValueTextStyle={{color: 'red'}}
                             optionTextStyle={{color: 'black'}}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Sweetness"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputSweetnessValue}
                           />
                         </ModalSelector>
@@ -983,14 +987,15 @@ class ChooseProduct extends Component {
                           }}>
                           <TextInput
                             style={{
-                              borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Complexity"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputComplexityValue}
                           />
                         </ModalSelector>
@@ -1060,14 +1065,15 @@ class ChooseProduct extends Component {
                           }}>
                           <TextInput
                             style={{
-                              borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Balance"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputBalanceValue}
                           />
                         </ModalSelector>
@@ -1132,14 +1138,15 @@ class ChooseProduct extends Component {
                           }}>
                           <TextInput
                             style={{
-                              borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Maturity"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputMaturityValue}
                           />
                         </ModalSelector>
@@ -1197,14 +1204,15 @@ class ChooseProduct extends Component {
                           }}>
                           <TextInput
                             style={{
-                              borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
-                              color: primaryColor,
                               height: 50,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Finish"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputFinishValue}
                           />
                         </ModalSelector>
@@ -1264,14 +1272,15 @@ class ChooseProduct extends Component {
                           }}>
                           <TextInput
                             style={{
-                              borderBottomWidth: 1,
-                              borderColor: '#ccc',
                               padding: 10,
                               height: 50,
-                              color: primaryColor,
+                              color: 'black',
+                              fontWeight: '500',
+                              fontSize: 15,
                             }}
                             editable={false}
-                            placeholder="Select"
+                            placeholder="Select Listing Candidate"
+                            placeholderTextColor={'black'}
                             value={this.state.textInputlistingCandidateValue}
                           />
                         </ModalSelector>
@@ -1343,7 +1352,7 @@ class ChooseProduct extends Component {
                   )}
                 </View>
               </View>
-              <View style={{flex: 1, marginBottom: 10}}>
+              <View style={{flex: 1, marginTop: -20}}>
                 {isEmpty(form.event) ? (
                   <SectionedMultiSelect
                     items={items}
@@ -1395,8 +1404,10 @@ class ChooseProduct extends Component {
                             fontSize: 18,
                             borderBottomColor: 'red',
                             padding: 10,
-                            height: 50,
+                            // height: 50,
                             color: primaryColor,
+                            marginTop: -10,
+                            marginLeft:-10
                           },
                         ]}>
                         Additional Notes
@@ -1405,6 +1416,7 @@ class ChooseProduct extends Component {
                     <TextInput
                       label="Description"
                       name="description"
+                      placeholder="Type here"
                       errors={errors}
                       editable={isEmpty(form.event) ? true : false}
                       multiline={true}
@@ -1419,9 +1431,10 @@ class ChooseProduct extends Component {
                       style={{
                         borderBottomWidth: 0.5,
                         borderColor: 'gray',
-                        padding: 10,
+                        // padding: 10,
                         // height: 30,
                         color: primaryColor,
+                        marginTop: -10,
                       }}
                     />
                   </>
@@ -1434,7 +1447,7 @@ class ChooseProduct extends Component {
                 <TouchableOpacity
                   activeOpacity={1}
                   style={{
-                    paddingVertical: 10,
+                    marginTop: 30,
                     width: '100%',
                     alignSelf: 'center',
                     alignItems: 'center',
@@ -1457,8 +1470,8 @@ class ChooseProduct extends Component {
                         : Images.HeartIcon
                     }
                     style={{
-                      height: 20,
-                      width: 20,
+                      height: 25,
+                      width: 25,
                       color:
                         !isEmpty(form) && form.is_favourite == 1
                           ? primaryColor
@@ -1585,11 +1598,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   SimpleText: {
-    color: primaryColor,
-    fontFamily: sofiaFont,
-    fontSize: 16,
-    textTransform: 'capitalize',
-    marginHorizontal: 15,
+    // color: primaryColor,
+    // fontFamily: sofiaFont,
+    // fontSize: 16,
+    // textTransform: 'capitalize',
+    // marginHorizontal: 15,
+    padding: 10,
+    height: 50,
+    color: 'black',
+    fontWeight: 500,
+    fontSize: 15,
   },
 });
 

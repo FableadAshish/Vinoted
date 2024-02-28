@@ -6,39 +6,6 @@ export const items = [
   {
     name: 'FRUITY',
     id: 0,
-    icon: Images.BackNavigationIcon,
-    // hasChildren: true,
-    children: [
-      {
-        name: 'FRUITY',
-        id: 1,
-        icon: Images.BackNavigationIcon,
-      },
-      {
-        name: '(Citrus)',
-        id: 2,
-        icon: Images.BackNavigationIcon,
-      },
-      {
-        name: 'grapefruit',
-        id: 3,
-        icon: Images.BackNavigationIcon,
-      },
-      {
-        name: 'lemon',
-        id: 4,
-        icon: Images.BackNavigationIcon,
-      },
-      {
-        name: 'lime',
-        id: 5,
-        icon: Images.BackNavigationIcon,
-      },
-    ],
-  },
-  {
-    name: 'FRUITY',
-    id: 0,
     // these are the children or 'sub items'
     hasChildren: true,
     children: [
@@ -47,7 +14,7 @@ export const items = [
         id: 1,
       },
       {
-        name: '(Citrus)',
+        name: 'citrus',
         id: 2,
       },
       {
@@ -63,7 +30,7 @@ export const items = [
         id: 5,
       },
       {
-        name: '(Green fruit)',
+        name: 'GREEN FRUIT',
         id: 6,
       },
       {
@@ -79,7 +46,7 @@ export const items = [
         id: 9,
       },
       {
-        name: '(Stone fruit) ',
+        name: 'STONE FRUIT',
         id: 10,
       },
       {
@@ -91,7 +58,7 @@ export const items = [
         id: 12,
       },
       {
-        name: '(Red fruit)',
+        name: 'RED FRUIT',
         id: 13,
       },
       {
@@ -103,89 +70,80 @@ export const items = [
         id: 15,
       },
       {
-        name: 'red',
+        name: 'red cherry',
         id: 16,
-      },
-
-      {
-        name: 'cherry',
-        id: 17,
       },
       {
         name: 'redcurrant',
-        id: 18,
+        id: 17,
       },
       {
         name: 'plum',
+        id: 18,
+      },
+      {
+        name: 'BLACK FRUIT',
         id: 19,
       },
       {
-        name: '(Black fruit)',
+        name: 'blackberry',
         id: 20,
       },
       {
-        name: 'blackberry',
+        name: 'black cherry',
         id: 21,
       },
       {
-        name: 'black',
+        name: 'blackcurrant',
         id: 22,
       },
       {
-        name: 'cherry',
+        name: 'TROPICAL FRUIT',
         id: 23,
       },
       {
-        name: 'blackcurrant',
+        name: 'banana',
         id: 24,
       },
       {
-        name: '(Tropical fruit)',
+        name: 'kiwi',
         id: 25,
       },
       {
-        name: 'banana',
+        name: 'lychee',
         id: 26,
       },
       {
-        name: 'kiwi',
+        name: 'mango',
         id: 27,
       },
       {
-        name: 'lychee',
+        name: 'melon',
         id: 28,
       },
       {
-        name: 'mango',
+        name: 'passion fruit',
         id: 29,
       },
       {
-        name: 'melon',
+        name: 'pineapple',
         id: 30,
       },
       {
-        name: 'passion fruit',
+        name: 'DRIED FRUIT',
         id: 31,
       },
       {
-        name: 'pineapple',
+        name: 'fig',
         id: 32,
       },
       {
-        name: '(Dried fruit)',
+        name: 'prune',
         id: 33,
       },
       {
-        name: 'fig',
-        id: 34,
-      },
-      {
-        name: 'prune',
-        id: 35,
-      },
-      {
         name: 'raisin',
-        id: 36,
+        id: 34,
       },
     ],
   },
@@ -200,7 +158,7 @@ export const items = [
         id: 1,
       },
       {
-        name: 'Rose',
+        name: 'rose',
         id: 2,
       },
       {
@@ -236,7 +194,7 @@ export const items = [
         id: 1,
       },
       {
-        name: 'Cinnamon',
+        name: 'cinnamon',
         id: 2,
       },
       {
@@ -280,24 +238,20 @@ export const items = [
         id: 1,
       },
       {
-        name: 'Asparagus',
+        name: 'asparagus',
         id: 2,
       },
       {
-        name: 'bell',
+        name: 'bell pepper',
         id: 3,
       },
       {
-        name: 'pepper',
+        name: 'mushroom',
         id: 4,
       },
       {
-        name: 'mushroom',
-        id: 5,
-      },
-      {
         name: 'olive',
-        id: 6,
+        id: 5,
       },
     ],
   },
@@ -312,7 +266,7 @@ export const items = [
         id: 1,
       },
       {
-        name: 'Eucalyptus',
+        name: 'eucalyptus',
         id: 2,
       },
       {
@@ -340,7 +294,7 @@ export const items = [
         id: 1,
       },
       {
-        name: 'Cedar',
+        name: 'cedar',
         id: 2,
       },
       {
@@ -352,7 +306,7 @@ export const items = [
         id: 4,
       },
       {
-        name: 'Almond',
+        name: 'almond',
         id: 5,
       },
       {
@@ -424,7 +378,7 @@ export const items = [
     // these are the children or 'sub items'
     children: [
       {
-        name: 'oxidative',
+        name: 'RIPE',
         id: 1,
       },
       {
@@ -467,11 +421,11 @@ export const items = [
     // these are the children or 'sub items'
     children: [
       {
-        name: 'Yeast',
+        name: 'AUTOLYTIC',
         id: 1,
       },
       {
-        name: 'Yeast',
+        name: 'yeast',
         id: 2,
       },
       {
