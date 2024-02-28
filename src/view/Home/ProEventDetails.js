@@ -140,9 +140,7 @@ class ProEventDetails extends Component {
 
   componentDidMount() {
     const EventDetail = this.props.route.params.Eventitem;
-    this.setState({form: EventDetail, loading: true, refreshing: true}, () =>
-      this.Store(),
-    );
+    this.setState({form: EventDetail}, () => this.Store());
     //
   }
 
@@ -279,6 +277,7 @@ class ProEventDetails extends Component {
   onRefresh() {
     this.setState({refreshing: true, page: 0, EventDetail: {}}, () =>
       this.Store(),
+      
     );
   }
 
@@ -793,7 +792,7 @@ class ProEventDetails extends Component {
                         </Text>
                       </View>
                     ) : (
-                      <View style={{width: '100%'}}>
+                      <View style={{width:"100%"}}>
                         <FlatList
                           showsVerticalScrollIndicator={false}
                           // data={EventDetail.eventproducts}
@@ -887,6 +886,7 @@ class ProEventDetails extends Component {
                                   style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
+
                                   }}>
                                   {!isEmpty(item.products) && (
                                     <View

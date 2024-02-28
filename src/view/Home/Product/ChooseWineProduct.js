@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DropDownPicker from 'react-native-dropdown-picker';
+
 import {
   View,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  Modal,
 } from 'react-native';
 import Header from '../../../component/Header/Header';
 import {Toast} from 'native-base';
@@ -41,7 +42,7 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Images} from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {items} from '../../../assets/Data/data';
 import {value} from 'react-native-extended-stylesheet';
 import {ChooseWineModal} from '../../../component/ChoseMineModal/ChooseWineModal';
@@ -606,33 +607,38 @@ class ChooseProduct extends Component {
                     {isEmpty(form.event) ? (
                       <ModalSelector
                         data={[
+                          {key: null, label: 'Select'},
                           {key: this.state.index++, label: 'Low'},
                           {key: this.state.index++, label: 'Medium'},
                           {key: this.state.index++, label: 'High'},
                         ]}
                         optionStyle={{
-                          // borderBottomWidth: 0.4,
-                          borderBottomColor:'grey',
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
                           alignItems: 'flex-start',
                           justifyContent: 'flex-start',
-                          backgroundColor:'white'
+                          backgroundColor: 'white',
                         }}
-                        // initValueTextStyle={{color: 'red'}}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                        }}
                         optionTextStyle={{color: 'black'}}
                         initValue="Select"
+                        cancelText="Cancel"
                         onChange={option => {
                           this.handleChange(
                             option.label,
                             'intensity',
                             option.key,
                           );
-
                           this.handleTextInputChange(option.label, 'intensity');
                         }}>
                         <TextInput
                           style={{
                             // borderBottomWidth: 1,
-                            borderColor: '#ccc',
+                            // borderColor: '#ccc',
                             padding: 10,
                             height: 50,
                             color: primaryColor,
@@ -643,6 +649,9 @@ class ChooseProduct extends Component {
                         />
                       </ModalSelector>
                     ) : (
+                      // <Modal animationType='none'>
+
+                      // </Modal>
                       <Text style={styles.SimpleText}>
                         {this.state.form.acidity}
                       </Text>
@@ -672,18 +681,26 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -729,18 +746,26 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -786,18 +811,26 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Light'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'Full'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(option.label, 'body', option.key);
                             this.handleTextInputChange(option.label, 'body');
@@ -839,19 +872,27 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Dry'},
                             {key: this.state.index++, label: 'Off-Dry'},
                             {key: this.state.index++, label: 'Sweet'},
                             {key: this.state.index++, label: 'Luscious'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -909,18 +950,26 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -981,18 +1030,26 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Low'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'High'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -1038,6 +1095,7 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Tired'},
                             {key: this.state.index++, label: 'Too Young'},
                             {key: this.state.index++, label: 'Ready to drink'},
@@ -1047,13 +1105,20 @@ class ChooseProduct extends Component {
                             },
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -1102,18 +1167,26 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'Short'},
                             {key: this.state.index++, label: 'Medium'},
                             {key: this.state.index++, label: 'Long'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -1159,17 +1232,25 @@ class ChooseProduct extends Component {
                       {isEmpty(form.event) ? (
                         <ModalSelector
                           data={[
+                            {key: null, label: 'Select'},
                             {key: this.state.index++, label: 'By the glass'},
                             {key: this.state.index++, label: 'By the bottle'},
                           ]}
                           optionStyle={{
-                            borderBottomWidth: 0,
+                            borderBottomWidth: 0.4,
+                            borderBottomColor: 'grey',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
+                            backgroundColor: 'white',
                           }}
-                          initValueTextStyle={{color: 'red'}}
+                          optionContainerStyle={{backgroundColor: 'white'}}
+                          cancelContainerStyle={{
+                            backgroundColor: 'white',
+                            marginTop: -5,
+                          }}
                           optionTextStyle={{color: 'black'}}
                           initValue="Select"
+                          cancelText="Cancel"
                           onChange={option => {
                             this.handleChange(
                               option.label,
@@ -1266,7 +1347,7 @@ class ChooseProduct extends Component {
                 {isEmpty(form.event) ? (
                   <SectionedMultiSelect
                     items={items}
-                    IconRenderer={this.IconRenderer}
+                    IconRenderer={Icon}
                     styles={{button: {backgroundColor: primaryColor}}}
                     uniqueKey="name"
                     subKey="children"
@@ -1276,6 +1357,7 @@ class ChooseProduct extends Component {
                     readOnlyHeadings={true}
                     onSelectedItemsChange={this.onSelectedItemsChange}
                     selectedItems={this.state.selectedItems}
+                    showChips={true}
                   />
                 ) : (
                   <>
@@ -1290,7 +1372,7 @@ class ChooseProduct extends Component {
                           }}>
                           Flavours
                         </Text>
-                        <Text style={styles.SimpleText}>
+                        <Text style={[styles.SimpleText, {width: 150}]}>
                           {!isNull(form.flavours)
                             ? form.flavours.map(item => item).join(', ')
                             : ''}
