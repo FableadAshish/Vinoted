@@ -4,6 +4,7 @@ import {SafeAreaView, StyleSheet, Image} from 'react-native';
 import {_handleAuthUser} from '../api/auth';
 import * as RootNavigation from '../navigation/RootNavigation';
 import SplashScreen from 'react-native-splash-screen';
+import { Images } from '../../theme/Images';
 export default class AppLoadingMain extends React.Component {
   state = {isLoadingComplete: false};
 
@@ -34,7 +35,7 @@ export default class AppLoadingMain extends React.Component {
       <SafeAreaView style={styles.container}>
         <Image
           resizeMode="contain"
-          source={require('../../src/assets/blueLogo.png')}
+          source={Images.blueLogo}
           style={{width: '70%', height: '100%', alignSelf: 'center'}}
         />
       </SafeAreaView>

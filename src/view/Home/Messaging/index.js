@@ -300,7 +300,7 @@ class Index extends Component {
               //this.props.navigation.replace("App",{screen: "Home"})
               this.props.navigation.goBack()
             }
-            image={require('../../../assets/blueLogo.png')}
+            image={Images.blueLogo}
           />
           <Shimmer />
           <Shimmer />
@@ -327,7 +327,7 @@ class Index extends Component {
             //this.props.navigation.replace("App", {screen:"Home"})
             this.props.navigation.goBack()
           }
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
 
         <View style={styles.searchcontainer}>

@@ -362,7 +362,7 @@ class ProEventDetails extends Component {
             iconColor={primaryColor}
             iconProps={Images.BackNavigationIcon}
             onPress={() => this.props.navigation.goBack()}
-            image={require('../../assets/blueLogo.png')}
+            image={Images.blueLogo}
           />
           <View style={{width: '90%', alignSelf: 'center'}}>
             <ShimmerPlaceHolder
@@ -447,7 +447,7 @@ class ProEventDetails extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {isEmpty(EventDetail) ? (
           <View style={{backgroundColor: white}}>

@@ -271,7 +271,7 @@ class ChooseProduct extends Component {
           iconColor={white}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/Logo.png')}
+          image={Images.Logo}
         />
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -496,7 +496,7 @@ class ChooseProduct extends Component {
                     onPress={() => {
                       this.setModalVisible(false);
                     }}
-                    image={require('../../../assets/blueLogo.png')}
+                    image={Images.blueLogo}
                   />
                 </View>
 

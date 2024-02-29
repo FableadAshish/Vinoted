@@ -201,7 +201,7 @@ class MyEvents extends Component {
                     iconColor={primaryColor}
                     iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
-                    image={require('../../../assets/blueLogo.png')}
+                    image={Images.blueLogo}
                 />
 
                 <View style={{ marginHorizontal: 5, flex: 1 }}>

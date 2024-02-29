@@ -21,5 +21,15 @@ export const Images = {
   CheckedSquareIcon: require('../src/assets/Images/PageIcons/CheckedSquare.png'),
   CalendarIcon: require('../src/assets/Images/PageIcons/Calendar.png'),
   CancelIcon: require('../src/assets/Images/PageIcons/Cancel.png'),
-  slectImage: require('../src/assets/Images/PageIcons/Selct.png')
+  slectImage: require('../src/assets/Images/PageIcons/Selct.png'),
+  blueLogo: require('../src/assets/Images/PageIcons/blueLogo.png'),
+  darkBotle: require('../src/assets/Images/PageIcons/darkBotle.png'),
+  ImageBackgroung: require('../src/assets/Images/PageIcons/ImageBackgroung.png'),
+  issue: require('../src/assets/Images/PageIcons/issue.jpg'),
+  Logo: require('../src/assets/Images/PageIcons/Logo.png'),
+  neww: require('../src/assets/Images/PageIcons/neww.png'),
+  notificationLogo: require('../src/assets/Images/PageIcons/notificationLogo.png'),
+  profile: require('../src/assets/Images/PageIcons/profile.jpeg'),
+  sommelier: require('../src/assets/Images/PageIcons/sommelier.jpeg'),
+  supplier: require('../src/assets/Images/PageIcons/supplier.jpeg'),
 };

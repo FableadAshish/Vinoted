@@ -45,6 +45,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const GOOGLE_API_KEY = 'AIzaSyBfwJ0clyRHUKSQtfReIcA4CFaIRnfiUwY';
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import { Images } from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 // let data = [
@@ -225,7 +226,6 @@ class WishlistDetail extends Component {
       isEmpty(this.state.EventDetail) && (
         <FLEC
           text="No data available"
-          // image={require('../../../assets/logo.png')}
         />
       )
     );
@@ -247,7 +247,7 @@ class WishlistDetail extends Component {
             iconColor={primaryColor}
             iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
             onPress={() => this.props.navigation.goBack()}
-            image={require('../../../assets/blueLogo.png')}
+            image={Images.blueLogo}
           />
           <View style={{width: '90%', alignSelf: 'center'}}>
             <ShimmerPlaceHolder
@@ -333,7 +333,7 @@ class WishlistDetail extends Component {
           iconColor={primaryColor}
           iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {!isEmpty(EventDetail) && (
           <ScrollView showsVerticalScrollIndicator={false}>

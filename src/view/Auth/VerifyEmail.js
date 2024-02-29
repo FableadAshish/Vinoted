@@ -28,6 +28,7 @@ import { primaryColor, secondryTextColor, secondryColor, white, sofiaFont } from
 import { Icon, Toast } from 'native-base';
 import { _getUser, _handleAuthUser } from '../../api/auth';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Images } from '../../../theme/Images';
 
 Dimensions.get("window");
 
@@ -220,7 +221,7 @@ export default class VerifyEmail extends React.Component {
 
                 </View>
                 <ImageBackground
-                    source={require('../../assets/ImageBackgroung.png')}
+                    source={Images.ImageBackgroung}
                     style={{ height: '100%', width: '100%' }}>
                     <Snackbar ref={ref => (this._snk = ref)} />
 
@@ -241,7 +242,7 @@ export default class VerifyEmail extends React.Component {
 
                             <View style={{ marginVertical: 25, alignItems: "flex-start", width: "100%" }}>
                                 <Image
-                                    source={require('../../assets/Logo.png')}
+                                    source={Images.Logo}
                                     style={{
                                         width: 150,
                                         height: 40,

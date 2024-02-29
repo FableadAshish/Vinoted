@@ -31,6 +31,7 @@ import {
 import {Toast} from 'native-base';
 Dimensions.get('window');
 import AsyncStorage from '@react-native-community/async-storage';
+import { Images } from '../../../theme/Images';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -170,7 +171,7 @@ export default class Signup extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require('../../assets/ImageBackgroung.png')}
+          source={Images.ImageBackgroung}
           style={{height: '100%', width: '100%'}}>
           <Snackbar ref={ref => (this._snk = ref)} />
 
@@ -192,7 +193,7 @@ export default class Signup extends React.Component {
                   width: '100%',
                 }}>
                 <Image
-                  source={require('../../assets/Logo.png')}
+                  source={Images.Logo}
                   style={{
                     width: 150,
                     height: 40,

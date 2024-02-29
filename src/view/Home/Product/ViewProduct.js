@@ -22,6 +22,7 @@ import TextInput from '../../../component/Common/EditTextField';
 import {connect} from 'react-redux';
 import http from '../../../http';
 import Slider from 'react-native-smooth-slider';
+import { Images } from '../../../../theme/Images';
 // import Slider from '@react-native-community/slider';
 const {width, height} = Dimensions.get('window');
 
@@ -124,7 +125,7 @@ class ViewProduct extends Component {
           iconColor={primaryColor}
           iconProps={{name: 'keyboard-arrow-left', type: 'MaterialIcons'}}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {!isEmpty(Testing) && (
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -189,7 +190,7 @@ class ViewProduct extends Component {
                   <Image
                     style={{height: '100%', width: '100%', marginTop: 20}}
                     resizeMode="contain"
-                    source={require('../../../assets/darkBotle.png')}
+                    source={Images.darkBotle}
                   />
                 </View>
               </View>

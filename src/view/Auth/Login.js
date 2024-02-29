@@ -30,6 +30,7 @@ import {
 import {Toast} from 'native-base';
 Dimensions.get('window');
 import AsyncStorage from '@react-native-community/async-storage';
+import { Images } from '../../../theme/Images';
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
@@ -173,7 +174,7 @@ export default class Login extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require('../../assets/ImageBackgroung.png')}
+          source={Images.ImageBackgroung}
           style={{height: '100%', width: '100%'}}>
           <Snackbar ref={ref => (this._snk = ref)} />
 

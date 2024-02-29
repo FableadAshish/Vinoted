@@ -395,7 +395,7 @@ class Profile extends Component {
           iconColor={white}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/Logo.png')}
+          image={Images.Logo}
         />
         {isEmpty(form) && this.state.loading ? (
           <ScrollView>
@@ -576,7 +576,7 @@ class Profile extends Component {
                       />
                     ) : (
                       <Image
-                        source={require('../../../assets/sommelier.jpeg')}
+                        source={Images.sommelier}
                         style={{width: 130, height: 130, borderRadius: 65}}
                       />
                     )}

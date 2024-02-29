@@ -188,7 +188,7 @@ class Index extends Component {
       isEmpty(this.state.Wishlist) && (
         <FLEC
           text="Currently No Wines Have Been Favourited"
-          // image={require('../../../assets/logo.png')}
+
         />
       )
     );
@@ -252,7 +252,7 @@ class Index extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         <View style={{marginHorizontal: 5, flex: 1}}>
           <View style={{marginHorizontal: 10, marginVertical: 10}}>

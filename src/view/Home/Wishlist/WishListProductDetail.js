@@ -99,7 +99,7 @@ class WishListProductDetail extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {isEmpty(ProductDetail) && this.state.loading ? (
           <SkeletonContent
@@ -150,7 +150,6 @@ class WishListProductDetail extends Component {
         ) : !this.state.loading && isEmpty(this.state.ProductDetail) ? (
           <FLEC
             text="No data available"
-            // image={require('../../../assets/logo.png')}
           />
         ) : (
           <ScrollView
@@ -264,7 +263,6 @@ class WishListProductDetail extends Component {
                       isEmpty(this.state.ProductDetail) ? (
                       <FLEC
                         text="No data available"
-                        // image={require('../../../assets/logo.png')}
                       />
                     ) : (
                       !isEmpty(ProductDetail) &&
@@ -313,7 +311,6 @@ class WishListProductDetail extends Component {
                       style={{height: '100%', width: '100%', marginTop: -20}}
                       resizeMode="contain"
                       source={{uri: ProductDetail?.product?.Imagesrc}}
-                      // source={require('../../../assets/darkBotle.png')}
                     />
                   </View>
                 </View>

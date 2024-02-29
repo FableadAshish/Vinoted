@@ -272,7 +272,7 @@ class Notification extends Component {
                     iconColor={white}
                     iconProps={Images.BackNavigationIcon}
                     onPress={() => this.props.navigation.goBack()}
-                    image={require('../../../assets/Logo.png')}
+                    image={Images.blueLogo}
                 />
                 <ScrollView
                     showsVerticalScrollIndicator={false}

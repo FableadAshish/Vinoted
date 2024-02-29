@@ -399,7 +399,7 @@ class SearchableTastingNots extends Component {
           iconColor={white}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.navigate('Home')}
-          image={require('../../../assets/Logo.png')}
+          image={Images.Logo}
         />
         <ScrollView
           showsVerticalScrollIndicator={false}

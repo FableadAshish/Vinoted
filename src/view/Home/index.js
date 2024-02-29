@@ -369,7 +369,7 @@ class Home extends Component {
           iconColor={white}
           iconProps={Images.MenuBarIcon}
           onPress={() => this.props.navigation.toggleDrawer()}
-          image={require('../../assets/Logo.png')}
+          image={Images.Logo}
           styleMenuBar={styles.menuBar}
         />
         <ScrollView

@@ -19,6 +19,7 @@ import {
 } from 'react-native-gesture-handler';
 // import SplashScreen from 'react-native-splash-screen';
 import {NativeBaseProvider} from 'native-base';
+import {Images} from './theme/Images';
 EStyleSheet.build({});
 export default class App extends React.Component {
   constructor(props) {
@@ -179,10 +180,7 @@ export default class App extends React.Component {
           backgroundColor: 'whitesmoke',
           elevation: 1,
         }}>
-        <Image
-          source={require('./src/assets/blueLogo.png')}
-          style={{height: 20, width: '30%'}}
-        />
+        <Image source={Images.blueLogo} style={{height: 20, width: '30%'}} />
       </View>
       <View style={{paddingHorizontal: 10}}>
         <Text

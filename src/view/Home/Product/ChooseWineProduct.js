@@ -470,7 +470,7 @@ class ChooseProduct extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {isEmpty(Testing) || (isEmpty(form) && this.state.loading) ? (
           <Shimmer />

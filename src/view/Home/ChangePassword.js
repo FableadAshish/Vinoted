@@ -138,7 +138,7 @@ export default class ChangePassword extends React.Component {
         </View>
 
         <ImageBackground
-          source={require('../../assets/ImageBackgroung.png')}
+          source={Images.ImageBackgroung}
           style={{height: '100%', width: '100%'}}>
           <Snackbar ref={ref => (this._snk = ref)} />
 

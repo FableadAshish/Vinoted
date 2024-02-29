@@ -150,7 +150,7 @@ export default class ForgotPassword extends React.Component {
           </TouchableOpacity>
         </View>
         <ImageBackground
-          source={require('../../assets/ImageBackgroung.png')}
+          source={Images.ImageBackgroung}
           style={{height: '100%', width: '100%', paddingBottom: 0}}>
           <Snackbar ref={ref => (this._snk = ref)} />
 
@@ -174,7 +174,7 @@ export default class ForgotPassword extends React.Component {
                   width: '100%',
                 }}>
                 <Image
-                  source={require('../../assets/Logo.png')}
+                  source={Images.Logo}
                   style={{
                     width: 150,
                     height: 40,

@@ -248,7 +248,7 @@ class ProductDetail extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {isEmpty(ProductDetail) && this.state.loading ? (
           <Shimmer />

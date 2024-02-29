@@ -15,6 +15,7 @@ import {DrawerActions} from '@react-navigation/native';
 import {unset} from 'lodash';
 import messaging from '@react-native-firebase/messaging';
 import styles from './Styles/DrawerStyles';
+import { Images } from '../../../theme/Images';
 
 class SideBar extends React.Component {
   constructor(props) {
@@ -95,7 +96,7 @@ class SideBar extends React.Component {
               }}>
               <Image
                 style={{height: '80%', width: '80%'}}
-                source={require('../../assets/Logo.png')}
+                source={Images.Logo}
               />
             </View>
             <TouchableOpacity

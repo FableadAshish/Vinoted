@@ -216,7 +216,7 @@ class RatingProductDetail extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
         {isEmpty(ProductDetail) && this.state.loading ? (
           <Shimmer />
@@ -271,7 +271,6 @@ class RatingProductDetail extends Component {
                     style={{height: '100%', width: '100%', marginTop: 20}}
                     resizeMode="contain"
                     source={{uri: ProductDetail?.Imagesrc}}
-                    // source={require('../../../assets/darkBotle.png')}
                   />
                 </View>
               </View>

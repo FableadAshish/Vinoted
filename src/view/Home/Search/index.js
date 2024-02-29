@@ -106,7 +106,6 @@ class Index extends Component {
       isEmpty(this.state.Events) && (
         <FLEC
           text="No Data Available"
-          // image={require('../../../assets/logo.png')}
         />
       )
     );
@@ -164,7 +163,7 @@ class Index extends Component {
           iconColor={primaryColor}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.goBack()}
-          image={require('../../../assets/blueLogo.png')}
+          image={Images.blueLogo}
         />
 
         <View style={styles.searchcontainer}>
