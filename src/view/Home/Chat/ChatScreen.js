@@ -82,7 +82,7 @@ class Chat extends React.Component {
     http
       .post('session/create', {friend_id: this.props.route.params.item.id})
       .then(res => {
-        console.log('response create SessiononChate 24', res);
+        // console.log('response create SessiononChate 24', res);
         this.setState(
           {
             loading: false,
@@ -107,12 +107,12 @@ class Chat extends React.Component {
   async componentDidMount() {
     this.createSession();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-      console.log('hello seesion created');
+      // console.log('hello seesion created');
       this.createSession();
     });
     // this.LoadMessages();
     let today = Moment().format('DD/MM/YYYY');
-    console.log('today', today);
+    // console.log('today', today);
     this.setState({currentDate: today});
     const userdata = await _getUser();
     this.setState({userData: userdata.data});
@@ -161,20 +161,20 @@ class Chat extends React.Component {
     });
 
     // console.log('socket intial', socketio )
-    console.log('echo0', echo);
-    console.log('session Id', this.state.threadId);
+    // console.log('echo0', echo);
+    // console.log('session Id', this.state.threadId);
     echo
       .channel(`Chat.${this.state.threadId}`)
       .listen('PrivateChatEvent', ev => {
-        console.log('event fired : ', ev);
+        // console.log('event fired : ', ev);
         this._addMessage(ev.data);
       });
-    console.log('echo6', echo);
+    // console.log('echo6', echo);
     this.LoadMessages();
   };
 
   _addMessage = mess => {
-    console.log('working', mess);
+    // console.log('working', mess);
     if (mess.user._id != this.state.user._id) {
       this.setState(previousState => {
         return {
@@ -185,12 +185,12 @@ class Chat extends React.Component {
   };
 
   LoadMessages() {
-    console.log('threadId11', this.state.threadId);
+    // console.log('threadId11', this.state.threadId);
     let url = `session/${this.state.threadId}/chats`;
     http
       .post(url)
       .then(res => {
-        console.log('Chates OLDD', res);
+        // console.log('Chates OLDD', res);
         this.setState({isLoading: false, messages: res.data.reverse()});
       })
       .catch(err => {
@@ -299,12 +299,12 @@ class Chat extends React.Component {
     http
       .post(url, data)
       .then(res => {
-        console.log('send result....', res);
+        // console.log('send result....', res);
         //this._addMessage(data);
         this.setState({ChateId: res});
       })
       .catch(err => {
-        console.log('errorrr', err);
+        // console.log('errorrr', err);
         let errors = {};
         if (err && err.status == 422) {
           errors = err.errors;
@@ -413,7 +413,7 @@ class Chat extends React.Component {
   renderMessageText = props => {
     const {currentMessage} = props;
     const {text: currText} = currentMessage;
-    console.log('render text in message', currText);
+    // console.log('render text in message', currText);
     if (currText.indexOf('[x]') === -1) {
       return (
         <MessageText
@@ -427,7 +427,7 @@ class Chat extends React.Component {
 
   render() {
     const {form, errors, loading, userData, userProfile} = this.state;
-    console.log('UserProfiledata', userProfile);
+    // console.log('UserProfiledata', userProfile);
     return (
       <View
         style={{

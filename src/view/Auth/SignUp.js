@@ -167,7 +167,7 @@ export default class Signup extends React.Component {
 
   render() {
     const {form, errors, isChecked} = this.state;
-    console.log(isChecked);
+    // console.log(isChecked);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -286,7 +286,7 @@ export default class Signup extends React.Component {
               />
 
               <View style={{flexDirection: 'row'}}>
-                <CheckBox
+                {/* <CheckBox
                   style={{flex: 1, padding: 10, color: primaryColor}}
                   onClick={() => {
                     this.setState({
@@ -297,7 +297,7 @@ export default class Signup extends React.Component {
                   checkBoxColor={'white'}
 
                   // leftText={'CheckBox'}
-                />
+                /> */}
                 <Text>
                   <Text
                     style={{

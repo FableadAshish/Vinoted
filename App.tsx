@@ -36,21 +36,21 @@ export default class App extends React.Component {
   componentDidMount() {
     this.unsuscrib();
     // this.forgroundmessanging();
-    console.log('check Subs');
+    // console.log('check Subs');
     isReadyRef.current = true;
-    console.log('isNavigation Mounted: ', isReadyRef.current);
-    console.log('current root state', navigationRef.current.getRootState());
+    // console.log('isNavigation Mounted: ', isReadyRef.current);
+    // console.log('current root state', navigationRef.current.getRootState());
   }
 
   componentWillUnmount() {
     isReadyRef.current = false;
-    console.log('isNavigation Mounted: ', isReadyRef.current);
+    // console.log('isNavigation Mounted: ', isReadyRef.current);
   }
 
   getFcmToken = async () => {
     try {
       let getToken = await AsyncStorage.getItem('fcmToken');
-      console.log('Token Retrieved Again', getToken);
+      // console.log('Token Retrieved Again', getToken);
 
       if (!getToken) {
         let fcmToken = await messaging().getToken();
@@ -58,7 +58,7 @@ export default class App extends React.Component {
         this.setState({fcmToken});
       }
     } catch (error) {
-      console.log('Error Retrieving Token', error);
+      // console.log('Error Retrieving Token', error);
     }
   };
 
@@ -69,7 +69,7 @@ export default class App extends React.Component {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      console.log('Authorization status:', authStatus);
+      // console.log('Authorization status:', authStatus);
     }
   };
 
@@ -77,7 +77,7 @@ export default class App extends React.Component {
     // console.log('Hello This is');
     await messaging().onMessage(async remoteMessage => {
       const notification = remoteMessage.notification;
-      console.log('helowin', remoteMessage.notification);
+      // console.log('helowin', remoteMessage.notification);
       this.popup.show({
         onPress: () =>
           remoteMessage.data.action_item == 'new_message'
@@ -94,7 +94,7 @@ export default class App extends React.Component {
     });
 
     await messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log(remoteMessage, 'index.setBackgroundMessageHandler');
+      // console.log(remoteMessage, 'index.setBackgroundMessageHandler');
     });
 
     await messaging().onNotificationOpenedApp(remoteMessage => {

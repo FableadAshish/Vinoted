@@ -104,7 +104,7 @@ const EventRequestWithType = ({
                 width: 15,
                 borderRadius: 50,
                 marginBottom: 8,
-                marginLeft: 35
+                marginLeft: 15
               }}
             />
           </View>

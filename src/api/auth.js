@@ -138,7 +138,7 @@ export function _getAcessToken() {
       .then(res => {
         // console.log('responcetokenAcces', res);
         if (res) {
-          // console.log('res', res);
+          console.log('res', res.data.access_token);
           resolve(res.data.access_token);
         } else {
           resolve(null);

@@ -197,7 +197,7 @@ class WishListProductDetail extends Component {
                     </View>
 
                     <View style={{marginVertical: 5}}>
-                      <Text style={{color: 'gray'}}>Year</Text>
+                      <Text style={{color: 'gray'}}>Vintage</Text>
                       <Text
                         style={{
                           fontFamily: sofiaFont,
@@ -330,7 +330,7 @@ class WishListProductDetail extends Component {
                         paddingHorizontal: 10,
                       }}>
                       <View style={{marginVertical: 5}}>
-                        <Text style={{color: 'gray'}}>Type</Text>
+                        <Text style={{color: 'gray'}}>Category</Text>
                         <Text
                           style={{
                             fontFamily: sofiaFont,

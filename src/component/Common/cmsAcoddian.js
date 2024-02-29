@@ -6,7 +6,7 @@ const CmsAccodian =(props)=>{
           return(
               props.itmeID?<View style={styles.conatainer}>
               <HTML source={{ html: props.content }}
-          tagsStyles= { {p: {marginBottom:0, "color": 'black',"marginleft":"20px" }} } 
+          tagsStyles= { {p: {marginBottom:0, color: 'black',marginLeft:20 }} } 
           contentWidth={contentWidth} />
           </View>:<View/>
           )

@@ -249,6 +249,7 @@ class ChooseProduct extends Component {
         product_id: Testing.product_id,
       })
       .then(res => {
+        console.log('rfg r', res);
         if (res.data) {
           this.setState({
             form: {...this.state.form, ...res.data},
@@ -273,36 +274,36 @@ class ChooseProduct extends Component {
   validate = () => {
     let errors = {};
     const {form} = this.state;
-    if (isEmpty(form.intensity)) {
-      set(errors, 'intensity', ['Intensity is required']);
-    }
-    if (isEmpty(form.acidity)) {
-      set(errors, 'acidity', ['Acidity is required']);
-    }
-    if (isEmpty(form.tannin)) {
-      set(errors, 'tannin', ['Tannin is required']);
-    }
-    if (isEmpty(form.body)) {
-      set(errors, 'body', ['Body is required']);
-    }
-    if (isEmpty(form.sweetness)) {
-      set(errors, 'sweetness', ['Sweetness is required']);
-    }
-    if (isEmpty(form.complexity)) {
-      set(errors, 'complexity', ['Complexity is required']);
-    }
-    if (isEmpty(form.balance)) {
-      set(errors, 'balance', ['Balance is required']);
-    }
-    if (isEmpty(form.maturity)) {
-      set(errors, 'maturity', ['Maturity is required']);
-    }
-    if (isEmpty(form.finish) && isNaN(form.finish)) {
-      set(errors, 'finish', ['Finish is required']);
-    }
-    if (isEmpty(form.listing_candidate)) {
-      set(errors, 'listing_candidate', ['Listing Candidate is required']);
-    }
+    // if (isEmpty(form.intensity)) {
+    //   set(errors, 'intensity', ['Intensity is required']);
+    // }
+    // if (isEmpty(form.acidity)) {
+    //   set(errors, 'acidity', ['Acidity is required']);
+    // }
+    // if (isEmpty(form.tannin)) {
+    //   set(errors, 'tannin', ['Tannin is required']);
+    // }
+    // if (isEmpty(form.body)) {
+    //   set(errors, 'body', ['Body is required']);
+    // }
+    // if (isEmpty(form.sweetness)) {
+    //   set(errors, 'sweetness', ['Sweetness is required']);
+    // }
+    // if (isEmpty(form.complexity)) {
+    //   set(errors, 'complexity', ['Complexity is required']);
+    // }
+    // if (isEmpty(form.balance)) {
+    //   set(errors, 'balance', ['Balance is required']);
+    // }
+    // if (isEmpty(form.maturity)) {
+    //   set(errors, 'maturity', ['Maturity is required']);
+    // }
+    // if (isEmpty(form.finish) && isNaN(form.finish)) {
+    //   set(errors, 'finish', ['Finish is required']);
+    // }
+    // if (isEmpty(form.listing_candidate)) {
+    //   set(errors, 'listing_candidate', ['Listing Candidate is required']);
+    // }
     if (isEmpty(form.overall) && isNaN(form.overall)) {
       set(errors, 'overall', ['Score is required']);
     }
@@ -332,7 +333,7 @@ class ChooseProduct extends Component {
     http
       .post('sommelier/rating', form)
       .then(res => {
-        // console.log('response Ratings..', res);
+        console.log('response Ratings..', res);
         this.setState({loading: false, refreshing: false}, () =>
           Toast.show({
             text: `${res.message}`,
@@ -458,7 +459,7 @@ class ChooseProduct extends Component {
   }
   render() {
     const {errors, form, Testing, items} = this.state;
-    console.log('Testing now', Testing.product);
+    console.log('Testing now', Testing.products);
     return (
       <View
         style={{
@@ -484,7 +485,7 @@ class ChooseProduct extends Component {
                 ]}>
                 <View style={{flexDirection: 'column', flex: 0.7}}>
                   <View style={{marginVertical: 5}}>
-                    <Text style={[styles.textheading, {fontWeight: '700'}]}>
+                    <Text style={[styles.textheading]}>
                       {Testing.product
                         ? Testing.product.title
                         : Testing.products.title}
@@ -555,7 +556,7 @@ class ChooseProduct extends Component {
                         <Text
                           style={{
                             fontSize: 20,
-                            fontWeight: '500',
+                            // fontWeight: '500',
                             fontFamily: sofiaFont,
                             color: primaryColor,
                           }}>
@@ -580,9 +581,9 @@ class ChooseProduct extends Component {
                     }}
                     resizeMode="contain"
                     source={{
-                      uri: Testing?.product
-                        ? Testing?.product?.Imagesrc
-                        : Testing?.products?.Imagesrc,
+                      uri: Testing.product
+                        ? Testing.product.Imagesrc
+                        : Testing.products.Imagesrc,
                     }}
                   />
                 </View>
@@ -616,6 +617,7 @@ class ChooseProduct extends Component {
                         cancelContainerStyle={{
                           backgroundColor: 'white',
                           marginTop: -5,
+                          borderRadius: 10,
                         }}
                         optionTextStyle={{color: 'black'}}
                         // initValue="Select"
@@ -635,7 +637,7 @@ class ChooseProduct extends Component {
                             padding: 10,
                             height: 50,
                             color: 'black',
-                            fontWeight: '500',
+                            // fontWeight: '500',
                             fontSize: 15,
                           }}
                           editable={false}
@@ -645,12 +647,57 @@ class ChooseProduct extends Component {
                         />
                       </ModalSelector>
                     ) : (
-                      // <Modal animationType='none'>
-
-                      // </Modal>
-                      <Text style={styles.SimpleText}>
-                        {this.state.form.acidity}
-                      </Text>
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        // initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'intensity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'intensity');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            // borderColor: '#ccc',
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.intensity == null
+                              ? 'Select'
+                              : this.state.form.intensity
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputIntensityValue}
+                        />
+                      </ModalSelector>
                     )}
                   </View>
                   {!isEmpty(errors) && errors.intensity && !form.intensity && (
@@ -665,660 +712,1061 @@ class ChooseProduct extends Component {
                   )}
                 </View>
 
-                {/* <ChooseWineModal
-                isEmpty={isEmpty(form.event)}
-
-                /> */}
-
                 <View style={styles.pickerView}>
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Acidity</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Low'},
-                            {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'High'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'acidity',
-                              option.key,
-                            );
-                            this.handleTextInputChange(option.label, 'acidity');
-                          }}>
-                          <TextInput
-                            style={{
-                              // borderBottomWidth: 1,
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Acidity"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputAcidityValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.acidity}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) && errors.acidity && !form.acidity && (
-                      <Text
-                        style={{
-                          fontFamily: sofiaFont,
-                          fontSize: 12,
-                          color: error,
+                  <Text style={styles.pickerText}>Acidity</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'acidity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'acidity');
                         }}>
-                        {errors.acidity}
-                      </Text>
-                    )}
-                  </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Tannin</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Low'},
-                            {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'High'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'tannin',
-                              option.key,
-                            );
-                            this.handleTextInputChange(option.label, 'tannin');
-                          }}>
-                          <TextInput
-                            style={{
-                              // borderBottomWidth: 1,
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Tannin"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputTanninnValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.tannin}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) && errors.tannin && !form.tannin && (
-                      <Text
-                        style={{
-                          fontFamily: sofiaFont,
-                          fontSize: 12,
-                          color: error,
-                        }}>
-                        {errors.tannin}
-                      </Text>
-                    )}
-                  </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Body</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Light'},
-                            {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'Full'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(option.label, 'body', option.key);
-                            this.handleTextInputChange(option.label, 'body');
-                          }}>
-                          <TextInput
-                            style={{
-                              // borderBottomWidth: 1,
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Body"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputBodyValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.body}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) && errors.body && !form.body && (
-                      <Text
-                        style={{
-                          fontFamily: sofiaFont,
-                          fontSize: 12,
-                          color: error,
-                        }}>
-                        {errors.body}
-                      </Text>
-                    )}
-                  </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Sweetness</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Dry'},
-                            {key: this.state.index++, label: 'Off-Dry'},
-                            {key: this.state.index++, label: 'Sweet'},
-                            {key: this.state.index++, label: 'Luscious'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'sweetness',
-                              option.key,
-                            );
-                            this.handleTextInputChange(
-                              option.label,
-                              'sweetness',
-                            );
-                          }}>
-                          <TextInput
-                            style={{
-                              // borderBottomWidth: 1,
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            optionStyle={{
-                              borderBottomWidth: 0,
-                              alignItems: 'flex-start',
-                              justifyContent: 'flex-start',
-                            }}
-                            initValueTextStyle={{color: 'red'}}
-                            optionTextStyle={{color: 'black'}}
-                            editable={false}
-                            placeholder="Select Sweetness"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputSweetnessValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.sweetness}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) &&
-                      errors.sweetness &&
-                      !form.sweetness && (
-                        <Text
+                        <TextInput
                           style={{
-                            fontFamily: sofiaFont,
-                            fontSize: 12,
-                            color: error,
-                          }}>
-                          {errors.sweetness}
-                        </Text>
-                      )}
-                  </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Complexity</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Low'},
-                            {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'High'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
                           }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'complexity',
-                              option.key,
-                            );
-                            this.handleTextInputChange(
-                              option.label,
-                              'complexity',
-                            );
-                          }}>
-                          <TextInput
-                            style={{
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Complexity"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputComplexityValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.complexity}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) &&
-                      errors.complexity &&
-                      !form.complexity && (
-                        <Text
+                          editable={false}
+                          placeholder="Select Acidity"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputAcidityValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'acidity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'acidity');
+                        }}>
+                        <TextInput
                           style={{
-                            fontFamily: sofiaFont,
-                            fontSize: 12,
-                            color: error,
-                          }}>
-                          {errors.complexity}
-                        </Text>
-                      )}
-                  </View>
-
-                  {/* <WineRatingsModal
-                    title={'Balance'}
-                    data={[
-                      {key: this.state.index++, label: 'Low'},
-                      {key: this.state.index++, label: 'Medium'},
-                      {key: this.state.index++, label: 'High'},
-                    ]}
-                    checkEmpty={form.event}
-
-                  /> */}
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Balance</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Low'},
-                            {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'High'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
                           }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'balance',
-                              option.key,
-                            );
-                            this.handleTextInputChange(option.label, 'balance');
-                          }}>
-                          <TextInput
-                            style={{
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Balance"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputBalanceValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.balance}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) && errors.balance && !form.balance && (
-                      <Text
-                        style={{
-                          fontFamily: sofiaFont,
-                          fontSize: 12,
-                          color: error,
-                        }}>
-                        {errors.balance}
-                      </Text>
+                          editable={false}
+                          placeholder={
+                            this.state.form.acidity === null
+                              ? 'Select'
+                              : this.state.form.acidity
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputAcidityValue}
+                        />
+                      </ModalSelector>
                     )}
                   </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Maturity</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Tired'},
-                            {key: this.state.index++, label: 'Too Young'},
-                            {key: this.state.index++, label: 'Ready to drink'},
-                            {
-                              key: this.state.index++,
-                              label: 'Ready to drink - can age',
-                            },
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'maturity',
-                              option.key,
-                            );
-                            this.handleTextInputChange(
-                              option.label,
-                              'maturity',
-                            );
-                          }}>
-                          <TextInput
-                            style={{
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Maturity"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputMaturityValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.maturity}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) && errors.maturity && !form.maturity && (
-                      <Text
-                        style={{
-                          fontFamily: sofiaFont,
-                          fontSize: 12,
-                          color: error,
-                        }}>
-                        {errors.maturity}
-                      </Text>
-                    )}
-                  </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Finish</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'Short'},
-                            {key: this.state.index++, label: 'Medium'},
-                            {key: this.state.index++, label: 'Long'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'finish',
-                              option.key,
-                            );
-                            this.handleTextInputChange(option.label, 'finish');
-                          }}>
-                          <TextInput
-                            style={{
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Finish"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputFinishValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.finish}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) && errors.finish && !form.finish && (
-                      <Text
-                        style={{
-                          fontFamily: sofiaFont,
-                          fontSize: 12,
-                          color: error,
-                        }}>
-                        {errors.finish}
-                      </Text>
-                    )}
-                  </View>
-
-                  <View style={styles.pickerView}>
-                    <Text style={styles.pickerText}>Listing Candidate</Text>
-                    <View style={styles.pickerstyle}>
-                      {isEmpty(form.event) ? (
-                        <ModalSelector
-                          data={[
-                            {key: null, label: 'Select'},
-                            {key: this.state.index++, label: 'By the glass'},
-                            {key: this.state.index++, label: 'By the bottle'},
-                          ]}
-                          optionStyle={{
-                            borderBottomWidth: 0.4,
-                            borderBottomColor: 'grey',
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            backgroundColor: 'white',
-                          }}
-                          optionContainerStyle={{backgroundColor: 'white'}}
-                          cancelContainerStyle={{
-                            backgroundColor: 'white',
-                            marginTop: -5,
-                          }}
-                          optionTextStyle={{color: 'black'}}
-                          initValue="Select"
-                          cancelText="Cancel"
-                          onChange={option => {
-                            this.handleChange(
-                              option.label,
-                              'listing_candidate',
-                              option.key,
-                            );
-                            this.handleTextInputChange(
-                              option.label,
-                              'listing_candidate',
-                            );
-                          }}>
-                          <TextInput
-                            style={{
-                              padding: 10,
-                              height: 50,
-                              color: 'black',
-                              fontWeight: '500',
-                              fontSize: 15,
-                            }}
-                            editable={false}
-                            placeholder="Select Listing Candidate"
-                            placeholderTextColor={'black'}
-                            value={this.state.textInputlistingCandidateValue}
-                          />
-                        </ModalSelector>
-                      ) : (
-                        <Text style={styles.SimpleText}>
-                          {this.state.form.listing_candidate}
-                        </Text>
-                      )}
-                    </View>
-                    {!isEmpty(errors) &&
-                      errors.listing_candidate &&
-                      !form.listing_candidate && (
-                        <Text
-                          style={{
-                            fontFamily: sofiaFont,
-                            fontSize: 12,
-                            color: error,
-                          }}>
-                          {errors.listing_candidate}
-                        </Text>
-                      )}
-                  </View>
+                  {!isEmpty(errors) && errors.acidity && !form.acidity && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.acidity}
+                    </Text>
+                  )}
                 </View>
 
-                <View style={{marginHorizontal: 5, marginVertical: 5}}>
-                  <Text style={{color: 'gray'}}>
-                    Score{' '}
-                    {
-                      <Text>
-                        (
-                        {!isNull(this.state.form.overall) &&
-                        this.state.form.overall !== undefined
-                          ? parseInt(this.state.form.overall)
-                          : 0}
-                        )
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Tannin</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(option.label, 'tannin', option.key);
+                          this.handleTextInputChange(option.label, 'tannin');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Tannin"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputTanninnValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(option.label, 'tannin', option.key);
+                          this.handleTextInputChange(option.label, 'tannin');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.tannin === null
+                              ? 'Select'
+                              : this.state.form.tannin
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputTanninnValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) && errors.tannin && !form.tannin && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.tannin}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Body</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Light'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'Full'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(option.label, 'body', option.key);
+                          this.handleTextInputChange(option.label, 'body');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Body"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputBodyValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Light'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'Full'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(option.label, 'body', option.key);
+                          this.handleTextInputChange(option.label, 'body');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.body === null
+                              ? 'Select'
+                              : this.state.form.body
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputBodyValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) && errors.body && !form.body && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.body}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Sweetness</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Dry'},
+                          {key: this.state.index++, label: 'Off-Dry'},
+                          {key: this.state.index++, label: 'Sweet'},
+                          {key: this.state.index++, label: 'Luscious'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'sweetness',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'sweetness');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
+                          editable={false}
+                          placeholder="Select Sweetness"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputSweetnessValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Dry'},
+                          {key: this.state.index++, label: 'Off-Dry'},
+                          {key: this.state.index++, label: 'Sweet'},
+                          {key: this.state.index++, label: 'Luscious'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'sweetness',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'sweetness');
+                        }}>
+                        <TextInput
+                          style={{
+                            // borderBottomWidth: 1,
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
+                          editable={false}
+                          placeholder={
+                            this.state.form.sweetness === null
+                              ? 'Select'
+                              : this.state.form.sweetness
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputSweetnessValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) && errors.sweetness && !form.sweetness && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.sweetness}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Complexity</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'complexity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(
+                            option.label,
+                            'complexity',
+                          );
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Complexity"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputComplexityValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'complexity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(
+                            option.label,
+                            'complexity',
+                          );
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.complexity == null
+                              ? 'Select'
+                              : this.state.form.complexity
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputComplexityValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) &&
+                    errors.complexity &&
+                    !form.complexity && (
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 12,
+                          color: error,
+                        }}>
+                        {errors.complexity}
                       </Text>
-                    }
-                  </Text>
+                    )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Balance</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'balance',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'balance');
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Balance"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputBalanceValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Low'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'High'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'balance',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'balance');
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.balance === null
+                              ? 'Select'
+                              : this.state.form.balance
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputBalanceValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) && errors.balance && !form.balance && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.balance}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Maturity</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Tired'},
+                          {key: this.state.index++, label: 'Too Young'},
+                          {key: this.state.index++, label: 'Ready to drink'},
+                          {
+                            key: this.state.index++,
+                            label: 'Ready to drink - can age',
+                          },
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'maturity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'maturity');
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Maturity"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputMaturityValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Tired'},
+                          {key: this.state.index++, label: 'Too Young'},
+                          {key: this.state.index++, label: 'Ready to drink'},
+                          {
+                            key: this.state.index++,
+                            label: 'Ready to drink - can age',
+                          },
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'maturity',
+                            option.key,
+                          );
+                          this.handleTextInputChange(option.label, 'maturity');
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.maturity == null
+                              ? 'Select'
+                              : this.state.form.maturity
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputMaturityValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) && errors.maturity && !form.maturity && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.maturity}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Finish</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Short'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'Long'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(option.label, 'finish', option.key);
+                          this.handleTextInputChange(option.label, 'finish');
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Finish"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputFinishValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'Short'},
+                          {key: this.state.index++, label: 'Medium'},
+                          {key: this.state.index++, label: 'Long'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(option.label, 'finish', option.key);
+                          this.handleTextInputChange(option.label, 'finish');
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.finish === null
+                              ? 'Select'
+                              : this.state.form.finish
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputFinishValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) && errors.finish && !form.finish && (
+                    <Text
+                      style={{
+                        fontFamily: sofiaFont,
+                        fontSize: 12,
+                        color: error,
+                      }}>
+                      {errors.finish}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.pickerView}>
+                  <Text style={styles.pickerText}>Listing Candidate</Text>
+                  <View style={styles.pickerstyle}>
+                    {isEmpty(form.event) ? (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'By the glass'},
+                          {key: this.state.index++, label: 'By the bottle'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'listing_candidate',
+                            option.key,
+                          );
+                          this.handleTextInputChange(
+                            option.label,
+                            'listing_candidate',
+                          );
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder="Select Listing Candidate"
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputlistingCandidateValue}
+                        />
+                      </ModalSelector>
+                    ) : (
+                      <ModalSelector
+                        data={[
+                          {key: null, label: 'Select'},
+                          {key: this.state.index++, label: 'By the glass'},
+                          {key: this.state.index++, label: 'By the bottle'},
+                        ]}
+                        optionStyle={{
+                          borderBottomWidth: 0.4,
+                          borderBottomColor: 'grey',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                          backgroundColor: 'white',
+                        }}
+                        optionContainerStyle={{backgroundColor: 'white'}}
+                        cancelContainerStyle={{
+                          backgroundColor: 'white',
+                          marginTop: -5,
+                          borderRadius: 10,
+                        }}
+                        optionTextStyle={{color: 'black'}}
+                        initValue="Select"
+                        cancelText="Cancel"
+                        onChange={option => {
+                          this.handleChange(
+                            option.label,
+                            'listing_candidate',
+                            option.key,
+                          );
+                          this.handleTextInputChange(
+                            option.label,
+                            'listing_candidate',
+                          );
+                        }}>
+                        <TextInput
+                          style={{
+                            padding: 10,
+                            height: 50,
+                            color: 'black',
+                            // fontWeight: '500',
+                            fontSize: 15,
+                          }}
+                          editable={false}
+                          placeholder={
+                            this.state.form.listing_candidate === null
+                              ? 'Select'
+                              : this.state.form.listing_candidate
+                          }
+                          placeholderTextColor={'black'}
+                          value={this.state.textInputlistingCandidateValue}
+                        />
+                      </ModalSelector>
+                    )}
+                  </View>
+                  {!isEmpty(errors) &&
+                    errors.listing_candidate &&
+                    !form.listing_candidate && (
+                      <Text
+                        style={{
+                          fontFamily: sofiaFont,
+                          fontSize: 12,
+                          color: error,
+                        }}>
+                        {errors.listing_candidate}
+                      </Text>
+                    )}
+                </View>
+              </View>
+
+              <View style={{marginHorizontal: 5, marginVertical: 5}}>
+                <Text style={{color: 'gray'}}>
+                  Score{' '}
+                  {
+                    <Text>
+                      (
+                      {!isNull(this.state.form.overall) &&
+                      this.state.form.overall !== undefined
+                        ? parseInt(this.state.form.overall)
+                        : 0}
+                      )
+                    </Text>
+                  }
+                </Text>
+                {isEmpty(form.event) ? (
                   <Slider
                     style={{width: '100%', height: 50}}
                     name="overall"
@@ -1340,17 +1788,39 @@ class ChooseProduct extends Component {
                       this.setState({...this.state.form, overall: value})
                     }
                   />
-                  {!isEmpty(errors) && errors.overall && !form.overall && (
-                    <Text
-                      style={{
-                        fontFamily: sofiaFont,
-                        fontSize: 12,
-                        color: error,
-                      }}>
-                      {errors.overall}
-                    </Text>
-                  )}
-                </View>
+                ) : (
+                  <Slider
+                    style={{width: '100%', height: 50}}
+                    name="overall"
+                    minimumValue={0}
+                    maximumValue={10}
+                    useNativeDriver={true}
+                    maximumTrackTintColor="lightgray"
+                    minimumTrackTintColor={'skyblue'}
+                    thumbStyle={[styles.thumb]}
+                    animateTransitions={true}
+                    value={this.state.form.overall}
+                    // disabled={!isEmpty(form.event) ? true : false}
+                    // onValueChange={this.handleChange(this, 'overall')}
+                    onValueChange={option => {
+                      // alert(`${option.label} (${option.key}) nom nom nom`);
+                      this.handleChange(option, 'overall');
+                    }}
+                    onSlidingComplete={value =>
+                      this.setState({...this.state.form, overall: value})
+                    }
+                  />
+                )}
+                {!isEmpty(errors) && errors.overall && !form.overall && (
+                  <Text
+                    style={{
+                      fontFamily: sofiaFont,
+                      fontSize: 12,
+                      color: error,
+                    }}>
+                    {errors.overall}
+                  </Text>
+                )}
               </View>
               <View style={{flex: 1, marginTop: -20}}>
                 {isEmpty(form.event) ? (
@@ -1370,8 +1840,22 @@ class ChooseProduct extends Component {
                   />
                 ) : (
                   <>
-                    {!isNull(form.flavours) && (
-                      <View>
+                    <SectionedMultiSelect
+                      items={items}
+                      IconRenderer={Icon}
+                      styles={{button: {backgroundColor: primaryColor}}}
+                      uniqueKey="name"
+                      subKey="children"
+                      selectText="Select Flavours"
+                      showDropDowns={true}
+                      searchPlaceholderText="Choose Flavour..."
+                      readOnlyHeadings={true}
+                      onSelectedItemsChange={this.onSelectedItemsChange}
+                      selectedItems={this.state.selectedItems}
+                      showChips={true}
+                    />
+                    {/* {!isNull(form.flavours) && (
+                      <View style={{width: '100%'}}>
                         <Text
                           style={{
                             color: 'gray',
@@ -1381,13 +1865,13 @@ class ChooseProduct extends Component {
                           }}>
                           Flavours
                         </Text>
-                        <Text style={[styles.SimpleText, {width: 150}]}>
+                        <Text style={[styles.SimpleText, {width: '100%'}]}>
                           {!isNull(form.flavours)
                             ? form.flavours.map(item => item).join(', ')
                             : ''}
                         </Text>
                       </View>
-                    )}
+                    )} */}
                   </>
                 )}
               </View>
@@ -1407,7 +1891,7 @@ class ChooseProduct extends Component {
                             // height: 50,
                             color: primaryColor,
                             marginTop: -10,
-                            marginLeft:-10
+                            marginLeft: -10,
                           },
                         ]}>
                         Additional Notes
@@ -1439,9 +1923,13 @@ class ChooseProduct extends Component {
                     />
                   </>
                 ) : (
-                  <Text style={styles.SimpleText}>
-                    {this.state.form.description}
-                  </Text>
+                  // <View>
+                  //   <Text style={styles.pickerText}>Description</Text>
+                  //   <Text style={styles.SimpleText}>
+                  //     {this.state.form.description}
+                  //   </Text>
+                  // </View>
+                  ''
                 )}
 
                 <TouchableOpacity
@@ -1455,7 +1943,12 @@ class ChooseProduct extends Component {
                   }}
                   onPress={() =>
                     !isEmpty(form.event)
-                      ? null
+                      ? this.setState({
+                          form: {
+                            ...this.state.form,
+                            is_favourite: !this.state.form.is_favourite,
+                          },
+                        })
                       : this.setState({
                           form: {
                             ...this.state.form,
@@ -1483,7 +1976,38 @@ class ChooseProduct extends Component {
                     Favourite
                   </Text>
                 </TouchableOpacity>
-                {isEmpty(form.event) && (
+
+                {isEmpty(form.event) ? (
+                  <View>
+                    {this.state.loading ? (
+                      <TouchableWithoutFeedback style={{width: '100%'}}>
+                        <View style={[styles.button, {marginTop: 70}]}>
+                          <ActivityIndicator
+                            animating={this.state.loading}
+                            size="large"
+                            color={white}
+                          />
+                        </View>
+                      </TouchableWithoutFeedback>
+                    ) : (
+                      <Button
+                        title="Submit"
+                        buttonstyles={{
+                          backgroundColor: secondryColor,
+                          width: '100%',
+                          borderRadius: 20,
+                          marginTop: 100,
+                        }}
+                        textsyles={{
+                          fontFamily: sofiaFont,
+                          color: '#fff',
+                          fontSize: 12,
+                        }}
+                        onPress={this.onSave}
+                      />
+                    )}
+                  </View>
+                ) : (
                   <View>
                     {this.state.loading ? (
                       <TouchableWithoutFeedback style={{width: '100%'}}>
@@ -1606,7 +2130,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 50,
     color: 'black',
-    fontWeight: 500,
+    // fontWeight: 500,
     fontSize: 15,
   },
 });

@@ -270,7 +270,9 @@ class ProductDetail extends Component {
                   paddingVertical: 5,
                   paddingHorizontal: 5,
                 }}>
-                <View style={{flexDirection: 'column', flex: 0.7}}>
+                  <View style={{flexDirection:'row', flex: 0.7, justifyContent:'space-between'}}>
+                   
+                <View style={{flexDirection: 'column'}}>
                   <View style={{marginVertical: 5}}>
                     <Text style={[styles.textheading, {fontWeight: 700}]}>
                       {ProductDetail.title}
@@ -346,6 +348,13 @@ class ProductDetail extends Component {
                     </View>
                   </View>
                 </View>
+               <View style={{ flexDirection: 'column', flex: 0.4 }}>
+                                        <Image style={{ height: 200, width: 200, marginTop: 20 }} resizeMode="contain"
+                                            source={{ uri: ProductDetail.Imagesrc }}
+                                        // source={require('../../../assets/darkBotle.png')}
+                                        />
+                                    </View>
+                  </View>
                 {isEmpty(ProductDetail) && this.state.loading ? (
                   <ShimmerPlaceHolder
                     style={{
@@ -362,43 +371,10 @@ class ProductDetail extends Component {
                     text="No data available"
                     // image={require('../../../assets/logo.png')}
                   />
-                ) : !isEmpty(event) && event.event_my_requests.status !== 'Pending' && (
+                ) : !isEmpty(event) && ProductDetail.is_tasted !== 1 && (
                   <TouchableOpacity
                     onPress={() =>
                       !isEmpty(event) &&
-                      ProductDetail.is_tasted == 1 &&
-                      this.props.navigation.navigate('ChooseProduct', {
-                        Testing: form,
-                        event: event,
-                      })
-                    }
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      paddingHorizontal: 10,
-                      height: 50,
-                      width: '90%',
-                      backgroundColor: secondryColor,
-                      borderTopRightRadius: 30,
-                      borderBottomRightRadius: 30,
-                      marginBottom: -50,
-                      position: 'absolute',
-                      bottom: 0,
-                    }}
-                  >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={[styles.textheading, { color: white }]}>
-                        {'Tasted'}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                )}
-                
-                {!isEmpty(event) && event.event_my_requests.status !== 'Pending' && (
-                  <TouchableOpacity
-                    onPress={() =>
-                      !isEmpty(event) &&
-                      ProductDetail.is_tasted == 0 &&
                       this.props.navigation.navigate('ChooseProduct', {
                         Testing: form,
                         event: event,
@@ -421,6 +397,37 @@ class ProductDetail extends Component {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Text style={[styles.textheading, { color: white }]}>
                         {'Tasting'}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                
+                {!isEmpty(event) && ProductDetail.is_tasted == 1 && (
+                  <TouchableOpacity
+                    onPress={() =>
+                      !isEmpty(event) &&
+                      this.props.navigation.navigate('ChooseProduct', {
+                        Testing: form,
+                        event: event,
+                      })
+                    }
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'flex-end',
+                      paddingHorizontal: 10,
+                      height: 50,
+                      width: '90%',
+                      backgroundColor: secondryColor,
+                      borderTopRightRadius: 30,
+                      borderBottomRightRadius: 30,
+                      marginBottom: -50,
+                      position: 'absolute',
+                      bottom: 0,
+                    }}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={[styles.textheading, { color: white }]}>
+                        {'Tasted'}
                       </Text>
                     </View>
                   </TouchableOpacity>

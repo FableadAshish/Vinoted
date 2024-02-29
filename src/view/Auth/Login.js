@@ -66,7 +66,7 @@ export default class Login extends React.Component {
   handleBackButtonClick = () => {
     Promise.resolve('Success')
       .then(value => {
-        console.log('Success', value); // "Success"
+        // console.log('Success', value); // "Success"
         BackHandler.exitApp();
         AsyncStorage.clear();
         return true;
@@ -96,7 +96,7 @@ export default class Login extends React.Component {
   }
 
   validate = () => {
-    console.log('on validate console');
+    // console.log('on validate console');
     let errors = {};
     const {email, password} = this.state.form;
     if (isEmpty(email)) {
@@ -112,7 +112,7 @@ export default class Login extends React.Component {
   getFcmToken = async () => {
     try {
       let getToken = await AsyncStorage.getItem('fcmToken');
-      console.log('Token Retrieved', getToken);
+      // console.log('Token Retrieved', getToken);
 
       if (!getToken) {
         let fcmToken = await messaging().getToken();
@@ -129,7 +129,7 @@ export default class Login extends React.Component {
 
   onSave = async () => {
     const {form} = this.state;
-    console.log('form Login Data:-', form);
+    // console.log('form Login Data:-', form);
 
     let errors = this.validate();
 
@@ -140,20 +140,20 @@ export default class Login extends React.Component {
     // Get the token before proceeding
     let token = await this.getFcmToken();
 
-    console.log('Got token', token);
+    // console.log('Got token', token);
     form.type = 'Sommelier';
     form.notification_token = token;
-    console.log('Recieved token', token);
+    // console.log('Recieved token', token);
     _login(this.state.form)
       .then(res => {
-        console.log('Login User Res Success', res);
+        // console.log('Login User Res Success', res);
         this.setState({loading: false, response: res});
         _handleAuthUser();
         // this.props.navigation.navigate('Home');
       })
       .catch(err => {
         this.setState({loading: false});
-        console.log('error for Login Form', err);
+        // console.log('error for Login Form', err);
         let errors = {};
 
         if (err && err.status.data.code == 422) {

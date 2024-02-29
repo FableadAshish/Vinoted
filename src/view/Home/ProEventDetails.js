@@ -353,7 +353,7 @@ class ProEventDetails extends Component {
 
   render() {
     const {EventDetail} = this.state;
-    console.log('EventDetail bew again Phirse rfg', EventDetail);
+    console.log('EventDetail bew again Phirse rfg efw', EventDetail);
     if (this.state.loading && isEmpty(EventDetail)) {
       return (
         <View style={{backgroundColor: white}}>
@@ -866,9 +866,10 @@ class ProEventDetails extends Component {
                             style={{
                               flexDirection: 'row',
                               padding: 10,
-                              marginHorizontal: 5,
+                              // marginHorizontal: 5,
                               bottom: 0,
                               borderRadius: 2,
+                              marginLeft:-5
                             }}>
                             <FlatList
                               showsVerticalScrollIndicator={false}
@@ -906,11 +907,11 @@ class ProEventDetails extends Component {
                                             item.products.type,
                                           ),
                                           borderBottomWidth: 0,
-                                          shadowColor: 'black',
-                                          shadowOffset: {width: 0, height: 2},
-                                          shadowOpacity: 0.9,
-                                          shadowRadius: 13,
-                                          elevation: 3,
+                                          // shadowColor: 'black',
+                                          // shadowOffset: {width: 0, height: 2},
+                                          // shadowOpacity: 0.9,
+                                          // shadowRadius: 13,
+                                          // elevation: 3,
                                           backgroundColor: this.renderColor(
                                             item.products.type,
                                           ),

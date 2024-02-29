@@ -378,7 +378,8 @@ class Home extends Component {
               refreshing={this.state.refreshing}
               onRefresh={() => this.onRefresh()}
             />
-          }>
+          }
+          scrollEnabled={false}>
           <View>
             {!this.state.loading && !isEmpty(user) ? (
               <>

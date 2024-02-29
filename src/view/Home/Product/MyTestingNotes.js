@@ -384,7 +384,7 @@ class MyTestingNotes extends Component {
           iconColor={white}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.navigate('Home')}
-          image={Images.Logo}
+          // image={require('../../../assets/Logo.png')}
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -405,7 +405,7 @@ class MyTestingNotes extends Component {
             <TouchableWithoutFeedback>
               <View style={styles.iconContainer}>
                 <Image
-                  source={Images.SearchIcon}
+                  source={Images?.SearchIcon}
                   style={{height: 22, width: 22}}
                 />
               </View>
@@ -943,7 +943,7 @@ class MyTestingNotes extends Component {
                   }}>
                   <Image
                     source={
-                      !isEmpty(item) && item?.is_favourite == 1
+                      !isEmpty(item) && item.is_favourite == 1
                         ? Images.FavouriteSelectedIcon
                         : Images.HeartIcon
                     }
