@@ -312,7 +312,7 @@ class WishListProductDetail extends Component {
                     <Image
                       style={{height: '100%', width: '100%', marginTop: -20}}
                       resizeMode="contain"
-                      source={{uri: ProductDetail.product.Imagesrc}}
+                      source={{uri: ProductDetail?.product?.Imagesrc}}
                       // source={require('../../../assets/darkBotle.png')}
                     />
                   </View>

@@ -571,7 +571,7 @@ class Profile extends Component {
                   <View style={[styles.view, {alignItems: 'center'}]}>
                     {!isEmpty(form.photo) ? (
                       <Image
-                        source={{uri: form.photo}}
+                        source={{uri: form?.photo}}
                         style={{width: 130, height: 130, borderRadius: 65}}
                       />
                     ) : (

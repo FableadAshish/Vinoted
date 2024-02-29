@@ -342,7 +342,7 @@ class WishlistDetail extends Component {
                 <View style={[styles.view, {backgroundColor: white}]}>
                   <Image
                     style={{height: 150, width: '100%', borderRadius: 30}}
-                    source={{uri: EventDetail.event.Imagesrc}}
+                    source={{uri: EventDetail?.event?.Imagesrc}}
                     // source={{ uri: "https://vistapointe.net/images/bar-3.jpg" }}
                   />
                 </View>

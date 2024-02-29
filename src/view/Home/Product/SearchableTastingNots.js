@@ -527,7 +527,7 @@ class SearchableTastingNots extends Component {
                             }}>
                             <Image
                               style={{height: 50, width: 50, borderRadius: 25}}
-                              source={{uri: item.product.Imagesrc}}
+                              source={{uri: item?.product?.Imagesrc}}
                             />
                           </View>
                         </View>
@@ -876,7 +876,7 @@ class SearchableTastingNots extends Component {
                   }}>
                       <Image
                     source={
-                      !isEmpty(item) && item.is_favourite == 1
+                      !isEmpty(item) && item?.is_favourite == 1
                         ? Images.FavouriteSelectedIcon
                         : Images.HeartIcon
                     }

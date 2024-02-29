@@ -478,9 +478,9 @@ class Chat extends React.Component {
                 <Image
                   source={{
                     uri:
-                      !isEmpty(this.state.userProfile) &&
-                      !isNull(this.state.userProfile.profile.photo)
-                        ? this.state.userProfile.profile.photo
+                      !isEmpty(this.state?.userProfile) &&
+                      !isNull(this.state?.userProfile?.profile?.photo)
+                        ? this.state?.userProfile?.profile?.photo
                         : 'https://www.freeiconspng.com/uploads/customers-icon-3.png',
                   }}
                   resizeMode="contain"

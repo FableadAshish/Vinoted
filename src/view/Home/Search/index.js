@@ -36,7 +36,7 @@ import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import {isEmpty, isNull} from 'lodash';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import { Images } from '../../../../theme/Images';
+import {Images} from '../../../../theme/Images';
 const {width, height} = Dimensions.get('window');
 
 let data = ['1', '2', '3', '4', '5'];
@@ -69,21 +69,21 @@ class Index extends Component {
       .get(`sommelier/events?page=${this.state.page}`)
       .then(res => {
         console.log('response All Events..', res.data.page.data);
-        this.setState(
-          {
-            Events:
-              this.state.page === 0
-                ? res.data.page.data
-                : [...this.state.Events, ...res.data.page.data],
-            loading: false,
-            // total: res.data.enquires.total,
-            refreshing: false,
-          },
-        );
+        this.setState({
+          Events:
+            this.state.page === 0
+              ? res.data.page.data
+              : [...this.state.Events, ...res.data.page.data],
+          loading: false,
+          // total: res.data.enquires.total,
+          refreshing: false,
+        });
       })
       .catch(err => {
         let errors = {};
-        if (err && err.status == 422) {errors = err.errors;}
+        if (err && err.status == 422) {
+          errors = err.errors;
+        }
         this.setState({errors, loading: false, refreshing: false});
       });
   };
@@ -97,7 +97,7 @@ class Index extends Component {
         },
         () => this.Store(),
       );
-    };
+    }
   };
 
   _renderEmptyComponent() {
@@ -144,7 +144,9 @@ class Index extends Component {
       })
       .catch(err => {
         let errors = {};
-        if (err && err.status == 422) {errors = err.errors;}
+        if (err && err.status == 422) {
+          errors = err.errors;
+        }
         this.setState({errors, loading: false, refreshing: false});
       });
   }
@@ -178,7 +180,11 @@ class Index extends Component {
           <TouchableWithoutFeedback>
             <View style={styles.iconContainer}>
               {/* <Icon name="search" type="FontAwesome" style={styles.icon}></Icon> */}
-              <Image source={Images.SearchIcon} tintColor={"white"} style={{height:25, width:25}}/>
+              <Image
+                source={Images.SearchIcon}
+                tintColor={'white'}
+                style={{height: 25, width: 25}}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -272,9 +278,7 @@ class Index extends Component {
                 />
               )}
             </View>
-
-
-                    </View>
+          </View>
         </ScrollView>
       </View>
     );
@@ -287,8 +291,7 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: white,
     paddingLeft: 10,
-
-    },
+  },
   subtitle: {
     fontSize: 12,
     fontFamily: sofiaFont,

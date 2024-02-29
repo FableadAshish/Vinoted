@@ -270,7 +270,7 @@ class RatingProductDetail extends Component {
                   <Image
                     style={{height: '100%', width: '100%', marginTop: 20}}
                     resizeMode="contain"
-                    source={{uri: ProductDetail.Imagesrc}}
+                    source={{uri: ProductDetail?.Imagesrc}}
                     // source={require('../../../assets/darkBotle.png')}
                   />
                 </View>

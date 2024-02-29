@@ -580,9 +580,9 @@ class ChooseProduct extends Component {
                     }}
                     resizeMode="contain"
                     source={{
-                      uri: Testing.product
-                        ? Testing.product.Imagesrc
-                        : Testing.products.Imagesrc,
+                      uri: Testing?.product
+                        ? Testing?.product?.Imagesrc
+                        : Testing?.products?.Imagesrc,
                     }}
                   />
                 </View>
