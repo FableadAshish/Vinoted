@@ -33,7 +33,8 @@ import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import {isEmpty, unset, set} from 'lodash';
 import {connect} from 'react-redux';
 import Button from '../../../component/Common/Button';
-import {Icon, Toast} from 'native-base';
+// import {Icon, Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Images} from '../../../../theme/Images';
 import Loader from '../../../component/Indicator/Loader';
@@ -356,11 +357,12 @@ class Profile extends Component {
             editable: false,
           },
           () =>
-            Toast.show({
-              text: `${res.message}`,
-              buttonText: 'Ok',
-              duration: 2000,
-            }),
+            // Toast.show({
+            //   text: `${res.message}`,
+            //   buttonText: 'Ok',
+            //   duration: 2000,
+            // }),
+            Toast.show(`${res.message}`),
         );
       })
       .catch(err => {

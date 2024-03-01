@@ -352,7 +352,7 @@ class RatingProductDetail extends Component {
                           fontSize: 15,
                           color: primaryColor,
                         }}>
-                        {ProductDetail.country}
+                        {ProductDetail.country.name}
                       </Text>
                     </View>
                   </View>

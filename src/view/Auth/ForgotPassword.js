@@ -27,7 +27,8 @@ import {
   secondryColor,
   sofiaFont,
 } from '../../style/variables';
-import {Icon, Toast} from 'native-base';
+// import {Icon, Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import http from '../../http';
 import {Images} from '../../../theme/Images';
 Dimensions.get('window');
@@ -87,11 +88,13 @@ export default class ForgotPassword extends React.Component {
       .then(res => {
         // console.log('response forgot pass..', res);
         this.setState({loading: false, refreshing: false}, () =>
-          Toast.show({
-            text: `${res.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          }),
+          // Toast.show({
+          //   text: `${res.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // }),
+          Toast.show(`${res.message}`),
+
         );
         setTimeout(() => this.props.navigation.navigate('Login'), 2000);
       })
@@ -103,18 +106,21 @@ export default class ForgotPassword extends React.Component {
           this.setState({loading: false, errors});
         } else if (err && err.status.data.code == 401) {
           this.setState({loading: false});
-          Toast.show({
-            text: `${err.status.data.message}`,
-            // buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   // buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
+
         } else {
           this.setState({loading: false});
-          Toast.show({
-            text: `${err.status.data.message}`,
-            // buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   // buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
         }
       });
   };

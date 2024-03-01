@@ -37,7 +37,8 @@ import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-import {Icon, Toast} from 'native-base';
+// import {Icon, Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import {_getUser} from '../../../api/auth';
 import BottomIndicator from '../../../component/Indicator/BottomIndicator';
 import http from '../../../http';
@@ -198,7 +199,7 @@ class MyTestingNotes extends Component {
       .then(res => {
         // this.setState({ loading: true, });
         // http.get(`sommelier/eventproductrating?page=${this.state.page}`).then(res => {
-        console.log('responce of ProductRatinge noted Now', res);
+        console.log('responce of ProductRatinge noted  rfdvNow', res);
         this.setState({
           arrayholder: res.data,
           ProductRating:
@@ -267,11 +268,12 @@ class MyTestingNotes extends Component {
         console.log('response changeeventrequeststatus..', res);
         this.props.navigation.push('Home');
         this.setState({loading: false, refreshing: false}, () =>
-          Toast.show({
-            text: `${res.message}`,
-            // buttonText: 'Ok',
-            duration: 2000,
-          }),
+          // Toast.show({
+          //   text: `${res.message}`,
+          //   // buttonText: 'Ok',
+          //   duration: 2000,
+          // }),
+          Toast.show(`${res.message}`),
         );
         // setTimeout(() =>  this.fetch(), 2000)
       })
@@ -279,11 +281,12 @@ class MyTestingNotes extends Component {
         console.log('ERROR on changeeventrequeststatus', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
         }
       });
   }
@@ -371,7 +374,7 @@ class MyTestingNotes extends Component {
   render() {
     const {item, form} = this.state;
     // const {SearchData} = this.props.route.params;
-    console.log('pdataNotedd Now', item);
+    console.log('pdataNotedd Nowhiou hiut hdguy', this.state.ProductRating);
     // console.log('Search Filter Function', SearchData);
     return (
       <View
@@ -384,7 +387,7 @@ class MyTestingNotes extends Component {
           iconColor={white}
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.navigate('Home')}
-          // image={require('../../../assets/Logo.png')}
+          image={Images.Logo}
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -650,7 +653,7 @@ class MyTestingNotes extends Component {
                                   // paddingVertical: 2,
                                 },
                               ]}>
-                              - {item.product.country}
+                              - {item.event.country_name}
                             </Text>
                           </View>
                         </View>

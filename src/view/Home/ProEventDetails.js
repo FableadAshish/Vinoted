@@ -13,7 +13,8 @@ import {
   TextInput,
 } from 'react-native';
 import Header from '../../component/Header/Header';
-import {Toast} from 'native-base';
+// import {Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import {WebView} from 'react-native-webview';
 import {
   white,
@@ -210,10 +211,11 @@ class ProEventDetails extends Component {
       .then(res => {
         // console.log('response EventDetail..ppp..', res);
         this.setState({loading: false, refreshing: false}, () =>
-          Toast.show({
-            text: `${res.message}`,
-            duration: 2000,
-          }),
+          // Toast.show({
+          //   text: `${res.message}`,
+          //   duration: 2000,
+          // }),
+          Toast.show(`${res.message}`),
         );
         setTimeout(
           () => this.props.navigation.replace('App', {screen: 'Home'}),
@@ -225,11 +227,12 @@ class ProEventDetails extends Component {
         console.log('ERROR on changeeventrequeststatus', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`)
         }
       });
   }
@@ -441,6 +444,7 @@ class ProEventDetails extends Component {
         style={{
           flex: 1,
           backgroundColor: white,
+          marginTop:10
         }}>
         <Header
           navigation={this.props.navigation}
@@ -530,7 +534,7 @@ class ProEventDetails extends Component {
                 onRefresh={() => this.onRefresh()}
               />
             }>
-            <View style={{marginHorizontal: 5}}>
+            <View style={{marginHorizontal: 5, marginTop:25}}>
               {!isEmpty(EventDetail) ? (
                 <View style={[styles.view, {backgroundColor: white}]}>
                   <Image

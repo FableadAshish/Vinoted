@@ -38,7 +38,8 @@ import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-import {Icon, Toast} from 'native-base';
+// import {Icon, Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import {_getUser} from '../../../api/auth';
 import BottomIndicator from '../../../component/Indicator/BottomIndicator';
 import http from '../../../http';
@@ -329,22 +330,25 @@ class SearchableTastingNots extends Component {
         console.log('response changeeventrequeststatus..', res);
         this.props.navigation.push('Home');
         this.setState({loading: false, refreshing: false}, () =>
-          Toast.show({
-            text: `${res.message}`,
-            // buttonText: 'Ok',
-            duration: 2000,
-          }),
+          // Toast.show({
+          //   text: `${res.message}`,
+          //   // buttonText: 'Ok',
+          //   duration: 2000,
+          // }),
+          Toast.show(`${res.message}`)
         );
       })
       .catch(err => {
         console.log('ERROR on changeeventrequeststatus', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
+
         }
       });
   }

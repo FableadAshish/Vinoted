@@ -962,6 +962,9 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.9.0):
     - React-Core
+  - react-native-simple-toast (3.3.0):
+    - React-Core
+    - Toast (~> 4)
   - react-native-slider (4.5.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1183,10 +1186,6 @@ PODS:
     - React-Core
   - RNSVG (14.1.0):
     - React-Core
-  - RNVectorIcons (10.0.3):
-    - glog
-    - RCT-Folly (= 2022.05.16.00)
-    - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -1194,6 +1193,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
+  - Toast (4.1.0)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
 
@@ -1233,6 +1233,7 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -1268,7 +1269,6 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1289,6 +1289,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
+    - Toast
     - TOCropViewController
 
 EXTERNAL SOURCES:
@@ -1357,6 +1358,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-simple-toast:
+    :path: "../node_modules/react-native-simple-toast"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
@@ -1427,8 +1430,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1478,6 +1479,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: 8a7fd3f7130ef4ad2fb4276d5c9f8d3f28d2df3d
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
+  react-native-simple-toast: 6148335d096ab63dc852535ec64c82527315d575
   react-native-slider: 7d387c7e8dd0b4c12bf49c975c8666435f082a33
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-webview: 0f93dc8f4208ae5365884922c3cd14da5037ca4c
@@ -1513,10 +1515,10 @@ SPEC CHECKSUMS:
   RNReanimated: 7d6d32f238f914f13d9d6fb45c0aef557f7f901e
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
-  RNVectorIcons: 210f910e834e3485af40693ad4615c1ec22fc02b
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 1b901a6d6eeba4e8a2e8f308f708691cdb5db312
 

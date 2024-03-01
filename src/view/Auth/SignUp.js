@@ -28,10 +28,11 @@ import {
   sofiaFont,
   primaryColor,
 } from '../../style/variables';
-import {Toast} from 'native-base';
+// import {Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 Dimensions.get('window');
 import AsyncStorage from '@react-native-community/async-storage';
-import { Images } from '../../../theme/Images';
+import {Images} from '../../../theme/Images';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -128,10 +129,11 @@ export default class Signup extends React.Component {
 
       if (res.success === true) {
         this.setState({loading: false, response: res}, () => {
-          Toast.show({
-            text: `${res.message}`,
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${res.message}`,
+          //   duration: 2000,
+          // });
+          Toast.show(`${res.message}`);
         });
         this.setState({form: {}});
       }
@@ -157,10 +159,11 @@ export default class Signup extends React.Component {
         err.status.data &&
         err.status.data.code === 401
       ) {
-        Toast.show({
-          text: `${err.status.data.message}`,
-          duration: 2000,
-        });
+        // Toast.show({
+        //   text: `${err.status.data.message}`,
+        //   duration: 2000,
+        // });
+        Toast.show(`${err.status.data.message}`);
       }
     }
   };

@@ -27,7 +27,8 @@ import {
   white,
   sofiaFont,
 } from '../../style/variables';
-import {Toast} from 'native-base';
+// import {Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 Dimensions.get('window');
 import AsyncStorage from '@react-native-community/async-storage';
 import { Images } from '../../../theme/Images';
@@ -132,6 +133,7 @@ export default class Login extends React.Component {
     // console.log('form Login Data:-', form);
 
     let errors = this.validate();
+    this.setState({loading: true})
 
     if (!isEmpty(errors)) {
       return this.setState({errors});
@@ -161,11 +163,12 @@ export default class Login extends React.Component {
           this.setState({errors});
         } else if (err && err.status.data.code == 401) {
           this.setState({loading: false});
-          Toast.show({
-            text: `${err.status.data.message}`,
-            // buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   // buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
         }
       });
   };

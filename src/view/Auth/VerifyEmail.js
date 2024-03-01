@@ -25,7 +25,8 @@ import Snackbar from '../../component/Common/Snackbar';
 import TextInput from '../../component/Common/EditTextField';
 import Button from '../../component/Common/Button';
 import { primaryColor, secondryTextColor, secondryColor, white, sofiaFont } from '../../style/variables';
-import { Icon, Toast } from 'native-base';
+// import { Icon, Toast } from 'native-base';
+import Toast from 'react-native-simple-toast';
 import { _getUser, _handleAuthUser } from '../../api/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Images } from '../../../theme/Images';
@@ -60,6 +61,7 @@ export default class VerifyEmail extends React.Component {
         //         duration: 2000,
         //     })
         // }
+        Toast.show(`${usergetotp.message}`)
         this.setState({ userData: usergetotp.data });
     };
 
@@ -121,19 +123,20 @@ export default class VerifyEmail extends React.Component {
                 this.setState({ loading: false, errors });
             } else if (err && err.status.data.code == 401) {
                 this.setState({ loading: false });
-                Toast.show({
-                    text: `${err.status.data.message}`,
-                    // buttonText: 'Ok',
-                    duration: 2000,
-                });
-
+                // Toast.show({
+                //     text: `${err.status.data.message}`,
+                //     // buttonText: 'Ok',
+                //     duration: 2000,
+                // });
+                Toast.show(`${err.status.data.message}`)
             } else if (err && err.status.data.code == 400) {
                 this.setState({ loading: false });
-                Toast.show({
-                    text: `${err.status.data.message}`,
-                    // buttonText: 'Ok',
-                    duration: 2000,
-                });
+                // Toast.show({
+                //     text: `${err.status.data.message}`,
+                //     // buttonText: 'Ok',
+                //     duration: 2000,
+                // });
+                Toast.show(`${err.status.data.message}`)
 
             }
         });
@@ -150,11 +153,12 @@ export default class VerifyEmail extends React.Component {
             .post(url, this.state.form)
             .then(async (res) => {
                 this.setState({ isloading: false });
-                Toast.show({
-                    text: `${res.message}`,
-                    // buttonText: 'Ok',
-                    duration: 2000,
-                });
+                // Toast.show({
+                //     text: `${res.message}`,
+                //     // buttonText: 'Ok',
+                //     duration: 2000,
+                // });
+                Toast.show(`${res.message}`)
                 // console.log('resend otp res : ', res);
             }).catch(err => {
                 this.setState({ isloading: false });
@@ -165,19 +169,21 @@ export default class VerifyEmail extends React.Component {
                     this.setState({ isloading: false, errors });
                 } else if (err && err.status.data.code == 401) {
                     this.setState({ isloading: false });
-                    Toast.show({
-                        text: `${err.status.data.message}`,
-                        // buttonText: 'Ok',
-                        duration: 2000,
-                    });
+                    // Toast.show({
+                    //     text: `${err.status.data.message}`,
+                    //     // buttonText: 'Ok',
+                    //     duration: 2000,
+                    // });
+                    Toast.show(`${err.status.data.message}`);
 
                 } else if (err && err.status.data.code == 400) {
                     this.setState({ loading: false });
-                    Toast.show({
-                        text: `${err.status.data.message}`,
-                        // buttonText: 'Ok',
-                        duration: 2000,
-                    });
+                    // Toast.show({
+                    //     text: `${err.status.data.message}`,
+                    //     // buttonText: 'Ok',
+                    //     duration: 2000,
+                    // });
+                    Toast.show(`${err.status.data.message}`)
 
                 }
             });

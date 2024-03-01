@@ -16,7 +16,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Header from '../../../component/Header/Header';
-import {Icon, Button, Toast} from 'native-base';
+// import {Icon, Button, Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import EventRequest from '../../../component/CustomeComponent/EventRequestcard';
 import EventRequestWithType from '../../../component/CustomeComponent/EventRequestCardWithType';
@@ -45,7 +46,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const GOOGLE_API_KEY = 'AIzaSyBfwJ0clyRHUKSQtfReIcA4CFaIRnfiUwY';
 import LinearGradient from 'react-native-linear-gradient';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
-import { Images } from '../../../../theme/Images';
+import {Images} from '../../../../theme/Images';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 // let data = [
@@ -128,9 +129,6 @@ const Shimmer = ({}) => {
   );
 };
 
-
-
-
 class WishlistDetail extends Component {
   constructor(props) {
     super(props);
@@ -185,7 +183,9 @@ class WishlistDetail extends Component {
       })
       .catch(err => {
         let errors = {};
-        if (err && err.status == 422) {errors = err.errors;}
+        if (err && err.status == 422) {
+          errors = err.errors;
+        }
         this.setState({errors, loading: false, refreshing: false});
       });
   };
@@ -200,10 +200,11 @@ class WishlistDetail extends Component {
       .then(res => {
         // console.log('response changeeventrequeststatus..', res);
         this.setState({loading: false, refreshing: false}, () =>
-          Toast.show({
-            text: `${res.message}`,
-            duration: 2000,
-          }),
+          // Toast.show({
+          //   text: `${res.message}`,
+          //   duration: 2000,
+          // }),
+          Toast.show(`${res.message}`),
         );
         setTimeout(() => this.props.navigation.push('Home'), 2000);
       })
@@ -211,11 +212,12 @@ class WishlistDetail extends Component {
         // console.log('ERROR on changeeventrequeststatus', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
         }
       });
   }
@@ -223,11 +225,7 @@ class WishlistDetail extends Component {
   _renderEmptyProComponent() {
     return (
       !this.state.loading &&
-      isEmpty(this.state.EventDetail) && (
-        <FLEC
-          text="No data available"
-        />
-      )
+      isEmpty(this.state.EventDetail) && <FLEC text="No data available" />
     );
   }
 
@@ -545,7 +543,6 @@ class WishlistDetail extends Component {
                   </View>
                 )}
               </View>
-
 
               {!isEmpty(EventDetail) && (
                 <View

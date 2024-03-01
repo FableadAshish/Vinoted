@@ -14,7 +14,8 @@ import {
   Modal,
 } from 'react-native';
 import Header from '../../../component/Header/Header';
-import {Toast} from 'native-base';
+// import {Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import Button from '../../../component/Common/Button';
 import ModalSelector from 'react-native-modal-selector';
 import TextInputs from '../../../component/Common/EditTextField';
@@ -262,10 +263,13 @@ class ChooseProduct extends Component {
         console.log('ERROR on Rating', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`, {
+            tapToDismissEnabled: true,
           });
         }
       });
@@ -335,26 +339,37 @@ class ChooseProduct extends Component {
       .then(res => {
         console.log('response Ratings..', res);
         this.setState({loading: false, refreshing: false}, () =>
-          Toast.show({
-            text: `${res.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          }),
+          Toast.show(`${res.message}`),
         );
         setTimeout(() => this.props.navigation.goBack(), 2000);
       })
       .catch(err => {
         console.log('ERROR on Rating', err);
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`, {
+            tapToDismissEnabled: true,
           });
         }
         let errors = {};
         if (err && err.status.data.code == 422) {
           errors = err.status.data.errors;
+          Toast.show(`${err.status.data.errors.color}`, {
+            tapToDismissEnabled: true,
+          });
+          Toast.show(`${err.status.data.errors.nose}`, {
+            tapToDismissEnabled: true,
+          });
+          Toast.show(`${err.status.data.errors.taste}`, {
+            tapToDismissEnabled: true,
+          });
+          Toast.show(`${err.status.data.errors.finish}`, {
+            tapToDismissEnabled: true,
+          });
           // Toast.show({
           //     text: `${err.status.data.errors.color}`,
           //     buttonText: 'Ok',
@@ -1212,14 +1227,22 @@ class ChooseProduct extends Component {
                         }}>
                         <TextInput
                           style={{
+                            // borderBottomWidth: 1,
                             padding: 10,
                             height: 50,
                             color: 'black',
                             // fontWeight: '500',
                             fontSize: 15,
                           }}
+                          optionStyle={{
+                            borderBottomWidth: 0,
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                          }}
+                          initValueTextStyle={{color: 'red'}}
+                          optionTextStyle={{color: 'black'}}
                           editable={false}
-                          placeholder="Select Complexity"
+                          placeholder="Select Sweetness"
                           placeholderTextColor={'black'}
                           value={this.state.textInputComplexityValue}
                         />
@@ -1923,13 +1946,13 @@ class ChooseProduct extends Component {
                     />
                   </>
                 ) : (
-                  // <View>
-                  //   <Text style={styles.pickerText}>Description</Text>
-                  //   <Text style={styles.SimpleText}>
-                  //     {this.state.form.description}
-                  //   </Text>
-                  // </View>
-                  ''
+                  <View>
+                    {/* <Text style={styles.pickerText}>Description</Text> */}
+                    <Text style={styles.SimpleText}>
+                      {this.state.form.description}
+                    </Text>
+                  </View>
+                  // ''
                 )}
 
                 <TouchableOpacity

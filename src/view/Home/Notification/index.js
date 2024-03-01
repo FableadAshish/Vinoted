@@ -21,7 +21,8 @@ import {
 } from '../../../style/variables';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
-import { Toast } from 'native-base';
+// import { Toast } from 'native-base';
+import Toast from 'react-native-simple-toast';
 import { _getUser } from '../../../api/auth'
 import BottomIndicator from '../../../component/Indicator/BottomIndicator';
 import http from "../../../http";
@@ -210,21 +211,24 @@ class Notification extends Component {
             console.log("response changeeventrequeststatus..", res)
             this.props.navigation.replace("App", {screen : "Home"});
             this.setState({ loading: false, refreshing: false }, () =>
-                Toast.show({
-                    text: `${res.message}`,
-                    // buttonText: 'Ok',
-                    duration: 2000,
-                }))
+                // Toast.show({
+                //     text: `${res.message}`,
+                //     // buttonText: 'Ok',
+                //     duration: 2000,
+                // })
+                Toast.show(`${res.message}`)
+                )
             // setTimeout(() =>  this.fetch(), 2000)
         }).catch(err => {
             console.log("ERROR on changeeventrequeststatus", err)
             this.setState({ loading: false, refreshing: false })
             if (err.status.data.code == 422) {
-                Toast.show({
-                    text: `${err.status.data.message}`,
-                    buttonText: 'Ok',
-                    duration: 2000,
-                })
+                // Toast.show({
+                //     text: `${err.status.data.message}`,
+                //     buttonText: 'Ok',
+                //     duration: 2000,
+                // })
+                Toast.show(`${err.status.data.message}`)
             }
         })
     }

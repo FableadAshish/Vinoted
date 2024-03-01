@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Header from '../../../component/Header/Header';
-import {Icon, Toast} from 'native-base';
+// import {Icon, Toast} from 'native-base';
+import Toast from 'react-native-simple-toast';
 import {
   white,
   secondryColor,
@@ -64,24 +65,27 @@ class ViewProduct extends Component {
         if (res.data) {
           this.setState({form: {...this.state.form, ...res.data}});
         }
-        this.setState({loading: false, refreshing: false});
-        // this.setState({ loading: false, refreshing: false }, () =>
-        //     Toast.show({
-        //         text: `${res.message}`,
-        //         buttonText: 'Ok',
-        //         duration: 2000,
-        //     }))
-        // setTimeout(() => this.props.navigation.goBack(), 2000)
+        // this.setState({loading: false, refreshing: false});
+        this.setState({loading: false, refreshing: false}, () =>
+          // Toast.show({
+          //     text: `${res.message}`,
+          //     buttonText: 'Ok',
+          //     duration: 2000,
+          // })
+          Toast.show(`${res.message}`),
+        );
+        setTimeout(() => this.props.navigation.goBack(), 2000);
       })
       .catch(err => {
         console.log('ERROR on Rating', err);
         this.setState({loading: false, refreshing: false});
         if (err.status.data.code == 422) {
-          Toast.show({
-            text: `${err.status.data.message}`,
-            buttonText: 'Ok',
-            duration: 2000,
-          });
+          // Toast.show({
+          //   text: `${err.status.data.message}`,
+          //   buttonText: 'Ok',
+          //   duration: 2000,
+          // });
+          Toast.show(`${err.status.data.message}`);
         }
       });
   }

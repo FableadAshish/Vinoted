@@ -101,13 +101,12 @@ class Index extends Component {
   };
 
   _renderEmptyComponent() {
+    const {loading, Events, arrayholder} = this.state;
+
     return (
-      !this.state.loading &&
-      isEmpty(this.state.Events) && (
-        <FLEC
-          text="No Data Available"
-        />
-      )
+      !loading &&
+      isEmpty(Events) &&
+      isEmpty(arrayholder) && <FLEC text="No Data Available" />
     );
   }
 
@@ -200,24 +199,6 @@ class Index extends Component {
           <View style={{marginHorizontal: 5, flex: 1}}>
             <View style={styles.view}>
               {this.state.loading && isEmpty(this.state.Events) ? (
-                // <SkeletonContent
-                //   containerStyle={{flex: 1, width: '100%'}}
-                //   boneColor="whitesmoke"
-                //   // layout={[
-                //   //     { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100,width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   //     // { height: 100, width:"95%", alignSelf: "center", marginHorizontal: 5, marginVertical: 5, justifyContent: "center", flexDirection: "row" },
-                //   // ]}
-                //   animationDirection="horizontalRight"
-                //   backgroundColor="grey"
-                //   loading={true}
-                //   // ...
-                // />
                 <View>
                   <Text>Loading ....</Text>
                 </View>
@@ -233,7 +214,6 @@ class Index extends Component {
                   horizontal={false}
                   scrollEventThrottle={16}
                   onEndReachedThreshold={0.5}
-                  showsVerticalScrollIndicator={false}
                   onEndReached={this.LoadMoreRandomData}
                   ListEmptyComponent={() => this._renderEmptyComponent()}
                   ListFooterComponent={() => this._renderFooterComponent()}
@@ -245,15 +225,6 @@ class Index extends Component {
                     />
                   }
                   renderItem={({item}) => (
-                    // <SearchCard
-                    //     // onPressView={() => this.props.navigation.push("ProductDetail")}
-                    //     onPress={() => this.props.navigation.push("ProEventDetails", { Eventitem: item })}
-                    //     subtitle={moment(item.date).format("DD/MM/YYYY")}
-                    //     imagelist={item.Imagesrc}
-                    //     areaname={item.supplier.default_address.city}
-                    //     status={item.status}
-                    //     title={item.name}
-                    // />
                     <SearchCard
                       ViewMore={'View More'}
                       onPressView={() =>

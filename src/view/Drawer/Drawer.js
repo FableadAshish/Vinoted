@@ -15,7 +15,7 @@ import {DrawerActions} from '@react-navigation/native';
 import {unset} from 'lodash';
 import messaging from '@react-native-firebase/messaging';
 import styles from './Styles/DrawerStyles';
-import { Images } from '../../../theme/Images';
+import {Images} from '../../../theme/Images';
 
 class SideBar extends React.Component {
   constructor(props) {
@@ -140,14 +140,6 @@ class SideBar extends React.Component {
               style={styles.listItem}>
               <Text style={[styles.text]}>Live Chat</Text>
             </TouchableOpacity>
-
-            {/* <TouchableOpacity
-              button
-              noBorder
-              onPress={() => this.navigateTo('Notification')}
-              style={styles.listItem}>
-              <Text style={[styles.text]}>Notifications</Text>
-            </TouchableOpacity> */}
 
             <TouchableOpacity
               button

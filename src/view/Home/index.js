@@ -437,7 +437,7 @@ class Home extends Component {
                 <View style={styles.iconContainer}>
                   <Image
                     source={Images.SearchIcon}
-                    style={{height: 25, width: 25}}
+                    style={{height: 22, width: 22}}
                   />
                 </View>
               </TouchableWithoutFeedback>
