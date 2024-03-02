@@ -146,7 +146,7 @@ class Index extends Component {
     http
       .get(`sommelier/myfavouriterating?page=${this.state.page}`)
       .then(res => {
-        console.log('response Wishlist..', res);
+        console.log('response Wishlist.. ukyg ju9o8y', res);
         // this.setState({Wishlist:res.data,loading: false,refreshing: false})
         this.setState({
           Wishlist:
@@ -171,7 +171,6 @@ class Index extends Component {
   };
 
   LoadMoreRandomData = () => {
-    console.log('length', this.state.Wishlist.length);
     if (this.state.Wishlist.length < this.state.total) {
       this.setState(
         {
@@ -186,10 +185,7 @@ class Index extends Component {
     return (
       !this.state.loading &&
       isEmpty(this.state.Wishlist) && (
-        <FLEC
-          text="Currently No Wines Have Been Favourited"
-
-        />
+        <FLEC text="Currently No Wines Have Been Favourited" />
       )
     );
   }
@@ -426,10 +422,10 @@ const styles = StyleSheet.create({
     color: white,
     fontFamily: sofiaFont,
   },
-  icon:{
-    height:22,
-    width:22
-  }
+  icon: {
+    height: 22,
+    width: 22,
+  },
 });
 
 const mapProps = state => ({

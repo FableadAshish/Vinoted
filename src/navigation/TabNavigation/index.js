@@ -15,16 +15,16 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs() {
   const [unRead, setUnread] = useState('');
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     http
-  //       .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
-  //       .then(res => setUnread(res))
-  //       .catch(err => console.log(err));
-  //   }, 1000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      http
+        .get('https://www.admin.vinoted-admin.com/api/unreadMsg')
+        .then(res => setUnread(res))
+        .catch(err => console.log(err));
+    }, 1000);
 
-  //   return () => clearInterval(intervalId);
-  // }, [unRead]);
+    return () => clearInterval(intervalId);
+  }, [unRead]);
   return (
     <Tab.Navigator
       screenOptions={{

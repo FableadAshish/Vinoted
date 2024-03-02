@@ -108,12 +108,12 @@ const SearchCard = ({
                   {
                     fontSize: 12,
                     width: '100%',
-                    color: 'lightgray',
+                    color: 'lightgrey',
                     textTransform: 'capitalize',
                     paddingVertical: 2,
                   },
                 ]}>
-                Rating - {date}
+                Tasted - {date}
               </Text>
             </View>
           ) : (

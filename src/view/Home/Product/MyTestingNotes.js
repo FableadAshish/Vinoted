@@ -193,13 +193,14 @@ class MyTestingNotes extends Component {
   }
 
   fetch = async () => {
+    // console.log('hgiuksgudfs efhdsilhuy');
     this.setState({loading: true});
     http
       .get(`sommelier/eventproductrating?page=${this.state.page}`)
       .then(res => {
         // this.setState({ loading: true, });
         // http.get(`sommelier/eventproductrating?page=${this.state.page}`).then(res => {
-        console.log('responce of ProductRatinge noted  rfdvNow', res);
+        console.log('hgiuksgudfs koiuo', res);
         this.setState({
           arrayholder: res.data,
           ProductRating:
@@ -374,7 +375,7 @@ class MyTestingNotes extends Component {
   render() {
     const {item, form} = this.state;
     // const {SearchData} = this.props.route.params;
-    console.log('pdataNotedd Nowhiou hiut hdguy', this.state.ProductRating);
+    console.log('pdataNotedd rjkfsgc', item);
     // console.log('Search Filter Function', SearchData);
     return (
       <View
@@ -388,6 +389,7 @@ class MyTestingNotes extends Component {
           iconProps={Images.BackNavigationIcon}
           onPress={() => this.props.navigation.navigate('Home')}
           image={Images.Logo}
+          
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -590,7 +592,7 @@ class MyTestingNotes extends Component {
                                   fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
-                                  textTransform: 'uppercase',
+                                  // textTransform: 'uppercase',
                                   // paddingVertical: 2,
                                 },
                               ]}>
@@ -610,7 +612,7 @@ class MyTestingNotes extends Component {
                                   fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
-                                  textTransform: 'uppercase',
+                                  // textTransform: 'uppercase',
                                   // paddingVertical: 2,
                                 },
                               ]}>
@@ -630,7 +632,7 @@ class MyTestingNotes extends Component {
                                   fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
-                                  textTransform: 'uppercase',
+                                  // textTransform: 'uppercase',
                                   // paddingVertical: 2,
                                 },
                               ]}>
@@ -649,11 +651,11 @@ class MyTestingNotes extends Component {
                                   fontSize: 15,
                                   width: '100%',
                                   color: primaryColor,
-                                  textTransform: 'uppercase',
+                                  // textTransform: 'uppercase',
                                   // paddingVertical: 2,
                                 },
                               ]}>
-                              - {item.event.country_name}
+                              - {item.product.country.name}
                             </Text>
                           </View>
                         </View>

@@ -232,7 +232,7 @@ class ProEventDetails extends Component {
           //   buttonText: 'Ok',
           //   duration: 2000,
           // });
-          Toast.show(`${err.status.data.message}`)
+          Toast.show(`${err.status.data.message}`);
         }
       });
   }
@@ -271,7 +271,7 @@ class ProEventDetails extends Component {
     );
 
     if (filteredArray.length === 0 && text !== '') {
-      this.setState({noData: 'No such wine available'});
+      this.setState({noData: 'No products found'});
     } else {
       this.setState({noData: '', searchedWine: filteredArray});
     }
@@ -280,7 +280,6 @@ class ProEventDetails extends Component {
   onRefresh() {
     this.setState({refreshing: true, page: 0, EventDetail: {}}, () =>
       this.Store(),
-      
     );
   }
 
@@ -444,7 +443,6 @@ class ProEventDetails extends Component {
         style={{
           flex: 1,
           backgroundColor: white,
-          marginTop:10
         }}>
         <Header
           navigation={this.props.navigation}
@@ -765,7 +763,7 @@ class ProEventDetails extends Component {
                       onChangeText={text => this.SearchFilterFunction(text)}
                       value={this.state.searchText}
                       underlineColorAndroid="transparent"
-                      placeholder="Search for Wine Here"
+                      placeholder="Search for wine here"
                       placeholderTextColor={white}
                     />
                     <TouchableWithoutFeedback>
@@ -796,7 +794,7 @@ class ProEventDetails extends Component {
                         </Text>
                       </View>
                     ) : (
-                      <View style={{width:"100%"}}>
+                      <View style={{width: '100%'}}>
                         <FlatList
                           showsVerticalScrollIndicator={false}
                           // data={EventDetail.eventproducts}
@@ -873,7 +871,7 @@ class ProEventDetails extends Component {
                               // marginHorizontal: 5,
                               bottom: 0,
                               borderRadius: 2,
-                              marginLeft:-5
+                              marginLeft: -5,
                             }}>
                             <FlatList
                               showsVerticalScrollIndicator={false}
@@ -891,7 +889,6 @@ class ProEventDetails extends Component {
                                   style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
-
                                   }}>
                                   {!isEmpty(item.products) && (
                                     <View

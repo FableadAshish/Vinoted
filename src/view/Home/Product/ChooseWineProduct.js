@@ -516,7 +516,7 @@ class ChooseProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: 700,
+                        // fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -533,7 +533,7 @@ class ChooseProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: 700,
+                        // fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -550,7 +550,7 @@ class ChooseProduct extends Component {
                       style={{
                         fontFamily: sofiaFont,
                         fontSize: 20,
-                        fontWeight: 700,
+                        // fontWeight: 700,
                         color: primaryColor,
                       }}>
                       {Testing.product
@@ -1965,17 +1965,18 @@ class ChooseProduct extends Component {
                     flexDirection: 'row',
                   }}
                   onPress={() =>
-                    !isEmpty(form.event)
+                    (!isEmpty(form.event) &&
+                    !isNull(this.state.form.is_favourite))
                       ? this.setState({
                           form: {
                             ...this.state.form,
-                            is_favourite: !this.state.form.is_favourite,
+                            is_favourite: !this.state.form.is_favourite == 1,
                           },
                         })
                       : this.setState({
                           form: {
                             ...this.state.form,
-                            is_favourite: !this.state.form.is_favourite,
+                            is_favourite: this.state.form.is_favourite === 0,
                           },
                         })
                   }>

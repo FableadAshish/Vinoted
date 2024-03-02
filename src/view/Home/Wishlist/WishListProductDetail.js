@@ -55,7 +55,7 @@ class WishListProductDetail extends Component {
   }
   componentDidMount() {
     const ProductDetail = this.props.route.params.ProductDetail;
-    console.log('ProductDetail...', ProductDetail);
+    console.log('klhhyk', ProductDetail.product);
     this.setState({ProductDetail: ProductDetail});
   }
 
@@ -86,7 +86,7 @@ class WishListProductDetail extends Component {
 
   render() {
     const {ProductDetail, isLike} = this.state;
-    console.log('Render Item on Product..Wid new', ProductDetail);
+    console.log('Render Item on Product..Wid new jiou', ProductDetail);
     return (
       <View
         style={{
@@ -367,7 +367,7 @@ class WishListProductDetail extends Component {
                             fontSize: 15,
                             color: primaryColor,
                           }}>
-                          {ProductDetail.product.country}
+                          {ProductDetail.product.country.name}
                         </Text>
                       </View>
                       <View style={{marginVertical: 5}}>

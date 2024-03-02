@@ -37,6 +37,7 @@ import {isEmpty, isNull} from 'lodash';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {Images} from '../../../../theme/Images';
+import Loader from '../../../component/Indicator/Loader';
 const {width, height} = Dimensions.get('window');
 
 let data = ['1', '2', '3', '4', '5'];
@@ -52,6 +53,7 @@ class Index extends Component {
       visible: false,
       refreshing: false,
       arrayholder: [],
+      arrayholderLength: '',
     };
   }
 
@@ -133,11 +135,12 @@ class Index extends Component {
     http
       .get(`sommelier/events?search=${text}`)
       .then(res => {
-        console.log('response Events..', res.data.page.data);
+        console.log('Length is here weds', res.data.page.data.length);
         this.setState({
           arrayholder: res.data.page.data,
           loading: false,
           refreshing: false,
+          arrayholderLength: res.data.page.data.length,
         });
       })
       .catch(err => {
@@ -200,7 +203,12 @@ class Index extends Component {
             <View style={styles.view}>
               {this.state.loading && isEmpty(this.state.Events) ? (
                 <View>
-                  <Text>Loading ....</Text>
+                  <Loader />
+                </View>
+              ) : this.state.arrayholderLength === 0 ? (
+                <View
+                  style={{width: '100%', alignItems: 'center', marginTop: 10}}>
+                  <Text style={{color: primaryColor}}>No Data Found</Text>
                 </View>
               ) : (
                 <FlatList

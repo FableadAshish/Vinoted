@@ -31,7 +31,7 @@ import {
 import Toast from 'react-native-simple-toast';
 Dimensions.get('window');
 import AsyncStorage from '@react-native-community/async-storage';
-import { Images } from '../../../theme/Images';
+import {Images} from '../../../theme/Images';
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
@@ -133,7 +133,6 @@ export default class Login extends React.Component {
     // console.log('form Login Data:-', form);
 
     let errors = this.validate();
-    this.setState({loading: true})
 
     if (!isEmpty(errors)) {
       return this.setState({errors});
@@ -149,13 +148,14 @@ export default class Login extends React.Component {
     _login(this.state.form)
       .then(res => {
         // console.log('Login User Res Success', res);
-        this.setState({loading: false, response: res});
+        // this.setState({loading: true});
+        this.setState({loading: true, response: res});
         _handleAuthUser();
         // this.props.navigation.navigate('Home');
       })
       .catch(err => {
         this.setState({loading: false});
-        // console.log('error for Login Form', err);
+        // console.log('error for Login r);
         let errors = {};
 
         if (err && err.status.data.code == 422) {
